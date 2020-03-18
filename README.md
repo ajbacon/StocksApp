@@ -12,6 +12,7 @@ A personal project, post Makers, to solidify knowlege in developing full-stack J
 - Allow user to set limits and set alerts when limits exceeded
 - Provide user with a smooth interface to search and view company share prices
 - Have news feed with latest relevant stock market news
+- Provide a practice trading enviroment
 - Provide a way to buy stocks (???)
 - Provide trading tips (??? might be a stretch goal!)
 
