@@ -14,7 +14,7 @@ class Navbar extends Component {
               }}
               className='col s5 brand-logo center black-text'
             >
-              <i className='material-icons'>show_chart</i>
+              <i className='material-icons'>trending_up</i>
               StocksApp
             </Link>
           </div>
