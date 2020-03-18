@@ -10,7 +10,7 @@ const app = express();
 // Init Middleware
 app.use(bodyParser.json());
 
-app.get('/', (req, res) => res.send('API Running'));
+// app.get('/', (req, res) => res.send('API Running'));
 
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static('client/build'));
