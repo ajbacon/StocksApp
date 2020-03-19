@@ -5,7 +5,8 @@ class Register extends Component {
   constructor() {
     super();
     this.state = {
-      name: '',
+      firstName: '',
+      surname: '',
       email: '',
       password: '',
       password2: '',
@@ -18,7 +19,8 @@ class Register extends Component {
   onSubmit = e => {
     e.preventDefault();
     const newUser = {
-      name: this.state.name,
+      firstName: this.state.firstName,
+      surname: this.state.surname,
       email: this.state.email,
       password: this.state.password,
       password2: this.state.password2
@@ -43,7 +45,17 @@ class Register extends Component {
                 Already have an account? <Link to='/login'>Log in</Link>
               </p>
             </div>
-            <form noValidate onSubmit={this.onSubmit}>
+            <form noValidate onSubmit={this.onSubmit} autoComplete='off'>
+              <div className='input-field col s12'>
+                <input
+                  onChange={this.onChange}
+                  value={this.state.firstName}
+                  error={errors.firstName}
+                  id='first-name'
+                  type='text'
+                />
+                <label htmlFor='name'>First Name</label>
+              </div>
               <div className='input-field col s12'>
                 <input
                   onChange={this.onChange}
@@ -52,7 +64,7 @@ class Register extends Component {
                   id='name'
                   type='text'
                 />
-                <label htmlFor='name'>Name</label>
+                <label htmlFor='name'>Surname</label>
               </div>
               <div className='input-field col s12'>
                 <input
@@ -61,6 +73,7 @@ class Register extends Component {
                   error={errors.email}
                   id='email'
                   type='email'
+                  autoComplete='off'
                 />
                 <label htmlFor='email'>Email</label>
               </div>
@@ -71,6 +84,7 @@ class Register extends Component {
                   error={errors.password}
                   id='password'
                   type='password'
+                  autoComplete='off'
                 />
                 <label htmlFor='password'>Password</label>
               </div>
