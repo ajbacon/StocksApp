@@ -21,6 +21,8 @@ The live application is deployed [here](https://project-stocks-app.herokuapp.com
 - Provide trading tips (??? might be a stretch goal!)
 - deal with password resets etc
 - email confirmations
+- Google OAuth
+
 
 ## Technologies
 
