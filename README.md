@@ -23,6 +23,7 @@ The live application is deployed [here](https://project-stocks-app.herokuapp.com
 - email confirmations
 - Google OAuth
 
+
 ## Technologies
 
 - **Backend:** NodeJS, Express, MongoDB. Tested with Jest and Supertest
