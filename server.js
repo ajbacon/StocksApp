@@ -1,6 +1,8 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
+const passport = require('passport');
+const users = require('./routes/api/users');
 
 const app = express();
 
@@ -20,7 +22,12 @@ mongoose
   .then(() => console.log('MongoDB successfully connected...'))
   .catch(err => console.log(err));
 
-// app.get('/', (req, res) => res.send('API Running'));
+// Passport middleware
+app.use(passport.initialize());
+// Passport config
+require('./config/passport')(passport);
+// Routes
+app.use('/api/users', users);
 
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static('client/build'));
