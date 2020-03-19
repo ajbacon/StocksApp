@@ -1,5 +1,5 @@
 const express = require('express');
-const connectDB = require('./config/db');
+const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 
 const app = express();
@@ -8,7 +8,17 @@ const app = express();
 // connectDB();
 
 // Init Middleware
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+
+// configure the database
+const db = require('./config/keys').mongoURI;
+
+// connect to the database
+mongoose
+  .connect(db, { useNewUrlParser: true })
+  .then(() => console.log('MongoDB successfully connected...'))
+  .catch(err => console.log(err));
 
 // app.get('/', (req, res) => res.send('API Running'));
 
