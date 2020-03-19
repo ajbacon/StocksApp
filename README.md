@@ -4,6 +4,10 @@
 
 A personal project, post Makers, to solidify knowlege in developing full-stack JavaScript application. The aim is to hit multiple other different endpoints, such as relevant stock market news feeds, to provide a rich user experience.
 
+## Deployed Application
+
+The live application is deployed [here](https://project-stocks-app.herokuapp.com/register)
+
 ## Features
 
 - User Sign-up / Authentication
@@ -15,6 +19,8 @@ A personal project, post Makers, to solidify knowlege in developing full-stack J
 - Provide a mock trading enviroment
 - Provide a way to buy stocks (??? definetely a stretch goal)
 - Provide trading tips (??? might be a stretch goal!)
+- deal with password resets etc
+- email confirmations
 
 ## Technologies
 
