@@ -14,7 +14,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 // configure the database
-const db = require('./config/keys').mongoURI;
+const db = process.env.MONGO_URI || require('./config/keys').mongoURI;
 
 // connect to the database
 mongoose
@@ -28,7 +28,6 @@ app.use(passport.initialize());
 require('./config/passport')(passport);
 // Routes
 app.use('/api/users', users);
-
 
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static('client/build'));
