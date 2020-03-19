@@ -19,7 +19,7 @@ class Register extends Component {
   onSubmit = e => {
     e.preventDefault();
     const newUser = {
-      firstName: this.state.firstName,
+      name: this.state.firstName,
       surname: this.state.surname,
       email: this.state.email,
       password: this.state.password,
@@ -45,26 +45,26 @@ class Register extends Component {
                 Already have an account? <Link to='/login'>Log in</Link>
               </p>
             </div>
-            <form noValidate onSubmit={this.onSubmit} autoComplete='off'>
+            <form noValidate onSubmit={this.onSubmit}>
               <div className='input-field col s12'>
                 <input
                   onChange={this.onChange}
                   value={this.state.firstName}
                   error={errors.firstName}
-                  id='first-name'
+                  id='firstName'
                   type='text'
                 />
-                <label htmlFor='name'>First Name</label>
+                <label htmlFor='firstName'>First Name</label>
               </div>
               <div className='input-field col s12'>
                 <input
                   onChange={this.onChange}
-                  value={this.state.name}
-                  error={errors.name}
-                  id='name'
+                  value={this.state.surname}
+                  error={errors.surname}
+                  id='surname'
                   type='text'
                 />
-                <label htmlFor='name'>Surname</label>
+                <label htmlFor='surname'>Surname</label>
               </div>
               <div className='input-field col s12'>
                 <input
