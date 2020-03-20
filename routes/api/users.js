@@ -15,36 +15,38 @@ const User = require('../../models/User');
 // @desc Register user
 // @access Public
 // --------------------------------------------------------------------
-router.post('/register', (req, res) => {
+router.post('/register', async (req, res) => {
   // Form validation
   const { errors, isValid } = validateRegisterInput(req.body);
   // Check validation
   if (!isValid) {
     return res.status(400).json(errors);
   }
-  User.findOne({ email: req.body.email }).then(user => {
+
+  const { firstName, surname, email, password } = req.body;
+
+  try {
+    let user = await User.findOne({ email });
     if (user) {
       return res.status(400).json({ email: 'Email already exists' });
-    } else {
-      const newUser = new User({
-        firstName: req.body.firstName,
-        surname: req.body.surname,
-        email: req.body.email,
-        password: req.body.password
-      });
-      // Hash password before saving in database
-      bcrypt.genSalt(10, (err, salt) => {
-        bcrypt.hash(newUser.password, salt, (err, hash) => {
-          if (err) throw err;
-          newUser.password = hash;
-          newUser
-            .save()
-            .then(user => res.json(user))
-            .catch(err => console.log(err));
-        });
-      });
     }
-  });
+
+    user = new User({
+      firstName,
+      surname,
+      email,
+      password
+    });
+
+    const salt = await bcrypt.genSalt(10);
+    user.password = await bcrypt.hash(password, salt);
+
+    await user.save();
+    res.send('User created');
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send('Server error');
+  }
 });
 // --------------------------------------------------------------------
 
