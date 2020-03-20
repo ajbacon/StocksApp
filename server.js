@@ -1,22 +1,18 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
-// const passport = require('passport');
-// const users = require('./routes/api/users');
+const keys = require('./config/keys');
+const passport = require('passport');
+const users = require('./routes/api/users');
 
 const app = express();
-
-// connect database
-// connectDB();
 
 // Init Middleware
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 // configure the database
-const db = process.env.MONGO_URI || require('./config/keys').mongoURI;
-console.log('DB URI:');
-console.log(db);
+const db = keys.mongoURI;
 
 // connect to the database
 mongoose
@@ -25,11 +21,11 @@ mongoose
   .catch(err => console.log(err));
 
 // Passport middleware
-// app.use(passport.initialize());
-// // Passport config
-// require('./config/passport')(passport);
-// // Routes
-// app.use('/api/users', users);
+app.use(passport.initialize());
+// Passport config
+require('./config/passport')(passport);
+// Routes
+app.use('/api/users', users);
 
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static('client/build'));
@@ -38,8 +34,6 @@ if (process.env.NODE_ENV === 'production') {
     res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
   });
 }
-//define routes
-// TBD
 
 const PORT = process.env.PORT || 5000;
 

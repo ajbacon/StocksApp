@@ -10,8 +10,6 @@ const validateLoginInput = require('../../validation/login');
 // Load User model
 const User = require('../../models/User');
 
-const secretOrKey = process.env.JWT_SECRET || keys.secretOrKey;
-
 // --------------------------------------------------------------------
 // @route POST api/users/register
 // @desc Register user
@@ -84,7 +82,7 @@ router.post('/login', (req, res) => {
 
         jwt.sign(
           payload,
-          secretOrKey,
+          keys.secretOrKey,
           {
             expiresIn: 31556926 // 1 year in seconds
           },
