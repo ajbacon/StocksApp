@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 
 class Register extends Component {
   constructor() {
@@ -16,16 +17,28 @@ class Register extends Component {
   onChange = e => {
     this.setState({ [e.target.id]: e.target.value });
   };
-  onSubmit = e => {
+  onSubmit = async e => {
     e.preventDefault();
     const newUser = {
-      name: this.state.firstName,
+      firstName: this.state.firstName,
       surname: this.state.surname,
       email: this.state.email,
       password: this.state.password,
       password2: this.state.password2
     };
-    console.log(newUser);
+    try {
+      const config = {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      };
+
+      const body = JSON.stringify(newUser);
+      const res = await axios.post('/api/users/register', body, config);
+      console.log(res.data);
+    } catch (err) {
+      console.error(err.response.data);
+    }
   };
   render() {
     const { errors } = this.state;
