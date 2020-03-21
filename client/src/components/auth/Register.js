@@ -1,48 +1,56 @@
-import React, { Component } from 'react';
+import React, { Fragment, useState } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 
-class Register extends Component {
-  constructor() {
-    super();
-    this.state = {
-      firstName: '',
-      surname: '',
-      email: '',
-      password: '',
-      password2: '',
-      errors: {}
-    };
-  }
-  onChange = e => {
-    this.setState({ [e.target.id]: e.target.value });
-  };
-  onSubmit = async e => {
-    e.preventDefault();
-    const newUser = {
-      firstName: this.state.firstName,
-      surname: this.state.surname,
-      email: this.state.email,
-      password: this.state.password,
-      password2: this.state.password2
-    };
-    try {
-      const config = {
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      };
+const Register = () => {
+  const [formData, setFormData] = useState({
+    firstName: '',
+    surname: '',
+    email: '',
+    password: '',
+    password2: ''
+  });
 
-      const body = JSON.stringify(newUser);
-      const res = await axios.post('/api/users/register', body, config);
-      console.log(res.data);
-    } catch (err) {
-      console.error(err.response.data);
+  const { firstName, surname, email, password, password2 } = formData;
+
+  const onChange = e =>
+    setFormData({ ...formData, [e.target.id]: e.target.value });
+
+  const onSubmit = async e => {
+    e.preventDefault();
+
+    if (password !== password2) {
+      console.log('passwords do not match');
+    } else {
+      console.log(formData);
     }
+
+    // const newUser = {
+    //   firstName: this.state.firstName,
+    //   surname: this.state.surname,
+    //   email: this.state.email,
+    //   password: this.state.password,
+    //   password2: this.state.password2
+    // };
+    // try {
+    //   const config = {
+    //     headers: {
+    //       'Content-Type': 'application/json'
+    //     }
+    //   };
+
+    //   const body = JSON.stringify(newUser);
+    //   const res = await axios.post('/api/users/register', body, config);
+    //   console.log(res.data);
+    // } catch (err) {
+    //   console.error(err.response.data);
+    // }
   };
-  render() {
-    const { errors } = this.state;
-    return (
+
+  // const { errors } = this.state;
+
+  return (
+    <Fragment>
       <div className='container'>
         <div className='row'>
           <div className='col s8 offset-s2'>
@@ -58,12 +66,12 @@ class Register extends Component {
                 Already have an account? <Link to='/login'>Log in</Link>
               </p>
             </div>
-            <form noValidate onSubmit={this.onSubmit}>
+            <form noValidate onSubmit={e => onSubmit(e)}>
               <div className='input-field col s12'>
                 <input
-                  onChange={this.onChange}
-                  value={this.state.firstName}
-                  error={errors.firstName}
+                  onChange={e => onChange(e)}
+                  value={firstName}
+                  // error={errors.firstName}
                   id='firstName'
                   type='text'
                 />
@@ -71,9 +79,9 @@ class Register extends Component {
               </div>
               <div className='input-field col s12'>
                 <input
-                  onChange={this.onChange}
-                  value={this.state.surname}
-                  error={errors.surname}
+                  onChange={e => onChange(e)}
+                  value={surname}
+                  // error={errors.surname}
                   id='surname'
                   type='text'
                 />
@@ -81,9 +89,9 @@ class Register extends Component {
               </div>
               <div className='input-field col s12'>
                 <input
-                  onChange={this.onChange}
-                  value={this.state.email}
-                  error={errors.email}
+                  onChange={e => onChange(e)}
+                  value={email}
+                  // error={errors.email}
                   id='email'
                   type='email'
                   autoComplete='off'
@@ -92,9 +100,9 @@ class Register extends Component {
               </div>
               <div className='input-field col s12'>
                 <input
-                  onChange={this.onChange}
-                  value={this.state.password}
-                  error={errors.password}
+                  onChange={e => onChange(e)}
+                  value={password}
+                  // error={errors.password}
                   id='password'
                   type='password'
                   autoComplete='off'
@@ -103,9 +111,9 @@ class Register extends Component {
               </div>
               <div className='input-field col s12'>
                 <input
-                  onChange={this.onChange}
-                  value={this.state.password2}
-                  error={errors.password2}
+                  onChange={e => onChange(e)}
+                  value={password2}
+                  // error={errors.password2}
                   id='password2'
                   type='password'
                 />
@@ -129,7 +137,7 @@ class Register extends Component {
           </div>
         </div>
       </div>
-    );
-  }
-}
+    </Fragment>
+  );
+};
 export default Register;
