@@ -1,9 +1,9 @@
 const express = require('express');
-const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
-const keys = require('./config/keys');
 const passport = require('passport');
 const users = require('./routes/api/users');
+const auth = require('./routes/api/auth');
+const connectDB = require('./config/db');
 
 const app = express();
 
@@ -11,14 +11,8 @@ const app = express();
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-// configure the database
-const db = keys.mongoURI;
-
 // connect to the database
-mongoose
-  .connect(db, { useNewUrlParser: true, useUnifiedTopology: true })
-  .then(() => console.log('MongoDB successfully connected...'))
-  .catch(err => console.log(err));
+connectDB();
 
 // Passport middleware
 app.use(passport.initialize());
@@ -26,6 +20,7 @@ app.use(passport.initialize());
 require('./config/passport')(passport);
 // Routes
 app.use('/api/users', users);
+app.use('/api/auth', auth);
 
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static('client/build'));
