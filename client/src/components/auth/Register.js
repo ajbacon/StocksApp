@@ -1,8 +1,9 @@
 import React, { Fragment, useState } from 'react';
+import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
+import { setAlert } from '../../actions/alert';
 
-const Register = () => {
+const Register = ({ setAlert }) => {
   const [formData, setFormData] = useState({
     firstName: '',
     surname: '',
@@ -20,28 +21,9 @@ const Register = () => {
     e.preventDefault();
 
     if (password !== password2) {
-      console.log('passwords do not match');
+      setAlert('passwords do not match', 'danger');
     } else {
-      const newUser = {
-        firstName,
-        surname,
-        email,
-        password,
-        password2
-      };
-      try {
-        const config = {
-          headers: {
-            'Content-Type': 'application/json'
-          }
-        };
-
-        const body = JSON.stringify(newUser);
-        const res = await axios.post('/api/users/register', body, config);
-        console.log(res.data);
-      } catch (err) {
-        console.error(err.response.data);
-      }
+      console.log(formData);
     }
   };
 
@@ -138,4 +120,4 @@ const Register = () => {
     </Fragment>
   );
 };
-export default Register;
+export default connect(null, { setAlert })(Register);
