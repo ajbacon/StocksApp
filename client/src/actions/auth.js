@@ -28,8 +28,6 @@ export const register = ({
     const res = await axios.post('/api/users/register', body, config);
     dispatch({ type: REGISTER_SUCCESS, payload: res.data });
   } catch (err) {
-    let test = {};
-    console.log(!!test);
     Object.keys(err.response.data).forEach(key => {
       let msg = err.response.data[key];
       dispatch(setAlert(msg, 'danger'));
