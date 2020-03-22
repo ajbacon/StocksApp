@@ -1,28 +1,28 @@
-import React, { Component } from 'react';
+import React, { Fragment, useState } from 'react';
 import { Link } from 'react-router-dom';
-class Login extends Component {
-  constructor() {
-    super();
-    this.state = {
-      email: '',
-      password: '',
-      errors: {}
-    };
-  }
-  onChange = e => {
-    this.setState({ [e.target.id]: e.target.value });
-  };
-  onSubmit = e => {
+
+const Login = () => {
+  const [formData, setFormData] = useState({
+    email: '',
+    password: ''
+  });
+
+  const { email, password } = formData;
+
+  const onChange = e =>
+    setFormData({ ...formData, [e.target.id]: e.target.value });
+
+  const onSubmit = async e => {
     e.preventDefault();
     const userData = {
-      email: this.state.email,
-      password: this.state.password
+      email,
+      password
     };
     console.log(userData);
   };
-  render() {
-    const { errors } = this.state;
-    return (
+  // const { errors } = this.state;
+  return (
+    <Fragment>
       <div className='container'>
         <div style={{ marginTop: '4rem' }} className='row'>
           <div className='col s8 offset-s2'>
@@ -38,12 +38,12 @@ class Login extends Component {
                 Don't have an account? <Link to='/register'>Register</Link>
               </p>
             </div>
-            <form noValidate onSubmit={this.onSubmit}>
+            <form noValidate onSubmit={e => onSubmit(e)}>
               <div className='input-field col s12'>
                 <input
-                  onChange={this.onChange}
-                  value={this.state.email}
-                  error={errors.email}
+                  onChange={e => onChange(e)}
+                  value={email}
+                  // error={errors.email}
                   id='email'
                   type='email'
                 />
@@ -51,9 +51,9 @@ class Login extends Component {
               </div>
               <div className='input-field col s12'>
                 <input
-                  onChange={this.onChange}
-                  value={this.state.password}
-                  error={errors.password}
+                  onChange={e => onChange(e)}
+                  value={password}
+                  // error={errors.password}
                   id='password'
                   type='password'
                 />
@@ -77,7 +77,7 @@ class Login extends Component {
           </div>
         </div>
       </div>
-    );
-  }
-}
+    </Fragment>
+  );
+};
 export default Login;
