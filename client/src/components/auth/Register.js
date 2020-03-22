@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom';
 import { setAlert } from '../../actions/alert';
 import { register } from '../../actions/auth';
 import PropTypes from 'prop-types';
-import Axios from 'axios';
 
 const Register = ({ setAlert, register }) => {
   const [formData, setFormData] = useState({
@@ -22,32 +21,6 @@ const Register = ({ setAlert, register }) => {
 
   const onSubmit = async e => {
     e.preventDefault();
-
-    // if (password !== password2) {
-    //   console.log('passwords do not match');
-    // } else {
-    //   const newUser = {
-    //     firstName,
-    //     surname,
-    //     email,
-    //     password,
-    //     password2
-    //   };
-
-    //   try {
-    //     const config = {
-    //       headers: {
-    //         'Content-Type': 'application/json'
-    //       }
-    //     };
-
-    //     const body = JSON.stringify(newUser);
-    //     const res = await Axios.post('/api/users/register', body, config);
-    //     console.log(res.data);
-    //   } catch (err) {
-    //     console.error(err.response.data);
-    //   }
-    // }
 
     if (password !== password2) {
       setAlert('passwords do not match', 'danger');

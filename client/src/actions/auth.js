@@ -1,5 +1,5 @@
 import axios from 'axios';
-
+import { setAlert } from './alert';
 import { REGISTER_SUCCESS, REGISTER_FAIL } from './types';
 
 // register user
@@ -26,9 +26,17 @@ export const register = ({
 
   try {
     const res = await axios.post('/api/users/register', body, config);
-    console.log(res);
     dispatch({ type: REGISTER_SUCCESS, payload: res.data });
   } catch (err) {
-    console.log(err.response);
+    let test = {};
+    console.log(!!test);
+    Object.keys(err.response.data).forEach(key => {
+      let msg = err.response.data[key];
+      dispatch(setAlert(msg, 'danger'));
+    });
+
+    dispatch({
+      type: REGISTER_FAIL
+    });
   }
 };
