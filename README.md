@@ -6,7 +6,7 @@ A personal project, post Makers, to solidify knowlege in developing full-stack J
 
 ## Deployed Application
 
-The live application is deployed [here](https://project-stocks-app.herokuapp.com/register)
+The live application is deployed [here](https://project-stocks-app.herokuapp.com/)
 
 ## Features
 
