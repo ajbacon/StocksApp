@@ -14,7 +14,7 @@ const Landing = ({ isAuthenticated }) => {
       <div className='row'>
         <div className='col s12 center-align'>
           <h4>
-            <span style={{ fontFamily: 'monospace' }}>StocksApp</span>
+            <span>StocksApp</span>
           </h4>
           <p className='flow-text grey-text text-darken-1'>
             Track stocks and shares and trade in a mock environment
