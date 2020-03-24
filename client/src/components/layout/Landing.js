@@ -1,7 +1,11 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
+
 class Landing extends Component {
   render() {
+    if (isAuthenticated) {
+      return <Redirect to='/dashboard' />;
+    }
     return (
       <div style={{ height: '75vh' }} className='container valign-wrapper'>
         <div className='row'>
