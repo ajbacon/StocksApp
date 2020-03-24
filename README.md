@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.com/ajbacon/StocksApp.svg?branch=master)](https://travis-ci.org/ajbacon/makers-bnb)
 # Stocks App
 
 ## Introduction
@@ -12,6 +13,7 @@ The live application is deployed [here](https://project-stocks-app.herokuapp.com
 
 - User Sign-up / Authentication
 - Save user preferences
+- get stock data from alphavantage api
 - Allow user to select stocks to watch
 - Allow user to set limits and set alerts when limits exceeded
 - Provide user with a smooth interface to search and view company share prices
