@@ -37,11 +37,7 @@ const Navbar = ({ auth, logout }) => {
     <Fragment>
       <nav>
         <div className='nav-wrapper white'>
-          <Link
-            to='/'
-            className='brand-logo black-text'
-            style={{ fontFamily: 'monospace' }}
-          >
+          <Link to='/' className='brand-logo black-text'>
             <i className='material-icons'>trending_up</i>
             StocksApp
           </Link>
