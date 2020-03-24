@@ -4,7 +4,9 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test:server": "echo \"No server-side tests specified\" && exit 0",
+    "test:client": "npm run test --prefix client",
+    "test": "npm run test:server && npm run test:client",
     "client-install": "npm install --prefix client",
     "start": "node server.js",
     "server": "nodemon server.js",
