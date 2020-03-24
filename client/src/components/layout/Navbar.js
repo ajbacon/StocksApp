@@ -50,7 +50,6 @@ const Navbar = ({ auth, logout }) => {
           )}
         </div>
       </nav>
-      ;
     </Fragment>
   );
 };
