@@ -4,6 +4,7 @@ const passport = require('passport');
 const users = require('./routes/api/users');
 const auth = require('./routes/api/auth');
 const connectDB = require('./config/db');
+var path = require('path');
 
 const app = express();
 
