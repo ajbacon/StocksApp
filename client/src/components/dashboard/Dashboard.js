@@ -1,10 +1,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const Dashboard = props => {
-  return <div>Welcome to the user dashboard</div>;
+//redux
+import { connect } from 'react-redux';
+
+const Dashboard = ({ auth: { user } }) => {
+  return <div>Welcome, {user && user.firstName}</div>;
 };
 
-Dashboard.propTypes = {};
+Dashboard.propTypes = {
+  auth: PropTypes.object.isRequired
+};
 
-export default Dashboard;
+const mapStateToProps = state => ({
+  auth: state.auth
+});
+
+export default connect(mapStateToProps)(Dashboard);
