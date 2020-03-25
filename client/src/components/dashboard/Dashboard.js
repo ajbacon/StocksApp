@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 const Dashboard = props => {
-  return <div>Welcome</div>;
+  return <div>Welcome to the user dashboard</div>;
 };
 
 Dashboard.propTypes = {};
