@@ -1,10 +1,21 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const Dashboard = props => {
-  return <div>Welcome to the user dashboard</div>;
+//redux
+import { connect } from 'react-redux';
+
+const capitalize = require('../../utils/capitalize');
+
+const Dashboard = ({ auth: { user } }) => {
+  return <div>Welcome, {user && capitalize(user.firstName)}</div>;
 };
 
-Dashboard.propTypes = {};
+Dashboard.propTypes = {
+  auth: PropTypes.object.isRequired
+};
 
-export default Dashboard;
+const mapStateToProps = state => ({
+  auth: state.auth
+});
+
+export default connect(mapStateToProps)(Dashboard);
