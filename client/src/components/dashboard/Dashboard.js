@@ -4,8 +4,10 @@ import PropTypes from 'prop-types';
 //redux
 import { connect } from 'react-redux';
 
+const capitalize = require('../../utils/capitalize');
+
 const Dashboard = ({ auth: { user } }) => {
-  return <div>Welcome, {user && user.firstName}</div>;
+  return <div>Welcome, {user && capitalize(user.firstName)}</div>;
 };
 
 Dashboard.propTypes = {
