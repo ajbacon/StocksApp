@@ -4,6 +4,14 @@ const app = require('../server');
 const request = supertest(app);
 const User = require('../models/User');
 
+const testUser = {
+  firstName: 'test',
+  surname: 'user',
+  email: 'test_user@example.com',
+  password: 'pass123',
+  password2: 'pass123'
+};
+
 describe('server', () => {
   beforeEach(async done => {
     await User.deleteMany();
@@ -17,13 +25,6 @@ describe('server', () => {
 
   describe('POST /api/users/register', () => {
     it('should pass the correct data in the request and return a response status of 200', async done => {
-      const testUser = {
-        firstName: 'test',
-        surname: 'user',
-        email: 'test_user@example.com',
-        password: 'pass123',
-        password2: 'pass123'
-      };
       const response = await request.post('/api/users/register').send(testUser);
 
       expect(response.status).toEqual(200);
@@ -36,13 +37,6 @@ describe('server', () => {
     });
 
     it('should return a jwt token and add user to the database', async done => {
-      const testUser = {
-        firstName: 'test',
-        surname: 'user',
-        email: 'test_user@example.com',
-        password: 'pass123',
-        password2: 'pass123'
-      };
       const response = await request.post('/api/users/register').send(testUser);
 
       const bodyKeys = Object.keys(response.body);
