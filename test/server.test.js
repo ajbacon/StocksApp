@@ -52,19 +52,38 @@ describe('server', () => {
     });
 
     it('should return an error if an email is not specified and return status of 400', async done => {
-      const testUser = {
+      const badUser = {
         firstName: 'test',
         surname: 'user',
         password: 'pass123',
         password2: 'pass123'
       };
-      const response = await request.post('/api/users/register').send(testUser);
+      const response = await request.post('/api/users/register').send(badUser);
 
       expect(response.status).toEqual(400);
       expect(response.error.text).toEqual(
         '{"email":"Email field is required"}'
       );
       expect(response.body.email).toEqual('Email field is required');
+      done();
+    });
+
+    it('should return multiple errors when firstName, surname and Email are not specified and return status of 400', async done => {
+      const badUser = {
+        password: 'pass123',
+        password2: 'pass123'
+      };
+      const response = await request.post('/api/users/register').send(badUser);
+
+      expect(response.body.firstName).toEqual('First name field is required');
+      expect(response.body.surname).toEqual('surname field is required');
+      expect(response.body.email).toEqual('Email field is required');
+
+      expect(response.status).toEqual(400);
+      expect(response.error.text).toEqual(
+        '{"firstName":"First name field is required","surname":"surname field is required","email":"Email field is required"}'
+      );
+
       done();
     });
   });
