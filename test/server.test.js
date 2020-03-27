@@ -105,7 +105,25 @@ describe('server', () => {
       expect(response.error.text).toEqual(
         '{"password":"Password must be at least 6 characters","password2":"Confirm password field is required"}'
       );
+      done();
+    });
 
+    it('should return an error if password fields do not match and return status of 400', async done => {
+      const badUser = {
+        firstName: 'test',
+        surname: 'user',
+        email: 'test_user@example.com',
+        password: 'pass123',
+        password2: 'pass1234'
+      };
+      const response = await request.post('/api/users/register').send(badUser);
+
+      expect(response.body.password2).toEqual('Passwords must match');
+
+      expect(response.status).toEqual(400);
+      expect(response.error.text).toEqual(
+        '{"password2":"Passwords must match"}'
+      );
       done();
     });
   });
