@@ -13,13 +13,16 @@ const testUser = {
 };
 
 describe('server', () => {
+  process.env.NODE_ENV = 'test';
   beforeEach(async done => {
+    process.env.NODE_ENV = 'test';
     await User.deleteMany();
     done();
   });
 
   afterAll(async done => {
     mongoose.connection.close();
+    process.env.NODE_ENV = 'dev';
     done();
   });
 
