@@ -19,7 +19,7 @@ The live application is deployed [here](https://project-stocks-app.herokuapp.com
 - Provide user with a smooth interface to search and view company share prices
 - Have news feed with latest relevant stock market news
 - Provide a mock trading enviroment
-- Provide a way to buy stocks (??? definetely a stretch goal)
+- Provide a way to buy stocks (??? definitely a stretch goal)
 - Provide trading tips (??? might be a stretch goal!)
 - deal with password resets etc
 - email confirmations
