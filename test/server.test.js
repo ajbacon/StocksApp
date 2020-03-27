@@ -16,7 +16,7 @@ describe('server', () => {
   });
 
   describe('POST /api/users/register', () => {
-    it('should return a response status of 200', async done => {
+    it('should pass the correct data in the request and return a response status of 200', async done => {
       const testUser = {
         firstName: 'test',
         surname: 'user',
@@ -27,6 +27,32 @@ describe('server', () => {
       const response = await request.post('/api/users/register').send(testUser);
 
       expect(response.status).toEqual(200);
+      expect(response.request._data.firstName).toEqual('test');
+      expect(response.request._data.surname).toEqual('user');
+      expect(response.request._data.email).toEqual('test_user@example.com');
+      expect(response.request._data.password).toEqual('pass123');
+      expect(response.request._data.password2).toEqual('pass123');
+      done();
+    });
+
+    it('should return a jwt token and add user to the database', async done => {
+      const testUser = {
+        firstName: 'test',
+        surname: 'user',
+        email: 'test_user@example.com',
+        password: 'pass123',
+        password2: 'pass123'
+      };
+      const response = await request.post('/api/users/register').send(testUser);
+
+      const bodyKeys = Object.keys(response.body);
+      expect(bodyKeys).toHaveLength(1);
+      expect(bodyKeys[0]).toEqual('token');
+      expect(response.body.token).not.toBeNull();
+
+      const users = await User.find();
+      expect(users).toHaveLength(1);
+      expect(users[0].email).toEqual('test_user@example.com');
       done();
     });
   });
