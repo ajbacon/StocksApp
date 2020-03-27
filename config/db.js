@@ -4,8 +4,6 @@ const keys = require('./keys');
 const db = keys.mongoURI;
 
 const connectDB = async () => {
-  console.log(process.env.NODE_ENV);
-  console.log(db);
   try {
     await mongoose.connect(db, {
       useNewUrlParser: true,
