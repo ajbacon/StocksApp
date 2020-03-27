@@ -43,6 +43,7 @@ describe('server', () => {
         password: 'pass123',
         password2: 'pass123'
       };
+
       const response = await request.post('/api/users/register').send(testUser);
 
       const bodyKeys = Object.keys(response.body);
