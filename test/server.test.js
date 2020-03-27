@@ -28,6 +28,7 @@ describe('server', () => {
       const response = await request.post('/api/users/register').send(testUser);
 
       expect(response.status).toEqual(200);
+      expect(response.error).toEqual(false);
       expect(response.request._data.firstName).toEqual('test');
       expect(response.request._data.surname).toEqual('user');
       expect(response.request._data.email).toEqual('test_user@example.com');
@@ -47,6 +48,23 @@ describe('server', () => {
       const users = await User.find();
       expect(users).toHaveLength(1);
       expect(users[0].email).toEqual('test_user@example.com');
+      done();
+    });
+
+    it('should return an error if an email is not specified and return status of 400', async done => {
+      const testUser = {
+        firstName: 'test',
+        surname: 'user',
+        password: 'pass123',
+        password2: 'pass123'
+      };
+      const response = await request.post('/api/users/register').send(testUser);
+
+      expect(response.status).toEqual(400);
+      expect(response.error.text).toEqual(
+        '{"email":"Email field is required"}'
+      );
+      expect(response.body.email).toEqual('Email field is required');
       done();
     });
   });
