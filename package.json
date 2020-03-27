@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test:server": "echo \"No server-side tests specified\" && exit 0",
+    "test:server": "jest",
     "test:client": "npm run test --prefix client",
     "test": "npm run test:server && npm run test:client",
     "client-install": "npm install --prefix client",
