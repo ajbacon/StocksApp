@@ -1,6 +1,9 @@
 language: node_js
 node_js:
   - stable
+env:
+  - MONGO_URI=$MONGO_URI
+  - JWT_SECRET=$JWT_SECRET
 cache:
   directories:
   - node_modules
