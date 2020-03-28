@@ -47,5 +47,60 @@ describe('login', () => {
       expect(loginResponse.request._data.password).toEqual('pass123');
       done();
     });
+
+    it('should return a jwt token', async done => {
+      const registerResponse = await request
+        .post('/api/users/register')
+        .send(testUser);
+
+      const loginResponse = await request.post('/api/auth').send(loginTestUser);
+
+      const bodyKeys = Object.keys(loginResponse.body);
+      expect(bodyKeys).toHaveLength(1);
+      expect(bodyKeys[0]).toEqual('token');
+      expect(loginResponse.body.token).not.toBeNull();
+
+      done();
+    });
+
+    it('should return an error if an email is not specified and return status of 400', async done => {
+      const badLoginTestUser = {
+        password: 'pass123'
+      };
+      const registerResponse = await request
+        .post('/api/users/register')
+        .send(testUser);
+
+      const loginResponse = await request
+        .post('/api/auth')
+        .send(badLoginTestUser);
+
+      expect(loginResponse.status).toEqual(400);
+      expect(loginResponse.error.text).toEqual(
+        '{"email":"Email field is required"}'
+      );
+      expect(loginResponse.body.email).toEqual('Email field is required');
+      done();
+    });
+
+    // it('should return an error if an incorrect password is specified and return status of 400', async done => {
+    //   const badLoginTestUser = {
+    //     password: 'pass123'
+    //   };
+    //   const registerResponse = await request
+    //     .post('/api/users/register')
+    //     .send(testUser);
+
+    //   const loginResponse = await request
+    //     .post('/api/auth')
+    //     .send(badLoginTestUser);
+
+    //   expect(loginResponse.status).toEqual(400);
+    //   expect(loginResponse.error.text).toEqual(
+    //     '{"email":"Email field is required"}'
+    //   );
+    //   expect(loginResponse.body.email).toEqual('Email field is required');
+    //   done();
+    // });
   });
 });
