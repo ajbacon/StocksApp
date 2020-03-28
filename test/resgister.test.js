@@ -12,16 +12,16 @@ const testUser = {
   password2: 'pass123'
 };
 
-describe('server', () => {
+describe('register', () => {
   process.env.NODE_ENV = 'test';
   beforeEach(async done => {
-    process.env.NODE_ENV = 'test';
     await User.deleteMany();
     done();
   });
 
   afterAll(async done => {
-    mongoose.connection.close();
+    await User.deleteMany();
+    await mongoose.connection.close();
     process.env.NODE_ENV = 'dev';
     done();
   });
