@@ -42,9 +42,6 @@ describe('server', () => {
     it('should return a jwt token and add user to the database', async done => {
       const response = await request.post('/api/users/register').send(testUser);
 
-      const bodyKeys = Object.keys(response.body);
-      expect(bodyKeys).toHaveLength(1);
-      expect(bodyKeys[0]).toEqual('token');
       expect(response.body.token).not.toBeNull();
 
       const users = await User.find();

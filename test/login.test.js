@@ -101,24 +101,23 @@ describe('login', () => {
       done();
     });
 
-    // it('should return an error if an incorrect password is specified and return status of 400', async done => {
-    //   const badLoginTestUser = {
-    //     password: 'pass123'
-    //   };
-    //   const registerResponse = await request
-    //     .post('/api/users/register')
-    //     .send(testUser);
+    it('should return an error if email doesnt exist in database and return status of 400', async done => {
+      const badLoginTestUser = {
+        email: 'doesnt_exist@example.com',
+        password: 'pass123'
+      };
+      const registerResponse = await request
+        .post('/api/users/register')
+        .send(testUser);
 
-    //   const loginResponse = await request
-    //     .post('/api/auth')
-    //     .send(badLoginTestUser);
+      const loginResponse = await request
+        .post('/api/auth')
+        .send(badLoginTestUser);
 
-    //   expect(loginResponse.status).toEqual(400);
-    //   expect(loginResponse.error.text).toEqual(
-    //     '{"email":"Email field is required"}'
-    //   );
-    //   expect(loginResponse.body.email).toEqual('Email field is required');
-    //   done();
-    // });
+      expect(loginResponse.status).toEqual(400);
+      expect(loginResponse.error.text).toEqual('{"msg":"invalid credentials"}');
+      expect(loginResponse.body.msg).toEqual('invalid credentials');
+      done();
+    });
   });
 });
