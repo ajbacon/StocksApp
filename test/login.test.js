@@ -6,34 +6,28 @@ const User = require('../models/User');
 
 const testUser = {
   firstName: 'test',
-  surname: 'user',
-  email: 'test_user@example.com',
+  surname: 'user2',
+  email: 'test_user2@example.com',
   password: 'pass123',
   password2: 'pass123'
 };
 
 const loginTestUser = {
-  email: 'test_user@example.com',
+  email: 'test_user2@example.com',
   password: 'pass123'
 };
 
 describe('login', () => {
   process.env.NODE_ENV = 'test';
 
-  // beforeAll(async done => {
-  //   await User.collection.drop();
-  //   done();
-  // });
-
   beforeEach(async done => {
     await User.deleteMany();
     done();
   });
 
-  afterAll(async done => {
+  afterAll(async () => {
     await mongoose.connection.close();
     process.env.NODE_ENV = 'dev';
-    done();
   });
 
   describe('POST /api/auth', () => {
@@ -47,7 +41,7 @@ describe('login', () => {
       expect(loginResponse.status).toEqual(200);
       expect(loginResponse.error).toEqual(false);
       expect(loginResponse.request._data.email).toEqual(
-        'test_user@example.com'
+        'test_user2@example.com'
       );
       expect(loginResponse.request._data.password).toEqual('pass123');
       done();
@@ -88,24 +82,24 @@ describe('login', () => {
       done();
     });
 
-    // it('should return an error if incorrect password and return status of 400', async done => {
-    //   const badLoginTestUser = {
-    //     email: 'test_user@example.com',
-    //     password: 'wrongPassword'
-    //   };
-    //   const registerResponse = await request
-    //     .post('/api/users/register')
-    //     .send(testUser);
+    it('should return an error if incorrect password and return status of 400', async done => {
+      const badLoginTestUser = {
+        email: 'test_user2@example.com',
+        password: 'wrongPassword'
+      };
+      const registerResponse = await request
+        .post('/api/users/register')
+        .send(testUser);
 
-    //   const loginResponse = await request
-    //     .post('/api/auth')
-    //     .send(badLoginTestUser);
+      const loginResponse = await request
+        .post('/api/auth')
+        .send(badLoginTestUser);
 
-    //   expect(loginResponse.status).toEqual(400);
-    //   expect(loginResponse.error.text).toEqual('{"msg":"invalid credentials"}');
-    //   expect(loginResponse.body.msg).toEqual('invalid credentials');
-    //   done();
-    // });
+      expect(loginResponse.status).toEqual(400);
+      expect(loginResponse.error.text).toEqual('{"msg":"invalid credentials"}');
+      expect(loginResponse.body.msg).toEqual('invalid credentials');
+      done();
+    });
 
     // it('should return an error if an incorrect password is specified and return status of 400', async done => {
     //   const badLoginTestUser = {
