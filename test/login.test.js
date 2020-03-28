@@ -19,6 +19,12 @@ const loginTestUser = {
 
 describe('login', () => {
   process.env.NODE_ENV = 'test';
+
+  beforeAll(async done => {
+    await User.collection.drop();
+    done();
+  });
+
   beforeEach(async done => {
     await User.deleteMany();
     done();
@@ -82,6 +88,25 @@ describe('login', () => {
       expect(loginResponse.body.email).toEqual('Email field is required');
       done();
     });
+
+    // it('should return an error if incorrect password and return status of 400', async done => {
+    //   const badLoginTestUser = {
+    //     email: 'test_user@example.com',
+    //     password: 'wrongPassword'
+    //   };
+    //   const registerResponse = await request
+    //     .post('/api/users/register')
+    //     .send(testUser);
+
+    //   const loginResponse = await request
+    //     .post('/api/auth')
+    //     .send(badLoginTestUser);
+
+    //   expect(loginResponse.status).toEqual(400);
+    //   expect(loginResponse.error.text).toEqual('{"msg":"invalid credentials"}');
+    //   expect(loginResponse.body.msg).toEqual('invalid credentials');
+    //   done();
+    // });
 
     // it('should return an error if an incorrect password is specified and return status of 400', async done => {
     //   const badLoginTestUser = {
