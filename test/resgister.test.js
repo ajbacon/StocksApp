@@ -14,16 +14,15 @@ const testUser = {
 
 describe('server', () => {
   process.env.NODE_ENV = 'test';
+
   beforeEach(async done => {
-    process.env.NODE_ENV = 'test';
     await User.deleteMany();
     done();
   });
 
-  afterAll(async done => {
-    mongoose.connection.close();
+  afterAll(async () => {
+    await mongoose.connection.close();
     process.env.NODE_ENV = 'dev';
-    done();
   });
 
   describe('POST /api/users/register', () => {
@@ -43,9 +42,6 @@ describe('server', () => {
     it('should return a jwt token and add user to the database', async done => {
       const response = await request.post('/api/users/register').send(testUser);
 
-      const bodyKeys = Object.keys(response.body);
-      expect(bodyKeys).toHaveLength(1);
-      expect(bodyKeys[0]).toEqual('token');
       expect(response.body.token).not.toBeNull();
 
       const users = await User.find();
