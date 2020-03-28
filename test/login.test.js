@@ -20,10 +20,10 @@ const loginTestUser = {
 describe('login', () => {
   process.env.NODE_ENV = 'test';
 
-  beforeAll(async done => {
-    await User.collection.drop();
-    done();
-  });
+  // beforeAll(async done => {
+  //   await User.collection.drop();
+  //   done();
+  // });
 
   beforeEach(async done => {
     await User.deleteMany();
@@ -31,7 +31,6 @@ describe('login', () => {
   });
 
   afterAll(async done => {
-    await User.deleteMany();
     await mongoose.connection.close();
     process.env.NODE_ENV = 'dev';
     done();

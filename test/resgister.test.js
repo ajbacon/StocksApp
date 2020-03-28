@@ -14,6 +14,12 @@ const testUser = {
 
 describe('register', () => {
   process.env.NODE_ENV = 'test';
+
+  // beforeAll(async done => {
+  //   await User.collection.drop();
+  //   done();
+  // });
+
   beforeEach(async done => {
     await User.deleteMany();
     done();
@@ -28,7 +34,11 @@ describe('register', () => {
 
   describe('POST /api/users/register', () => {
     it('should pass the correct data in the request and return a response status of 200', async done => {
+      const users = await User.find();
+      console.log(users);
       const response = await request.post('/api/users/register').send(testUser);
+
+      console.log(response);
 
       expect(response.status).toEqual(200);
       expect(response.error).toEqual(false);
