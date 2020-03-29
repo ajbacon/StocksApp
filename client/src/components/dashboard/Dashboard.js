@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import axios from 'axios';
 
 //redux
 import { connect } from 'react-redux';
@@ -7,6 +8,24 @@ import { connect } from 'react-redux';
 const capitalize = require('../../utils/capitalize');
 
 const Dashboard = ({ auth: { user } }) => {
+  searchApiAV = e => {
+    const AV_KEY = config('ALPHA_VANTAGE_API');
+    console.log(AV_KEY);
+    console.log(e.target.value);
+    let url = `https://www.alphavantage.co/query?function=SYMBOL_SEARCH&keywords=${e.target.value}&apikey=${AV_KEY}`;
+
+    axios
+      .get(url)
+      .then(res => {
+        this.setState({
+          searchItems: []
+        });
+        console.log(res.data.bestMatches[0]);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  };
   return (
     <div>
       <div>Welcome, {user && capitalize(user.firstName)}</div>
@@ -20,6 +39,7 @@ const Dashboard = ({ auth: { user } }) => {
                   type='search'
                   placeholder='search...'
                   required
+                  onChange={this.searchApiAV}
                 />
                 <label className='label-icon' htmlFor='search'>
                   <i className='material-icons'>search</i>
