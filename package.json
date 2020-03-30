@@ -22,6 +22,7 @@
     "config": "^3.2.6",
     "express": "^4.17.1",
     "express-validator": "^6.4.0",
+    "fuzzysort": "^1.1.4",
     "gravatar": "^1.8.0",
     "is-empty": "^1.2.0",
     "jsonwebtoken": "^8.5.1",
