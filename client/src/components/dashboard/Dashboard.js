@@ -8,8 +8,6 @@ const fuzzysort = require('fuzzysort');
 const symbolsUS = require('../../config/US');
 const capitalize = require('../../utils/capitalize');
 
-const anArr = ['Andrew', 'Peta', 'Pebble', 'tiger'];
-
 const Dashboard = ({ auth: { user } }) => {
   const [searchData, setSearchData] = useState({
     search: []
@@ -17,7 +15,7 @@ const Dashboard = ({ auth: { user } }) => {
 
   const searchCode = e => {
     const results = fuzzysort.go(e.target.value, symbolsUS, {
-      key: 'description',
+      keys: ['description', 'symbol'],
       limit: 10,
       threshold: -500
     });
