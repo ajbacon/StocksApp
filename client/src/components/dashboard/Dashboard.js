@@ -32,7 +32,7 @@ const Dashboard = ({ auth: { user } }) => {
   return (
     <div>
       <div>Welcome, {user && capitalize(user.firstName)}</div>
-      <div className='center row '>
+      <div className='row'>
         <div className='card col s6'>
           <div>
             <div className='nav-wrapper'>
@@ -43,17 +43,18 @@ const Dashboard = ({ auth: { user } }) => {
                   placeholder='search...'
                   required
                   onChange={e => searchCode(e)}
+                  autocomplete='off'
                 />
                 <label className='label-icon' htmlFor='search'>
                   <i className='material-icons'>search</i>
                 </label>
                 <i className='material-icons'>close</i>
               </div>
+              <div style={{ padding: '0 0 0 58px' }}>{searchList()}</div>
             </div>
           </div>
         </div>
       </div>
-      <div>{searchList()}</div>
     </div>
   );
 };
