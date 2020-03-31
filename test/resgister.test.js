@@ -12,7 +12,7 @@ const testUser = {
   password2: 'pass123'
 };
 
-describe('server', () => {
+describe('register', () => {
   process.env.NODE_ENV = 'test';
 
   beforeEach(async done => {
@@ -21,6 +21,7 @@ describe('server', () => {
   });
 
   afterAll(async () => {
+    await User.deleteMany();
     await mongoose.connection.close();
     process.env.NODE_ENV = 'dev';
   });
@@ -45,6 +46,7 @@ describe('server', () => {
       expect(response.body.token).not.toBeNull();
 
       const users = await User.find();
+
       expect(users).toHaveLength(1);
       expect(users[0].email).toEqual('test_user@example.com');
       done();

@@ -26,6 +26,7 @@ describe('login', () => {
   });
 
   afterAll(async () => {
+    await User.deleteMany();
     await mongoose.connection.close();
     process.env.NODE_ENV = 'dev';
   });
@@ -54,9 +55,6 @@ describe('login', () => {
 
       const loginResponse = await request.post('/api/auth').send(loginTestUser);
 
-      const bodyKeys = Object.keys(loginResponse.body);
-      expect(bodyKeys).toHaveLength(1);
-      expect(bodyKeys[0]).toEqual('token');
       expect(loginResponse.body.token).not.toBeNull();
 
       done();
