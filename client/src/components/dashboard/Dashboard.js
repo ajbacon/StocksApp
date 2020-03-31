@@ -66,7 +66,12 @@ const Dashboard = ({ auth: { user } }) => {
                 </label>
                 <i className='material-icons'>close</i>
               </div>
-              <div className={() => hideResults()}>{searchList()}</div>
+              <div
+                className={`${Classes.searchResult} ${!searchData.searchFocus &&
+                  Classes.hideElement}`}
+              >
+                {searchList()}
+              </div>
             </div>
           </div>
         </div>
