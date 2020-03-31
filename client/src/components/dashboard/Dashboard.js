@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import Classes from './Dashboard.module.css';
 
 //redux
 import { connect } from 'react-redux';
@@ -10,7 +11,8 @@ const capitalize = require('../../utils/capitalize');
 
 const Dashboard = ({ auth: { user } }) => {
   const [searchData, setSearchData] = useState({
-    search: []
+    search: [],
+    searchFocus: false
   });
 
   const searchCode = e => {
@@ -24,9 +26,21 @@ const Dashboard = ({ auth: { user } }) => {
   };
 
   const searchList = () => {
-    return searchData.search.map(item => {
-      return <div>{item.obj.description}</div>;
+    return searchData.search.map((item, i) => {
+      return <div key={i}>{item.obj.description}</div>;
     });
+  };
+
+  const onSearchFocus = () => {
+    setSearchData({ ...searchData, searchFocus: true });
+  };
+
+  const onSearchBlur = () => {
+    setSearchData({ ...searchData, searchFocus: false });
+  };
+
+  const hideResults = () => {
+    return `${Classes.searchResult}`;
   };
 
   return (
@@ -43,14 +57,16 @@ const Dashboard = ({ auth: { user } }) => {
                   placeholder='search...'
                   required
                   onChange={e => searchCode(e)}
-                  autocomplete='off'
+                  onFocus={() => onSearchFocus()}
+                  onBlur={() => onSearchBlur()}
+                  autoComplete='off'
                 />
                 <label className='label-icon' htmlFor='search'>
                   <i className='material-icons'>search</i>
                 </label>
                 <i className='material-icons'>close</i>
               </div>
-              <div style={{ padding: '0 0 0 58px' }}>{searchList()}</div>
+              <div className={() => hideResults()}>{searchList()}</div>
             </div>
           </div>
         </div>
