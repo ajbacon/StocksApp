@@ -25,9 +25,17 @@ const Dashboard = ({ auth: { user } }) => {
     console.log(results);
   };
 
+  const selectResult = e => {
+    console.log(e);
+  };
+
   const searchList = () => {
     return searchData.search.map((item, i) => {
-      return <div key={i}>{item.obj.description}</div>;
+      return (
+        <div onClick={() => selectResult(item.obj)} key={i}>
+          {item.obj.description}
+        </div>
+      );
     });
   };
 
@@ -36,7 +44,9 @@ const Dashboard = ({ auth: { user } }) => {
   };
 
   const onSearchBlur = () => {
-    setSearchData({ ...searchData, searchFocus: false });
+    setTimeout(() => {
+      setSearchData({ ...searchData, searchFocus: false });
+    }, 200);
   };
 
   const hideResults = () => {
