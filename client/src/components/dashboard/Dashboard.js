@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import Classes from './Dashboard.module.css';
-
+import axios from 'axios';
 //redux
 import { connect } from 'react-redux';
 
@@ -12,7 +12,9 @@ const capitalize = require('../../utils/capitalize');
 const Dashboard = ({ auth: { user } }) => {
   const [searchData, setSearchData] = useState({
     search: [],
-    searchFocus: false
+    searchFocus: false,
+    companyData: [],
+    currentQuote: []
   });
 
   const searchCode = e => {
@@ -25,14 +27,22 @@ const Dashboard = ({ auth: { user } }) => {
     console.log(results);
   };
 
-  const selectResult = e => {
-    console.log(e);
+  const selectResult = async obj => {
+    let companyCode = obj.symbol;
+    let url = `https://finnhub.io/api/v1/quote?symbol=${companyCode}&token=${process.env.REACT_APP_FINNHUB_API_KEY}`;
+    let response = await fetch(url);
+    let data = await response.json();
+    console.log(data);
   };
 
   const searchList = () => {
     return searchData.search.map((item, i) => {
       return (
-        <div onClick={() => selectResult(item.obj)} key={i}>
+        <div
+          className={Classes.resultItem}
+          onClick={() => selectResult(item.obj)}
+          key={i}
+        >
           {item.obj.description}
         </div>
       );
@@ -49,13 +59,15 @@ const Dashboard = ({ auth: { user } }) => {
     }, 200);
   };
 
-  const hideResults = () => {
-    return `${Classes.searchResult}`;
-  };
-
   return (
     <div>
-      <div>Welcome, {user && capitalize(user.firstName)}</div>
+      <div>
+        Welcome,{' '}
+        {user &&
+          `${capitalize(user.firstName)}${
+            capitalize(user.firstName) === 'Niel' ? ' (poes)' : ''
+          }`}
+      </div>
       <div className='row'>
         <div className='card col s6'>
           <div>

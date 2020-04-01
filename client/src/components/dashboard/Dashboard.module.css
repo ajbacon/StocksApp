@@ -1,8 +1,13 @@
 .searchResult {
   padding: 0 0 0 58px;
   color: grey;
+  cursor: pointer;
 }
 
 .hideElement {
   display: none;
+}
+
+.resultItem {
+  cursor: pointer;
 }
