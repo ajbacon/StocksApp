@@ -4,10 +4,17 @@ import Classes from './Dashboard.module.css';
 import axios from 'axios';
 //redux
 import { connect } from 'react-redux';
+import { disconnect } from 'mongoose';
 
 const fuzzysort = require('fuzzysort');
 const symbolsUS = require('../../config/US');
 const capitalize = require('../../utils/capitalize');
+
+// todo:
+// Split up into multiple components
+// change to async await?
+// improve search bar such that search results can be selected using the arrow keys
+// improve visually
 
 const Dashboard = ({ auth: { user } }) => {
   const [searchData, setSearchData] = useState({
@@ -27,12 +34,45 @@ const Dashboard = ({ auth: { user } }) => {
     console.log(results);
   };
 
-  const selectResult = async obj => {
+  const selectResult = obj => {
     let companyCode = obj.symbol;
+    console.log(companyCode);
     let url = `https://finnhub.io/api/v1/quote?symbol=${companyCode}&token=${process.env.REACT_APP_FINNHUB_API_KEY}`;
-    let response = await fetch(url);
-    let data = await response.json();
-    console.log(data);
+
+    fetch(url)
+      .then(res => {
+        return res.json();
+      })
+      .then(data => {
+        setSearchData({
+          ...searchData,
+          companyData: [obj],
+          currentQuote: [data],
+          searchFocus: false
+        });
+      });
+
+    // try {
+    //   let response = await fetch(url);
+    //   let data = await response.json().then(data => {};
+    //   console.log(obj);
+    //   setSearchData({
+    //     ...searchData,
+    //     companyData: obj,
+    //     currentQuote: [data],
+    //     searchFocus: false
+    //   });
+    //   console.log(data);
+    //   console.log(searchData.currentQuote);
+    // } catch {
+    //   setSearchData({
+    //     ...searchData,
+    //     companyData: [],
+    //     currentQuote: [],
+    //     searchFocus: false
+    //   });
+    //   console.log('here');
+    // }
   };
 
   const searchList = () => {
@@ -61,13 +101,13 @@ const Dashboard = ({ auth: { user } }) => {
 
   return (
     <div>
-      <div>
+      <h3>
         Welcome,{' '}
         {user &&
           `${capitalize(user.firstName)}${
             capitalize(user.firstName) === 'Niel' ? ' (poes)' : ''
           }`}
-      </div>
+      </h3>
       <div className='row'>
         <div className='card col s6'>
           <div>
@@ -97,6 +137,36 @@ const Dashboard = ({ auth: { user } }) => {
             </div>
           </div>
         </div>
+      </div>
+      <h4>
+        {searchData.companyData.length > 0
+          ? searchData.companyData[0].description
+          : ''}
+      </h4>
+      <div>
+        {searchData.currentQuote.length > 0
+          ? `Current Price: ${searchData.currentQuote[0].c}`
+          : ''}
+      </div>
+      <div>
+        {searchData.currentQuote.length > 0
+          ? `Day Opening Price: ${searchData.currentQuote[0].o}`
+          : ''}
+      </div>
+      <div>
+        {searchData.currentQuote.length > 0
+          ? `Day High Price: ${searchData.currentQuote[0].h}`
+          : ''}
+      </div>
+      <div>
+        {searchData.currentQuote.length > 0
+          ? `Day Low Price: ${searchData.currentQuote[0].l}`
+          : ''}
+      </div>
+      <div>
+        {searchData.currentQuote.length > 0
+          ? `Previous Closing Price: ${searchData.currentQuote[0].pc}`
+          : ''}
       </div>
     </div>
   );
