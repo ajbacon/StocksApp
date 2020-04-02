@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import Classes from './Dashboard.module.css';
 import axios from 'axios';
@@ -22,6 +22,26 @@ const Dashboard = ({ auth: { user } }) => {
   const [companyData, setCompanyData] = useState([]);
   const [currentQuote, setCurrentQuote] = useState([]);
 
+  let isFirstRun = useRef(true);
+  useEffect(() => {
+    if (isFirstRun.current) {
+      isFirstRun.current = false;
+      return;
+    }
+    console.log('here');
+    console.log(companyData.symbol);
+    let url = `https://finnhub.io/api/v1/quote?symbol=${companyData[0].symbol}&token=${process.env.REACT_APP_FINNHUB_API_KEY}`;
+
+    fetch(url)
+      .then(res => {
+        return res.json();
+      })
+      .then(data => {
+        setSearchFocus(false);
+        setCurrentQuote([data]);
+      });
+  }, [companyData]);
+
   const searchCode = e => {
     const searchResults = fuzzysort.go(e.target.value, symbolsUS, {
       keys: ['description', 'symbol'],
@@ -33,41 +53,7 @@ const Dashboard = ({ auth: { user } }) => {
   };
 
   const selectResult = obj => {
-    let companyCode = obj.symbol;
-    console.log(companyCode);
-    let url = `https://finnhub.io/api/v1/quote?symbol=${companyCode}&token=${process.env.REACT_APP_FINNHUB_API_KEY}`;
-
-    fetch(url)
-      .then(res => {
-        return res.json();
-      })
-      .then(data => {
-        setSearchFocus(false);
-        setCompanyData([obj]);
-        setCurrentQuote([data]);
-      });
-
-    // try {
-    //   let response = await fetch(url);
-    //   let data = await response.json().then(data => {};
-    //   console.log(obj);
-    //   setSearchData({
-    //     ...searchData,
-    //     companyData: obj,
-    //     currentQuote: [data],
-    //     searchFocus: false
-    //   });
-    //   console.log(data);
-    //   console.log(searchData.currentQuote);
-    // } catch {
-    //   setSearchData({
-    //     ...searchData,
-    //     companyData: [],
-    //     currentQuote: [],
-    //     searchFocus: false
-    //   });
-    //   console.log('here');
-    // }
+    setCompanyData([obj]);
   };
 
   const searchList = () => {
