@@ -17,21 +17,19 @@ const capitalize = require('../../utils/capitalize');
 // improve visually
 
 const Dashboard = ({ auth: { user } }) => {
-  const [searchData, setSearchData] = useState({
-    search: [],
-    searchFocus: false,
-    companyData: [],
-    currentQuote: []
-  });
+  const [search, setSearch] = useState([]);
+  const [searchFocus, setSearchFocus] = useState(false);
+  const [companyData, setCompanyData] = useState([]);
+  const [currentQuote, setCurrentQuote] = useState([]);
 
   const searchCode = e => {
-    const results = fuzzysort.go(e.target.value, symbolsUS, {
+    const searchResults = fuzzysort.go(e.target.value, symbolsUS, {
       keys: ['description', 'symbol'],
       limit: 10,
       threshold: -500
     });
-    setSearchData({ ...searchData, search: results });
-    console.log(results);
+    setSearch(searchResults);
+    console.log(searchResults);
   };
 
   const selectResult = obj => {
@@ -44,12 +42,9 @@ const Dashboard = ({ auth: { user } }) => {
         return res.json();
       })
       .then(data => {
-        setSearchData({
-          ...searchData,
-          companyData: [obj],
-          currentQuote: [data],
-          searchFocus: false
-        });
+        setSearchFocus(false);
+        setCompanyData([obj]);
+        setCurrentQuote([data]);
       });
 
     // try {
@@ -76,7 +71,7 @@ const Dashboard = ({ auth: { user } }) => {
   };
 
   const searchList = () => {
-    return searchData.search.map((item, i) => {
+    return search.map((item, i) => {
       return (
         <div
           className={Classes.resultItem}
@@ -90,12 +85,12 @@ const Dashboard = ({ auth: { user } }) => {
   };
 
   const onSearchFocus = () => {
-    setSearchData({ ...searchData, searchFocus: true });
+    setSearchFocus(true);
   };
 
   const onSearchBlur = () => {
     setTimeout(() => {
-      setSearchData({ ...searchData, searchFocus: false });
+      setSearchFocus(false);
     }, 200);
   };
 
@@ -129,7 +124,7 @@ const Dashboard = ({ auth: { user } }) => {
                 <i className='material-icons'>close</i>
               </div>
               <div
-                className={`${Classes.searchResult} ${!searchData.searchFocus &&
+                className={`${Classes.searchResult} ${!searchFocus &&
                   Classes.hideElement}`}
               >
                 {searchList()}
@@ -138,34 +133,24 @@ const Dashboard = ({ auth: { user } }) => {
           </div>
         </div>
       </div>
-      <h4>
-        {searchData.companyData.length > 0
-          ? searchData.companyData[0].description
-          : ''}
-      </h4>
+      <h4>{companyData.length > 0 ? companyData[0].description : ''}</h4>
       <div>
-        {searchData.currentQuote.length > 0
-          ? `Current Price: ${searchData.currentQuote[0].c}`
+        {currentQuote.length > 0 ? `Current Price: ${currentQuote[0].c}` : ''}
+      </div>
+      <div>
+        {currentQuote.length > 0
+          ? `Day Opening Price: ${currentQuote[0].o}`
           : ''}
       </div>
       <div>
-        {searchData.currentQuote.length > 0
-          ? `Day Opening Price: ${searchData.currentQuote[0].o}`
-          : ''}
+        {currentQuote.length > 0 ? `Day High Price: ${currentQuote[0].h}` : ''}
       </div>
       <div>
-        {searchData.currentQuote.length > 0
-          ? `Day High Price: ${searchData.currentQuote[0].h}`
-          : ''}
+        {currentQuote.length > 0 ? `Day Low Price: ${currentQuote[0].l}` : ''}
       </div>
       <div>
-        {searchData.currentQuote.length > 0
-          ? `Day Low Price: ${searchData.currentQuote[0].l}`
-          : ''}
-      </div>
-      <div>
-        {searchData.currentQuote.length > 0
-          ? `Previous Closing Price: ${searchData.currentQuote[0].pc}`
+        {currentQuote.length > 0
+          ? `Previous Closing Price: ${currentQuote[0].pc}`
           : ''}
       </div>
     </div>
