@@ -49,9 +49,9 @@ const SearchBar = ({ setCompanyData }) => {
   return (
     <div>
       <div className='row'>
-        <div className='card col s12'>
+        <div className={'card col s12'}>
           <div>
-            <div className='nav-wrapper'>
+            <div className={`nav-wrapper ${Classes.searchBar}`}>
               <div className='input-field'>
                 <input
                   id='search'
@@ -69,8 +69,9 @@ const SearchBar = ({ setCompanyData }) => {
                 <i className='material-icons'>close</i>
               </div>
               <div
-                className={`${Classes.searchResult} ${!searchFocus &&
-                  Classes.hideElement}`}
+                className={`card col s12 ${
+                  Classes.searchResult
+                } ${!searchFocus && Classes.hideElement}`}
               >
                 {searchList()}
               </div>
