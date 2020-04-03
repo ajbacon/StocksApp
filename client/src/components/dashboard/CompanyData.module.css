@@ -1,0 +1,19 @@
+.currentPrice {
+  display: flex;
+  align-items: flex-end;
+  margin: 0 0 2.5vw 0;
+  color: green;
+}
+
+.infoItem { 
+  border-bottom: 1px solid grey;
+  padding: 5px 0 5px 0;
+}
+
+.redText {
+  color: red
+}
+
+.greenText {
+  color: green
+}
