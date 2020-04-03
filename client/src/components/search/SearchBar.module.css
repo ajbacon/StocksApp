@@ -1,0 +1,21 @@
+
+.searchBar {
+  position: relative
+}
+
+.searchResult {
+  background-color: white;
+  color: blue;
+  cursor: pointer;
+  position: absolute;
+  z-index: 10;
+}
+
+.hideElement {
+  display: none;
+}
+
+.resultItem {
+  cursor: pointer;
+  padding: 0 0 0 46px;
+}
