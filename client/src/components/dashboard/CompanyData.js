@@ -22,18 +22,22 @@ const CompanyData = ({ companyData }) => {
   }, [companyData.symbol]);
 
   const renderCurrent = () => {
+    // this should probably be its own component at some point
     const { c, pc } = currentQuote[0];
     const delta = c - pc;
     const deltaPercent = delta / pc;
     const sign = delta < 0 ? '' : '+';
+    const textColor = delta < 0 ? Classes.redText : Classes.greenText;
 
     const deltaStr = `${sign}${delta.toFixed(2)} (${sign}${deltaPercent.toFixed(
       2
-    )})`;
+    )}%)`;
     return (
-      <div className={Classes.currentPrice}>
-        <div style={{ fontSize: '4vw' }}>{currentQuote[0].c}</div>
-        <div style={{ fontSize: '3vw', margin: '0 0 4px 10px' }}>
+      <div className={`${Classes.currentPrice} ${textColor}`}>
+        <b>
+          <div style={{ fontSize: '40px' }}>{c.toFixed(2)}</div>
+        </b>
+        <div style={{ fontSize: '20px', margin: '0 0 4px 10px' }}>
           {deltaStr}
         </div>
       </div>
