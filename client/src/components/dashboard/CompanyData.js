@@ -33,7 +33,7 @@ const CompanyData = ({ companyData }) => {
       2
     )}%)`;
     return (
-      <div className={`${Classes.currentPrice} ${textColor}`}>
+      <div className={`col s12 ${Classes.currentPrice} ${textColor}`}>
         <b>
           <div style={{ fontSize: '40px' }}>{c.toFixed(2)}</div>
         </b>
@@ -51,11 +51,24 @@ const CompanyData = ({ companyData }) => {
       <h4 style={{ padding: '5px', borderBottom: '1px solid grey' }}>
         {companyData.description}
       </h4>
-      {renderCurrent()}
-      <div>Day Opening Price: {currentQuote[0].o}</div>
-      <div>Day High Price: {currentQuote[0].h}</div>
-      <div>Day Low Price: {currentQuote[0].l}</div>
-      <div>Previous Closing Price: {currentQuote[0].pc}</div>
+
+      <div className='row'>
+        {renderCurrent()}
+        <div className='col s12'>
+          <div className={Classes.infoItem}>
+            Day Opening Price: {currentQuote[0].o}
+          </div>
+          <div className={Classes.infoItem}>
+            Day High Price: {currentQuote[0].h}
+          </div>
+          <div className={Classes.infoItem}>
+            Day Low Price: {currentQuote[0].l}
+          </div>
+          <div className={Classes.infoItem}>
+            Previous Closing Price: {currentQuote[0].pc}
+          </div>
+        </div>
+      </div>
     </div>
   );
 };
