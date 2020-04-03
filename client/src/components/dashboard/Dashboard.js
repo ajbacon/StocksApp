@@ -11,15 +11,14 @@ const capitalize = require('../../utils/capitalize');
 
 // todo:
 // Split out company data component - done
-// split out search bar component
-// improve search bar such that search results can be selected using the arrow keys
+// split out search bar component - done
 // improve visually
 
 const Dashboard = ({ auth: { user } }) => {
   const [companyData, setCompanyData] = useState([]);
 
   return (
-    <div>
+    <div className='container'>
       <h3>Welcome, {user && capitalize(user.firstName)}</h3>
       <SearchBar setCompanyData={setCompanyData} />
       {companyData.map((data, i) => (
