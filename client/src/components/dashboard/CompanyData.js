@@ -18,15 +18,6 @@ const CompanyData = ({ companyData }) => {
       setCurrentQuote([data]);
       setLoading(false);
     })();
-
-    // fetch(url)
-    //   .then((res) => {
-    //     return res.json();
-    //   })
-    //   .then((data) => {
-    //     setCurrentQuote([data]);
-    //     setLoading(false);
-    //   });
   }, [companyData.symbol]);
 
   const renderCurrent = () => {
@@ -64,16 +55,16 @@ const CompanyData = ({ companyData }) => {
         {renderCurrent()}
         <div className='col l6 m5 s10'>
           <div className={Classes.infoItem}>
-            Day Opening Price: {currentQuote[0].o}
+            Day Opening Price: {currentQuote[0].o.toFixed(2)}
           </div>
           <div className={Classes.infoItem}>
-            Day High Price: {currentQuote[0].h}
+            Day High Price: {currentQuote[0].h.toFixed(2)}
           </div>
           <div className={Classes.infoItem}>
-            Day Low Price: {currentQuote[0].l}
+            Day Low Price: {currentQuote[0].l.toFixed(2)}
           </div>
           <div className={Classes.infoItem}>
-            Previous Closing Price: {currentQuote[0].pc}
+            Previous Closing Price: {currentQuote[0].pc.toFixed(2)}
           </div>
         </div>
       </div>
