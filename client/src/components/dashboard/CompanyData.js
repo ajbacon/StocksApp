@@ -9,16 +9,24 @@ const CompanyData = ({ companyData }) => {
 
   useEffect(() => {
     setLoading(true);
-    let url = `https://finnhub.io/api/v1/quote?symbol=${companyData.symbol}&token=${process.env.REACT_APP_FINNHUB_API_KEY}`;
 
-    fetch(url)
-      .then((res) => {
-        return res.json();
-      })
-      .then((data) => {
-        setCurrentQuote([data]);
-        setLoading(false);
-      });
+    (async () => {
+      let url = `https://finnhub.io/api/v1/quote?symbol=${companyData.symbol}&token=${process.env.REACT_APP_FINNHUB_API_KEY}`;
+
+      const res = await fetch(url);
+      const data = await res.json();
+      setCurrentQuote([data]);
+      setLoading(false);
+    })();
+
+    // fetch(url)
+    //   .then((res) => {
+    //     return res.json();
+    //   })
+    //   .then((data) => {
+    //     setCurrentQuote([data]);
+    //     setLoading(false);
+    //   });
   }, [companyData.symbol]);
 
   const renderCurrent = () => {
@@ -33,7 +41,7 @@ const CompanyData = ({ companyData }) => {
       2
     )}%)`;
     return (
-      <div className={`col s12 ${Classes.currentPrice} ${textColor}`}>
+      <div className={`col l6 m7 s12 ${Classes.currentPrice} ${textColor}`}>
         <b>
           <div style={{ fontSize: '40px' }}>{c.toFixed(2)}</div>
         </b>
@@ -54,7 +62,7 @@ const CompanyData = ({ companyData }) => {
 
       <div className='row'>
         {renderCurrent()}
-        <div className='col s12'>
+        <div className='col l6 m5 s10'>
           <div className={Classes.infoItem}>
             Day Opening Price: {currentQuote[0].o}
           </div>
