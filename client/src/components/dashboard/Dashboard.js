@@ -3,15 +3,12 @@ import CompanyData from './CompanyData';
 import SearchBar from '../search/SearchBar';
 import PropTypes from 'prop-types';
 // import Classes from './Dashboard.module.css';
-// import axios from 'axios';
 //redux
 import { connect } from 'react-redux';
 
 const capitalize = require('../../utils/capitalize');
 
 // todo:
-// Split out company data component - done
-// split out search bar component - done
 // improve visually
 
 const Dashboard = ({ auth: { user } }) => {
