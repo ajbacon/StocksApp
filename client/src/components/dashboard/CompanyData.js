@@ -22,8 +22,9 @@ const CompanyData = ({ companyData }) => {
   }, []);
 
   useEffect(() => {
+    console.log(companyData.symbol);
+
     setLoading(true);
-    console.log('here2');
     localStorage.setItem('companyData', JSON.stringify(companyData));
 
     (async () => {
@@ -41,7 +42,7 @@ const CompanyData = ({ companyData }) => {
     // this should probably be its own component at some point
     const { c, pc } = currentQuote[0];
     const delta = c - pc;
-    const deltaPercent = delta / pc;
+    const deltaPercent = (delta / pc) * 100;
     const sign = delta < 0 ? '' : '+';
     const textColor = delta < 0 ? Classes.redText : Classes.greenText;
 
@@ -49,12 +50,6 @@ const CompanyData = ({ companyData }) => {
       2
     )}%)`;
 
-    console.log(moment.unix(currentQuote[0].t).format('LLL'));
-    // const timestamp = new Date(1586164688 * 1000);
-    // const dateStr = timestamp.toLocaleDateString('en-UK');
-    // const timeStr = timestamp.toLocaleTimeString('en-UK');
-    // console.log(dateStr);
-    // console.log(timeStr);
     return (
       <div className={`col l6 m7 s12`}>
         <div className='row'>
