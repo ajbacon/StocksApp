@@ -9,6 +9,19 @@ const CompanyData = ({ companyData }) => {
 
   useEffect(() => {
     setLoading(true);
+    const storageCurrentQuoteData = JSON.parse(
+      localStorage.getItem('currentQuoteData')
+    );
+
+    if (storageCurrentQuoteData) {
+      setCurrentQuote([storageCurrentQuoteData]);
+      setLoading(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    setLoading(true);
+    localStorage.setItem('companyData', JSON.stringify(companyData));
 
     (async () => {
       let url = `https://finnhub.io/api/v1/quote?symbol=${companyData.symbol}&token=${process.env.REACT_APP_FINNHUB_API_KEY}`;
@@ -16,6 +29,7 @@ const CompanyData = ({ companyData }) => {
       const res = await fetch(url);
       const data = await res.json();
       setCurrentQuote([data]);
+      localStorage.setItem('currentQuoteData', JSON.stringify(data));
       setLoading(false);
     })();
   }, [companyData.symbol]);
@@ -54,8 +68,9 @@ const CompanyData = ({ companyData }) => {
       <div className='row'>
         {renderCurrent()}
         <div className='col l6 m5 s10'>
-          <div className={Classes.infoItem}>
-            Day Opening Price: {currentQuote[0].o.toFixed(2)}
+          <div className={`${Classes.infoItem}`}>
+            <div>Day Opening Price: </div>
+            <div className='right'>{currentQuote[0].o.toFixed(2)}</div>
           </div>
           <div className={Classes.infoItem}>
             Day High Price: {currentQuote[0].h.toFixed(2)}

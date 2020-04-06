@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import CompanyData from './CompanyData';
 import SearchBar from '../search/SearchBar';
 import PropTypes from 'prop-types';
@@ -17,6 +17,14 @@ const capitalize = require('../../utils/capitalize');
 const Dashboard = ({ auth: { user } }) => {
   const [companyData, setCompanyData] = useState([]);
 
+  useEffect(() => {
+    const storageCompanyData = JSON.parse(localStorage.getItem('companyData'));
+
+    if (storageCompanyData) {
+      setCompanyData([storageCompanyData]);
+    }
+  }, []);
+
   return (
     <div className='container'>
       <h3>Welcome, {user && capitalize(user.firstName)}</h3>
@@ -29,11 +37,11 @@ const Dashboard = ({ auth: { user } }) => {
 };
 
 Dashboard.propTypes = {
-  auth: PropTypes.object.isRequired
+  auth: PropTypes.object.isRequired,
 };
 
-const mapStateToProps = state => ({
-  auth: state.auth
+const mapStateToProps = (state) => ({
+  auth: state.auth,
 });
 
 export default connect(mapStateToProps)(Dashboard);
