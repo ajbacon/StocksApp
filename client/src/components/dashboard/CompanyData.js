@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Classes from './CompanyData.module.css';
+
+const moment = require('moment');
 // todo:
 // change to async await?
 
@@ -9,6 +11,7 @@ const CompanyData = ({ companyData }) => {
 
   useEffect(() => {
     setLoading(true);
+    console.log('here1');
     const storageCurrentQuoteData = JSON.parse(
       localStorage.getItem('currentQuoteData')
     );
@@ -27,6 +30,7 @@ const CompanyData = ({ companyData }) => {
 
   useEffect(() => {
     setLoading(true);
+    console.log('here2');
     localStorage.setItem('companyData', JSON.stringify(companyData));
 
     (async () => {
@@ -52,19 +56,26 @@ const CompanyData = ({ companyData }) => {
       2
     )}%)`;
 
-    console.log(currentQuote[0]);
-    const timestamp = new Date(1586164688 * 1000);
-    const dateStr = timestamp.toLocaleDateString('en-UK');
-    const timeStr = timestamp.toLocaleTimeString('en-UK');
-    console.log(dateStr);
-    console.log(timeStr);
+    console.log(moment.unix(currentQuote[0].t).format('LLL'));
+    // const timestamp = new Date(1586164688 * 1000);
+    // const dateStr = timestamp.toLocaleDateString('en-UK');
+    // const timeStr = timestamp.toLocaleTimeString('en-UK');
+    // console.log(dateStr);
+    // console.log(timeStr);
     return (
-      <div className={`col l6 m7 s12 ${Classes.currentPrice} ${textColor}`}>
-        <b>
-          <div style={{ fontSize: '40px' }}>{c.toFixed(2)}</div>
-        </b>
-        <div style={{ fontSize: '20px', margin: '0 0 4px 10px' }}>
-          {deltaStr}
+      <div className={`col l6 m7 s12`}>
+        <div className='row'>
+          <div className={`col s12 ${Classes.currentPrice} ${textColor}`}>
+            <div style={{ fontSize: '40px', margin: '0 5px 0 0' }}>
+              {c.toFixed(2)}
+            </div>
+            <div style={{ fontSize: '20px', margin: '0 0 6px 0' }}>
+              {deltaStr}
+            </div>
+          </div>
+          <div className={`col s12 ${Classes.quoteTimestamp}`}>
+            Last updated: {moment.unix(currentQuote[0].t).format('LLL')}
+          </div>
         </div>
       </div>
     );
