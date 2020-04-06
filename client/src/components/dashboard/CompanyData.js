@@ -16,6 +16,12 @@ const CompanyData = ({ companyData }) => {
     if (storageCurrentQuoteData) {
       setCurrentQuote([storageCurrentQuoteData]);
       setLoading(false);
+      // console.log(currentQuote[0]);
+      // const timestamp = new Date(currentQuote[0].t);
+      // const dateStr = timestamp.toLocaleDateString('en-UK');
+      // const timeStr = timestamp.toLocaleTimeString('en-UK');
+      // console.log(dateStr);
+      // console.log(timeStr);
     }
   }, []);
 
@@ -45,6 +51,13 @@ const CompanyData = ({ companyData }) => {
     const deltaStr = `${sign}${delta.toFixed(2)} (${sign}${deltaPercent.toFixed(
       2
     )}%)`;
+
+    console.log(currentQuote[0]);
+    const timestamp = new Date(1586164688 * 1000);
+    const dateStr = timestamp.toLocaleDateString('en-UK');
+    const timeStr = timestamp.toLocaleTimeString('en-UK');
+    console.log(dateStr);
+    console.log(timeStr);
     return (
       <div className={`col l6 m7 s12 ${Classes.currentPrice} ${textColor}`}>
         <b>
