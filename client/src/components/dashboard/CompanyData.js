@@ -36,7 +36,7 @@ const CompanyData = ({ companyData }) => {
       localStorage.setItem('currentQuoteData', JSON.stringify(data));
       setLoading(false);
     })();
-  }, [companyData.symbol]);
+  }, [companyData]);
 
   const renderCurrent = () => {
     // this should probably be its own component at some point
