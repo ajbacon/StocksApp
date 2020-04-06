@@ -25,11 +25,11 @@ const SearchBar = ({ setCompanyData }) => {
     });
   };
 
-  const searchCode = e => {
+  const searchCode = (e) => {
     const searchResults = fuzzysort.go(e.target.value, symbolsUS, {
       keys: ['description', 'symbol'],
       limit: 10,
-      threshold: -500
+      threshold: -500,
     });
     setSearch(searchResults);
   };
@@ -44,7 +44,7 @@ const SearchBar = ({ setCompanyData }) => {
     }, 200);
   };
 
-  const selectResult = obj => {
+  const selectResult = (obj) => {
     setCompanyData([obj]);
     setSearchFocus(false);
   };
@@ -61,7 +61,7 @@ const SearchBar = ({ setCompanyData }) => {
                   type='search'
                   placeholder='search...'
                   required
-                  onChange={e => searchCode(e)}
+                  onChange={(e) => searchCode(e)}
                   onFocus={() => onSearchFocus()}
                   onBlur={() => onSearchBlur()}
                   autoComplete='off'
@@ -72,9 +72,9 @@ const SearchBar = ({ setCompanyData }) => {
                 <i className='material-icons'>close</i>
               </div>
               <div
-                className={`card col s12 ${
-                  Classes.searchResult
-                } ${!searchFocus && Classes.hideElement}`}
+                className={`card col s12 ${Classes.searchResult} ${
+                  !searchFocus && Classes.hideElement
+                }`}
               >
                 {searchList()}
               </div>
