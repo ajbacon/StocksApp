@@ -11,7 +11,6 @@ const CompanyData = ({ companyData }) => {
 
   useEffect(() => {
     setLoading(true);
-    console.log('here1');
     const storageCurrentQuoteData = JSON.parse(
       localStorage.getItem('currentQuoteData')
     );
@@ -19,12 +18,6 @@ const CompanyData = ({ companyData }) => {
     if (storageCurrentQuoteData) {
       setCurrentQuote([storageCurrentQuoteData]);
       setLoading(false);
-      // console.log(currentQuote[0]);
-      // const timestamp = new Date(currentQuote[0].t);
-      // const dateStr = timestamp.toLocaleDateString('en-UK');
-      // const timeStr = timestamp.toLocaleTimeString('en-UK');
-      // console.log(dateStr);
-      // console.log(timeStr);
     }
   }, []);
 
@@ -67,7 +60,7 @@ const CompanyData = ({ companyData }) => {
         <div className='row'>
           <div className={`col s12 ${Classes.currentPrice} ${textColor}`}>
             <div style={{ fontSize: '40px', margin: '0 5px 0 0' }}>
-              {c.toFixed(2)}
+              <b>{c.toFixed(2)}</b>
             </div>
             <div style={{ fontSize: '20px', margin: '0 0 6px 0' }}>
               {deltaStr}
