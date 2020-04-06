@@ -73,13 +73,16 @@ const CompanyData = ({ companyData }) => {
             <div className='right'>{currentQuote[0].o.toFixed(2)}</div>
           </div>
           <div className={Classes.infoItem}>
-            Day High Price: {currentQuote[0].h.toFixed(2)}
+            <div>Day High Price:</div>
+            <div>{currentQuote[0].h.toFixed(2)}</div>
           </div>
           <div className={Classes.infoItem}>
-            Day Low Price: {currentQuote[0].l.toFixed(2)}
+            <div>Day Low Price:</div>
+            <div>{currentQuote[0].l.toFixed(2)}</div>
           </div>
           <div className={Classes.infoItem}>
-            Previous Closing Price: {currentQuote[0].pc.toFixed(2)}
+            <div>Previous Closing Price:</div>
+            <div>{currentQuote[0].pc.toFixed(2)}</div>
           </div>
         </div>
       </div>
