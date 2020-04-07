@@ -9,7 +9,7 @@ Enzyme.configure({ adapter: new EnzymeAdapter() });
 describe('<App />', () => {
   it('renders without crashing', () => {
     const wrapper = shallow(<App />);
-    const component = wrapper.find('[data-test="component-app1"]');
+    const component = wrapper.find('[data-test="component-app"]');
     expect(component).toHaveLength(1);
   });
 });
