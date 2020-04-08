@@ -1,3 +1,9 @@
 import { createStore, applyMiddleware } from 'redux';
 
-import { storeFactory } from '../utils/testUtils';
+import rootReducer from '../../../reducers';
+
+const middleware = [thunk];
+
+export const storeFactory = (initialState) => {
+  return createStore(rootReducer, initialState, applyMiddleware(...middleware));
+};
