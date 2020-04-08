@@ -68,8 +68,6 @@ export const register = ({
     // }
     const res = await axios.post('/api/users/register', body, config);
     dispatch({ type: REGISTER_SUCCESS, payload: res.data });
-    console.log('here');
-
     dispatch(loadUser());
   } catch (err) {
     Object.keys(err.response.data).forEach((key) => {
