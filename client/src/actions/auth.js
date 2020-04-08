@@ -7,27 +7,34 @@ import {
   AUTH_ERROR,
   LOGIN_SUCCESS,
   LOGIN_FAIL,
-  LOGOUT
+  LOGOUT,
 } from './types';
 import setAuthToken from '../utils/setAuthToken';
 
 // Load User
 
-export const loadUser = () => async dispatch => {
+export const loadUser = () => async (dispatch) => {
   if (localStorage.token) {
     setAuthToken(localStorage.token);
   }
-
   try {
-    const res = await axios.get('/api/auth');
+    // res format:
+    // {
+    //   _id: string,
+    //   firstName: string,
+    //   surname: string,
+    //   email: string,
+    //   Date: datestring
+    // }
 
+    const res = await axios.get('/api/auth');
     dispatch({
       type: USER_LOADED,
-      payload: res.data
+      payload: res.data,
     });
   } catch (err) {
     dispatch({
-      type: AUTH_ERROR
+      type: AUTH_ERROR,
     });
   }
 };
@@ -38,12 +45,12 @@ export const register = ({
   surname,
   email,
   password,
-  password2
-}) => async dispatch => {
+  password2,
+}) => async (dispatch) => {
   const config = {
     headers: {
-      'Content-Type': 'application/json'
-    }
+      'Content-Type': 'application/json',
+    },
   };
 
   const body = JSON.stringify({
@@ -51,37 +58,42 @@ export const register = ({
     surname,
     email,
     password,
-    password2
+    password2,
   });
 
   try {
+    // res format:
+    // {
+    //   token: 'jwt'
+    // }
     const res = await axios.post('/api/users/register', body, config);
     dispatch({ type: REGISTER_SUCCESS, payload: res.data });
+    console.log('here');
 
     dispatch(loadUser());
   } catch (err) {
-    Object.keys(err.response.data).forEach(key => {
+    Object.keys(err.response.data).forEach((key) => {
       let msg = err.response.data[key];
       dispatch(setAlert(msg, 'danger'));
     });
 
     dispatch({
-      type: REGISTER_FAIL
+      type: REGISTER_FAIL,
     });
   }
 };
 
 // login user
-export const login = (email, password) => async dispatch => {
+export const login = (email, password) => async (dispatch) => {
   const config = {
     headers: {
-      'Content-Type': 'application/json'
-    }
+      'Content-Type': 'application/json',
+    },
   };
 
   const body = JSON.stringify({
     email,
-    password
+    password,
   });
 
   try {
@@ -89,17 +101,17 @@ export const login = (email, password) => async dispatch => {
     dispatch({ type: LOGIN_SUCCESS, payload: res.data });
     dispatch(loadUser());
   } catch (err) {
-    Object.keys(err.response.data).forEach(key => {
+    Object.keys(err.response.data).forEach((key) => {
       let msg = err.response.data[key];
       dispatch(setAlert(msg, 'danger'));
     });
 
     dispatch({
-      type: LOGIN_FAIL
+      type: LOGIN_FAIL,
     });
   }
 };
 
-export const logout = () => dispatch => {
+export const logout = () => (dispatch) => {
   dispatch({ type: LOGOUT });
 };
