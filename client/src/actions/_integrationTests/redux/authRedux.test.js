@@ -10,29 +10,32 @@ describe('register auth action creator', () => {
   afterEach(() => {
     moxios.uninstall();
   });
+  const newUser = {
+    firstName: 'Eric',
+    surname: 'Cantona',
+    email: 'e_cantona@example.com',
+    password: 'pass123',
+    password2: 'pass123',
+  };
+  describe('successful authentication', () => {
+    it('changes token, isAuthenticated and loading to authenticated state', async () => {
+      const store = storeFactory();
 
-  it('adds jwt response to state', async () => {
-    const newUser = {
-      firstName: 'Eric',
-      surname: 'Cantona',
-      email: 'e_cantona@example.com',
-      password: 'pass123',
-      password2: 'pass123',
-    };
+      moxios.stubRequest('/api/users/register', {
+        status: 200,
+        response: { token: 'jwtheader.payload.signature' },
+      });
+      moxios.wait(() => {});
 
-    const store = storeFactory();
-
-    moxios.stubRequest('/api/users/register', {
-      status: 200,
-      response: { token: 'jwtheader.payload.signature' },
+      const result = await store.dispatch(register(newUser));
+      const newState = store.getState();
+      expect(newState.auth.token).toBe('jwtheader.payload.signature');
+      expect(newState.auth.isAuthenticated).toBe(true);
+      expect(newState.auth.loading).toBe(false);
     });
-    moxios.wait(() => {});
+    // it('fires the loadUser action creator', () => {
 
-    const result = await store.dispatch(register(newUser));
-    const newState = store.getState();
-    expect(newState.auth.token).toBe('jwtheader.payload.signature');
-    expect(newState.auth.isAuthenticated).toBe(true);
-    expect(newState.auth.loading).toBe(false);
+    // })
   });
 });
 
