@@ -16,7 +16,8 @@ import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 
 import { storeFactory } from '../../../utils/testUtils';
-import { register } from '../../../actions/auth';
+import { register, loadUser } from '../../../actions/auth';
+import { registerAssertions } from 'redux-actions-assertions';
 
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
@@ -30,6 +31,7 @@ const newUser = {
 
 describe('register auth action creator', () => {
   beforeEach(() => {
+    registerAssertions;
     moxios.install();
   });
   afterEach(() => {
@@ -52,6 +54,33 @@ describe('register auth action creator', () => {
       expect(newState.auth.token).toBe('jwtheader.payload.signature');
       expect(newState.auth.isAuthenticated).toBe(true);
       expect(newState.auth.loading).toBe(false);
+      // const expectedActions = [
+      //   {
+      //     type: 'REGISTER_SUCCESS',
+      //     payload: { token: 'jwtheader.payload.signature' },
+      //   },
+      //   loadUser(),
+      // ];
+      // expect(register(newUser)).toDispatchActions(expectedActions);
+    });
+
+    it('fires the loadUser action creator', (done) => {
+      const initialState = {
+        alert: [],
+        auth: { token: null, isAuthenticated: null, loading: true, user: null },
+      };
+      expect(register(newUser))
+        .withState(initialState)
+        .toDispatch(
+          [
+            {
+              type: 'REGISTER_SUCCESS',
+              payload: { token: 'jwtheader.payload.signature' },
+            },
+            loadUser(),
+          ],
+          done
+        );
     });
 
     // it('fires the loadUser action creator', async () => {
