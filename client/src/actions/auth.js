@@ -60,7 +60,6 @@ export const register = ({
     password,
     password2,
   });
-
   try {
     // res format:
     // {

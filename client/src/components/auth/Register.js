@@ -13,21 +13,23 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
     surname: '',
     email: '',
     password: '',
-    password2: ''
+    password2: '',
   });
 
   const { firstName, surname, email, password, password2 } = formData;
 
-  const onChange = e =>
+  const onChange = (e) =>
     setFormData({ ...formData, [e.target.id]: e.target.value });
 
-  const onSubmit = async e => {
+  const onSubmit = async (e) => {
     e.preventDefault();
 
     if (password !== password2) {
       setAlert('passwords do not match', 'danger');
     } else {
+      console.log(isAuthenticated);
       register({ firstName, surname, email, password, password2 });
+      console.log(isAuthenticated);
     }
   };
 
@@ -52,10 +54,10 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
                 Already have an account? <Link to='/login'>Log in</Link>
               </p>
             </div>
-            <form noValidate onSubmit={e => onSubmit(e)}>
+            <form noValidate onSubmit={(e) => onSubmit(e)}>
               <div className='input-field col s12'>
                 <input
-                  onChange={e => onChange(e)}
+                  onChange={(e) => onChange(e)}
                   value={firstName}
                   // error={errors.firstName}
                   id='firstName'
@@ -65,7 +67,7 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
               </div>
               <div className='input-field col s12'>
                 <input
-                  onChange={e => onChange(e)}
+                  onChange={(e) => onChange(e)}
                   value={surname}
                   // error={errors.surname}
                   id='surname'
@@ -75,7 +77,7 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
               </div>
               <div className='input-field col s12'>
                 <input
-                  onChange={e => onChange(e)}
+                  onChange={(e) => onChange(e)}
                   value={email}
                   // error={errors.email}
                   id='email'
@@ -86,7 +88,7 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
               </div>
               <div className='input-field col s12'>
                 <input
-                  onChange={e => onChange(e)}
+                  onChange={(e) => onChange(e)}
                   value={password}
                   // error={errors.password}
                   id='password'
@@ -97,7 +99,7 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
               </div>
               <div className='input-field col s12'>
                 <input
-                  onChange={e => onChange(e)}
+                  onChange={(e) => onChange(e)}
                   value={password2}
                   // error={errors.password2}
                   id='password2'
@@ -111,7 +113,7 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
                     width: '150px',
                     borderRadius: '3px',
                     letterSpacing: '1.5px',
-                    marginTop: '1rem'
+                    marginTop: '1rem',
                   }}
                   type='submit'
                   className='btn btn-large waves-effect waves-light hoverable blue accent-3'
@@ -130,11 +132,11 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
 Register.propTypes = {
   setAlert: PropTypes.func.isRequired,
   register: PropTypes.func.isRequired,
-  isAuthenticated: PropTypes.bool
+  isAuthenticated: PropTypes.bool,
 };
 
-const mapStateToProps = state => ({
-  isAuthenticated: state.auth.isAuthenticated
+const mapStateToProps = (state) => ({
+  isAuthenticated: state.auth.isAuthenticated,
 });
 
 export default connect(mapStateToProps, { setAlert, register })(Register);
