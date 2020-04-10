@@ -71,8 +71,6 @@ describe('register auth action creator', () => {
       expect(newState.auth.token).toBe(null);
       expect(newState.auth.isAuthenticated).toBe(false);
       expect(newState.auth.loading).toBe(false);
-
-      console.log(newState);
     });
   });
 });
@@ -100,7 +98,6 @@ describe('login auth action creator', () => {
 
       const result = await store.dispatch(login(existingUser));
       const newState = store.getState();
-      console.log(newState);
       expect(newState.auth.token).toBe('jwtheader.payload.signature');
       expect(newState.auth.isAuthenticated).toBe(true);
       expect(newState.auth.loading).toBe(false);
@@ -111,4 +108,78 @@ describe('login auth action creator', () => {
       expect(moxios.requests.__items[1].config.url).toBe('/api/auth');
     });
   });
+
+  describe('unsuccessful login', () => {
+    it('does something', async () => {
+      const store = storeFactory();
+      moxios.stubRequest('/api/auth', {
+        status: 400,
+        response: {
+          alert1: 'error message 1',
+          alert2: 'error message 2',
+        },
+      });
+
+      const result = await store.dispatch(login(existingUser));
+      const newState = store.getState();
+      expect(newState.alert.length).toBe(2);
+      expect(newState.alert[0].msg).toBe('error message 1');
+      expect(newState.alert[1].msg).toBe('error message 2');
+
+      expect(newState.auth.token).toBe(null);
+      expect(newState.auth.isAuthenticated).toBe(false);
+      expect(newState.auth.loading).toBe(false);
+    });
+  });
+});
+
+describe('load user auth action creator', () => {
+  beforeEach(() => {
+    moxios.install();
+  });
+  afterEach(() => {
+    moxios.uninstall();
+  });
+
+  describe('successful transaction', () => {
+    it('updates user details', async () => {
+      const store = storeFactory();
+
+      moxios.stubRequest('/api/auth', {
+        status: 200,
+        response: { user: 'details' },
+      });
+
+      const result = await store.dispatch(loadUser());
+      const newState = store.getState();
+      expect(newState.auth.user).toEqual({ user: 'details' });
+      // check that the store.dispatch generates 1 moxios request
+      expect(moxios.requests.__items[0].config.url).toBe('/api/auth');
+    });
+  });
+
+  // describe('unsuccessful registration', () => {
+  //   it('does something', async () => {
+  //     const store = storeFactory();
+  //     moxios.stubRequest('/api/users/register', {
+  //       status: 400,
+  //       response: {
+  //         alert1: 'error message 1',
+  //         alert2: 'error message 2',
+  //       },
+  //     });
+
+  //     const result = await store.dispatch(register(newUser));
+  //     const newState = store.getState();
+  //     expect(newState.alert.length).toBe(2);
+  //     expect(newState.alert[0].msg).toBe('error message 1');
+  //     expect(newState.alert[1].msg).toBe('error message 2');
+
+  //     expect(newState.auth.token).toBe(null);
+  //     expect(newState.auth.isAuthenticated).toBe(false);
+  //     expect(newState.auth.loading).toBe(false);
+
+  //     console.log(newState);
+  //   });
+  // });
 });
