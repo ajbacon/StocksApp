@@ -39,7 +39,7 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
 
   return (
     <Fragment>
-      <div className='container'>
+      <div data-test='component-register' className='container'>
         <div className='row'>
           <div className='col s8 offset-s2'>
             <Link to='/' className='btn-flat waves-effect'>
@@ -57,6 +57,7 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
             <form noValidate onSubmit={(e) => onSubmit(e)}>
               <div className='input-field col s12'>
                 <input
+                  data-test='component-first-name'
                   onChange={(e) => onChange(e)}
                   value={firstName}
                   // error={errors.firstName}
@@ -67,6 +68,7 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
               </div>
               <div className='input-field col s12'>
                 <input
+                  data-test='component-surname'
                   onChange={(e) => onChange(e)}
                   value={surname}
                   // error={errors.surname}
@@ -77,6 +79,7 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
               </div>
               <div className='input-field col s12'>
                 <input
+                  data-test='component-email'
                   onChange={(e) => onChange(e)}
                   value={email}
                   // error={errors.email}
@@ -88,6 +91,7 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
               </div>
               <div className='input-field col s12'>
                 <input
+                  data-test='component-password'
                   onChange={(e) => onChange(e)}
                   value={password}
                   // error={errors.password}
@@ -99,6 +103,7 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
               </div>
               <div className='input-field col s12'>
                 <input
+                  data-test='component-password2'
                   onChange={(e) => onChange(e)}
                   value={password2}
                   // error={errors.password2}
@@ -109,6 +114,7 @@ const Register = ({ setAlert, register, isAuthenticated }) => {
               </div>
               <div className='col s12' style={{ paddingLeft: '11.250px' }}>
                 <button
+                  data-test='component-signup-btn'
                   style={{
                     width: '150px',
                     borderRadius: '3px',
