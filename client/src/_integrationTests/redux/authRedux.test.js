@@ -170,7 +170,6 @@ describe('load user auth action creator', () => {
         },
       };
       const store = storeFactory(initialState);
-      console.log(store.getState());
       moxios.stubRequest('/api/auth', {
         status: 400,
         response: {},
@@ -183,8 +182,6 @@ describe('load user auth action creator', () => {
       expect(newState.auth.isAuthenticated).toBe(false);
       expect(newState.auth.loading).toBe(false);
       expect(newState.auth.user).toBe(null);
-
-      console.log(newState);
     });
   });
 });
