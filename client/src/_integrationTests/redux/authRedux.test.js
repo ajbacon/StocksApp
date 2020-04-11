@@ -2,7 +2,7 @@ import moxios from 'moxios';
 import thunk from 'redux-thunk';
 
 import { storeFactory } from '../../utils/testUtils';
-import { login, register, loadUser } from '../../actions/auth';
+import { login, register, loadUser, logout } from '../../actions/auth';
 
 const newUser = {
   firstName: 'Eric',
@@ -44,8 +44,8 @@ describe('register auth action creator', () => {
       expect(newState.auth.isAuthenticated).toBe(true);
       expect(newState.auth.loading).toBe(false);
       // check that the store.dispatch generates 2 moxios requests
-      // the first for the /api/users/register
-      // the second for /api/auth after dispatch(loadUser()) is called
+      // the first to /api/users/register
+      // the second to /api/auth after dispatch(loadUser())
       expect(moxios.requests.__items[0].config.url).toBe('/api/users/register');
       expect(moxios.requests.__items[1].config.url).toBe('/api/auth');
     });
@@ -186,5 +186,36 @@ describe('load user auth action creator', () => {
 
       console.log(newState);
     });
+  });
+});
+
+describe('logout auth action creator', () => {
+  beforeEach(() => {
+    moxios.install();
+  });
+  afterEach(() => {
+    moxios.uninstall();
+  });
+
+  const initialState = {
+    alert: [],
+    auth: {
+      token: 'jwtheader.payload.signature',
+      isAuthenticated: true,
+      loading: false,
+      user: { user: 'details' },
+    },
+  };
+
+  it('updates user details', () => {
+    const store = storeFactory();
+
+    const result = store.dispatch(logout());
+    const newState = store.getState();
+
+    expect(newState.auth.token).toBe(null);
+    expect(newState.auth.isAuthenticated).toBe(false);
+    expect(newState.auth.loading).toBe(false);
+    expect(newState.auth.user).toBe(null);
   });
 });
