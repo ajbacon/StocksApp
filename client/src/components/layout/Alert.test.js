@@ -9,7 +9,6 @@ const setup = (state = {}) => {
   const wrapper = shallow(<Alert store={store} />)
     .dive()
     .dive();
-  console.log(wrapper.debug());
   return wrapper;
 };
 
@@ -38,16 +37,14 @@ describe('<Alert />', () => {
     expect(component).toHaveLength(2);
   });
 
-  // it('renders login inputs and submit button', () => {
-  //   wrapper = setup();
-  //   const componentEmail = findByTestAttr(wrapper, 'component-email-input');
-  //   const componentPassword = findByTestAttr(
-  //     wrapper,
-  //     'component-password-input'
-  //   );
-  //   const componentSubmitBtn = findByTestAttr(wrapper, 'component-submit-btn');
-  //   expect(componentEmail).toHaveLength(1);
-  //   expect(componentPassword).toHaveLength(1);
-  //   expect(componentSubmitBtn).toHaveLength(1);
-  // });
+  it('renders the alert message', () => {
+    const initialState = {
+      alert: [{ id: 1, msg: 'Alert msg 1' }],
+    };
+    wrapper = setup(initialState);
+    console.log(wrapper.text());
+    console.log(initialState.alert[0].msg);
+    component = findByTestAttr(wrapper, 'component-alert');
+    expect(wrapper.text()).toBe(initialState.alert[0].msg);
+  });
 });
