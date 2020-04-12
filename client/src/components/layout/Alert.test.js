@@ -26,6 +26,18 @@ describe('<Alert />', () => {
     expect(component).toHaveLength(1);
   });
 
+  it('renders 2 alert messages if they exist', () => {
+    const initialState = {
+      alert: [
+        { id: 1, msg: 'Alert msg 1' },
+        { id: 2, msg: 'Alert msg 2' },
+      ],
+    };
+    wrapper = setup(initialState);
+    component = findByTestAttr(wrapper, 'component-alert');
+    expect(component).toHaveLength(2);
+  });
+
   // it('renders login inputs and submit button', () => {
   //   wrapper = setup();
   //   const componentEmail = findByTestAttr(wrapper, 'component-email-input');
