@@ -35,7 +35,7 @@ const Navbar = ({ auth, logout }) => {
 
   return (
     <Fragment>
-      <nav>
+      <nav data-test='component-navbar'>
         <div className='nav-wrapper white'>
           <Link to='/' className='brand-logo black-text'>
             <i className='material-icons'>trending_up</i>
@@ -52,11 +52,11 @@ const Navbar = ({ auth, logout }) => {
 
 Navbar.propTypes = {
   logout: PropTypes.func.isRequired,
-  auth: PropTypes.object.isRequired
+  auth: PropTypes.object.isRequired,
 };
 
-const mapStateToProps = state => ({
-  auth: state.auth
+const mapStateToProps = (state) => ({
+  auth: state.auth,
 });
 
 export default connect(mapStateToProps, { logout })(Navbar);
