@@ -21,12 +21,20 @@ const Navbar = ({ auth, logout }) => {
   const guestLinks = (
     <ul className='right hide-on-med-and-down'>
       <li>
-        <Link to='/register' className='black-text'>
+        <Link
+          data-test='component-register-link'
+          to='/register'
+          className='black-text'
+        >
           Register
         </Link>
       </li>
       <li>
-        <Link to='/login' className='black-text'>
+        <Link
+          data-test='component-login-link'
+          to='/login'
+          className='black-text'
+        >
           Login
         </Link>
       </li>

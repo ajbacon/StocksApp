@@ -24,4 +24,15 @@ describe('<Navbar />', () => {
     component = findByTestAttr(wrapper, 'component-navbar');
     expect(component).toHaveLength(1);
   });
+
+  it('renders login and register links when user is not authorised', () => {
+    const initialState = {
+      auth: { isAuthenticated: false },
+    };
+    wrapper = setup(initialState);
+    const loginLink = findByTestAttr(wrapper, 'component-login-link');
+    const registerLink = findByTestAttr(wrapper, 'component-register-link');
+    expect(loginLink).toHaveLength(1);
+    expect(registerLink).toHaveLength(1);
+  });
 });
