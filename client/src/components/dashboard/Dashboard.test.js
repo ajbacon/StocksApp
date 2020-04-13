@@ -24,4 +24,13 @@ describe('<Dashboard />', () => {
     component = findByTestAttr(wrapper, 'component-dashboard');
     expect(component).toHaveLength(1);
   });
+
+  it('renders a search bar', () => {
+    const initialState = {
+      auth: { isAuthenticated: true },
+    };
+    wrapper = setup(initialState);
+    component = findByTestAttr(wrapper, 'component-search-bar');
+    expect(component).toHaveLength(1);
+  });
 });

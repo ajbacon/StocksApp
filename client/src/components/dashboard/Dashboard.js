@@ -25,7 +25,10 @@ const Dashboard = ({ auth: { user } }) => {
   return (
     <div data-test='component-dashboard' className='container'>
       <h3>Welcome, {user && capitalize(user.firstName)}</h3>
-      <SearchBar setCompanyData={setCompanyData} />
+      <SearchBar
+        data-test='component-search-bar'
+        setCompanyData={setCompanyData}
+      />
       {companyData.map((data, i) => (
         <CompanyData key={i} companyData={data} />
       ))}
