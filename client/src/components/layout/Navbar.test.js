@@ -35,4 +35,13 @@ describe('<Navbar />', () => {
     expect(loginLink).toHaveLength(1);
     expect(registerLink).toHaveLength(1);
   });
+
+  it('renders the logout link when user is authorised', () => {
+    const initialState = {
+      auth: { isAuthenticated: true },
+    };
+    wrapper = setup(initialState);
+    const logoutLink = findByTestAttr(wrapper, 'component-logout-link');
+    expect(logoutLink).toHaveLength(1);
+  });
 });

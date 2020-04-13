@@ -11,7 +11,12 @@ const Navbar = ({ auth, logout }) => {
   const authLinks = (
     <ul className='right hide-on-med-and-down'>
       <li>
-        <Link onClick={logout} to='#!' className='black-text'>
+        <Link
+          data-test='component-logout-link'
+          onClick={logout}
+          to='#!'
+          className='black-text'
+        >
           Logout
         </Link>
       </li>
