@@ -47,4 +47,13 @@ describe('<Alert />', () => {
     component = findByTestAttr(wrapper, 'component-alert');
     expect(wrapper.text()).toBe(initialState.alert[0].msg);
   });
+
+  it('renders nothing if no alerts', () => {
+    const initialState = {
+      alert: [],
+    };
+    wrapper = setup(initialState);
+    component = findByTestAttr(wrapper, 'component-alert');
+    expect(component).toHaveLength(0);
+  });
 });
