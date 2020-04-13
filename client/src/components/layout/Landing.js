@@ -26,6 +26,7 @@ const Landing = ({ isAuthenticated }) => {
           <br />
           <div className='col s6'>
             <Link
+              data-test='component-register-btn'
               to='/register'
               style={{
                 width: '140px',
@@ -39,6 +40,7 @@ const Landing = ({ isAuthenticated }) => {
           </div>
           <div className='col s6'>
             <Link
+              data-test='component-login-btn'
               to='/login'
               style={{
                 width: '140px',

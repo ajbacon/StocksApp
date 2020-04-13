@@ -34,12 +34,21 @@ describe('<Landing />', () => {
     expect(component).toHaveLength(0);
   });
 
-  // it('renders a login button', () => {
-  //   const initialState = {
-  //     auth: { isAuthenticated: true },
-  //   };
-  //   wrapper = setup(initialState);
-  //   component = findByTestAttr(wrapper, 'component-landing');
-  //   expect(component).toHaveLength(0);
-  // });
+  it('renders a register button', () => {
+    const initialState = {
+      auth: { isAuthenticated: false },
+    };
+    wrapper = setup(initialState);
+    component = findByTestAttr(wrapper, 'component-register-btn');
+    expect(component).toHaveLength(1);
+  });
+
+  it('renders a login button', () => {
+    const initialState = {
+      auth: { isAuthenticated: false },
+    };
+    wrapper = setup(initialState);
+    component = findByTestAttr(wrapper, 'component-login-btn');
+    expect(component).toHaveLength(1);
+  });
 });
