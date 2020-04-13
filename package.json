@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test:server": "jest",
-    "test:client": "npm run test --prefix client",
-    "test": "npm run test:server && npm run test:client",
+    "test:client": "npm test --prefix client",
+    "test": "jest && npm test --prefix client",
     "client-install": "npm install --prefix client",
     "start": "node index.js",
     "server": "nodemon index.js",
