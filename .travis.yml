@@ -3,10 +3,6 @@ node_js:
   - stable
 services:
   - mongodb
-cache:
-  directories:
-  - node_modules
-  - client/node_modules
 before_script:
   - cd client
 script: 
