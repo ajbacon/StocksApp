@@ -4,7 +4,11 @@ import { connect } from 'react-redux';
 
 const Alert = ({ alerts }) => {
   if (alerts !== null && alerts.length) {
-    let output = alerts.map(alert => <div key={alert.id}>{alert.msg}</div>);
+    let output = alerts.map((alert) => (
+      <div data-test='component-alert' key={alert.id}>
+        {alert.msg}
+      </div>
+    ));
     return output;
   }
   return null;
@@ -16,11 +20,11 @@ const Alert = ({ alerts }) => {
 //   alerts.map(alert => <div key={alert.id}>{alert.msg}</div>);
 
 Alert.propTypes = {
-  alerts: PropTypes.array
+  alerts: PropTypes.array,
 };
 
-const mapStateToProps = state => ({
-  alerts: state.alert
+const mapStateToProps = (state) => ({
+  alerts: state.alert,
 });
 
 export default connect(mapStateToProps)(Alert);

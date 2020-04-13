@@ -28,7 +28,7 @@ function App() {
   return (
     <Provider store={store}>
       <Router>
-        <div className='App'>
+        <div className='App' data-test='component-app'>
           <Navbar />
           <Alert />
           <Switch>

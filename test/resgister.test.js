@@ -9,13 +9,13 @@ const testUser = {
   surname: 'user',
   email: 'test_user@example.com',
   password: 'pass123',
-  password2: 'pass123'
+  password2: 'pass123',
 };
 
 describe('register', () => {
   process.env.NODE_ENV = 'test';
 
-  beforeEach(async done => {
+  beforeEach(async (done) => {
     await User.deleteMany();
     done();
   });
@@ -27,7 +27,7 @@ describe('register', () => {
   });
 
   describe('POST /api/users/register', () => {
-    it('should pass the correct data in the request and return a response status of 200', async done => {
+    it('should pass the correct data in the request and return a response status of 200', async (done) => {
       const response = await request.post('/api/users/register').send(testUser);
 
       expect(response.status).toEqual(200);
@@ -40,7 +40,7 @@ describe('register', () => {
       done();
     });
 
-    it('should return a jwt token and add user to the database', async done => {
+    it('should return a jwt token and add user to the database', async (done) => {
       const response = await request.post('/api/users/register').send(testUser);
 
       expect(response.body.token).not.toBeNull();
@@ -52,12 +52,12 @@ describe('register', () => {
       done();
     });
 
-    it('should return an error if an email is not specified and return status of 400', async done => {
+    it('should return an error if an email is not specified and return status of 400', async (done) => {
       const badUser = {
         firstName: 'test',
         surname: 'user',
         password: 'pass123',
-        password2: 'pass123'
+        password2: 'pass123',
       };
       const response = await request.post('/api/users/register').send(badUser);
 
@@ -69,10 +69,10 @@ describe('register', () => {
       done();
     });
 
-    it('should return multiple errors when firstName, surname and Email are not specified and return status of 400', async done => {
+    it('should return multiple errors when firstName, surname and Email are not specified and return status of 400', async (done) => {
       const badUser = {
         password: 'pass123',
-        password2: 'pass123'
+        password2: 'pass123',
       };
       const response = await request.post('/api/users/register').send(badUser);
 
@@ -87,11 +87,11 @@ describe('register', () => {
       done();
     });
 
-    it('should return errors if password fields are not populated and return status of 400', async done => {
+    it('should return errors if password fields are not populated and return status of 400', async (done) => {
       const badUser = {
         firstName: 'test',
         surname: 'user',
-        email: 'test_user@example.com'
+        email: 'test_user@example.com',
       };
       const response = await request.post('/api/users/register').send(badUser);
 
@@ -109,13 +109,13 @@ describe('register', () => {
       done();
     });
 
-    it('should return an error if password fields do not match and return status of 400', async done => {
+    it('should return an error if password fields do not match and return status of 400', async (done) => {
       const badUser = {
         firstName: 'test',
         surname: 'user',
         email: 'test_user@example.com',
         password: 'pass123',
-        password2: 'pass1234'
+        password2: 'pass1234',
       };
       const response = await request.post('/api/users/register').send(badUser);
 

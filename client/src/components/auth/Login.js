@@ -9,15 +9,15 @@ import { login } from '../../actions/auth';
 const Login = ({ login, isAuthenticated }) => {
   const [formData, setFormData] = useState({
     email: '',
-    password: ''
+    password: '',
   });
 
   const { email, password } = formData;
 
-  const onChange = e =>
+  const onChange = (e) =>
     setFormData({ ...formData, [e.target.id]: e.target.value });
 
-  const onSubmit = async e => {
+  const onSubmit = async (e) => {
     e.preventDefault();
     login(email, password);
   };
@@ -30,7 +30,7 @@ const Login = ({ login, isAuthenticated }) => {
 
   return (
     <Fragment>
-      <div className='container'>
+      <div data-test='component-login' className='container'>
         <div style={{ marginTop: '4rem' }} className='row'>
           <div className='col s8 offset-s2'>
             <Link to='/' className='btn-flat waves-effect'>
@@ -45,10 +45,11 @@ const Login = ({ login, isAuthenticated }) => {
                 Don't have an account? <Link to='/register'>Register</Link>
               </p>
             </div>
-            <form noValidate onSubmit={e => onSubmit(e)}>
+            <form noValidate onSubmit={(e) => onSubmit(e)}>
               <div className='input-field col s12'>
                 <input
-                  onChange={e => onChange(e)}
+                  data-test='component-email-input'
+                  onChange={(e) => onChange(e)}
                   value={email}
                   // error={errors.email}
                   id='email'
@@ -58,7 +59,8 @@ const Login = ({ login, isAuthenticated }) => {
               </div>
               <div className='input-field col s12'>
                 <input
-                  onChange={e => onChange(e)}
+                  data-test='component-password-input'
+                  onChange={(e) => onChange(e)}
                   value={password}
                   // error={errors.password}
                   id='password'
@@ -68,11 +70,12 @@ const Login = ({ login, isAuthenticated }) => {
               </div>
               <div className='col s12' style={{ paddingLeft: '11.250px' }}>
                 <button
+                  data-test='component-submit-btn'
                   style={{
                     width: '150px',
                     borderRadius: '3px',
                     letterSpacing: '1.5px',
-                    marginTop: '1rem'
+                    marginTop: '1rem',
                   }}
                   type='submit'
                   className='btn btn-large waves-effect waves-light hoverable blue accent-3'
@@ -90,11 +93,11 @@ const Login = ({ login, isAuthenticated }) => {
 
 Login.propTypes = {
   login: PropTypes.func.isRequired,
-  isAuthenticated: PropTypes.bool
+  isAuthenticated: PropTypes.bool,
 };
 
-const mapStateToProps = state => ({
-  isAuthenticated: state.auth.isAuthenticated
+const mapStateToProps = (state) => ({
+  isAuthenticated: state.auth.isAuthenticated,
 });
 
 export default connect(mapStateToProps, { login })(Login);
