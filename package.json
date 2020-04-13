@@ -6,7 +6,7 @@
   "scripts": {
     "test:server": "jest",
     "test:client": "npm test --prefix client",
-    "test": "jest && npm run test:client",
+    "test": "jest",
     "client-install": "npm install --prefix client",
     "start": "node index.js",
     "server": "nodemon index.js",
