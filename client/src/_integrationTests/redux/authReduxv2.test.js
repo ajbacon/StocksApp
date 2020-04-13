@@ -59,9 +59,7 @@ describe('register auth action creator', () => {
       //   response: { something: 'something' },
       // });
 
-      return store.dispatch(register(newUser)).then(() => {
-        console.log(store.getActions());
-      });
+      return store.dispatch(register(newUser)).then(() => {});
     });
 
     // it('fires the loadUser action creator', async () => {

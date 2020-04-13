@@ -2,8 +2,6 @@ import React, { useEffect, useState } from 'react';
 import Classes from './CompanyData.module.css';
 
 const moment = require('moment');
-// todo:
-// change to async await?
 
 const CompanyData = ({ companyData }) => {
   const [currentQuote, setCurrentQuote] = useState([]);

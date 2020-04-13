@@ -23,7 +23,7 @@ const Dashboard = ({ auth: { user } }) => {
   }, []);
 
   return (
-    <div className='container'>
+    <div data-test='component-dashboard' className='container'>
       <h3>Welcome, {user && capitalize(user.firstName)}</h3>
       <SearchBar setCompanyData={setCompanyData} />
       {companyData.map((data, i) => (
