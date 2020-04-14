@@ -13,7 +13,6 @@ import setAuthToken from './utils/setAuthToken';
 import { loadUser } from './actions/auth';
 
 //redux
-import { Provider } from 'react-redux';
 import store from './store';
 
 if (localStorage.token) {
@@ -26,20 +25,18 @@ function App() {
   }, []);
 
   return (
-    <Provider store={store}>
-      <Router>
-        <div className='App' data-test='component-app'>
-          <Navbar />
-          <Alert />
-          <Switch>
-            <Route exact path='/' component={Landing} />
-            <Route exact path='/register' component={Register} />
-            <Route exact path='/login' component={Login} />
-            <PrivateRoute exact path='/dashboard' component={Dashboard} />
-          </Switch>
-        </div>
-      </Router>
-    </Provider>
+    <Router>
+      <div className='App' data-test='component-app'>
+        <Navbar />
+        <Alert />
+        <Switch>
+          <Route exact path='/' component={Landing} />
+          <Route exact path='/register' component={Register} />
+          <Route exact path='/login' component={Login} />
+          <PrivateRoute exact path='/dashboard' component={Dashboard} />
+        </Switch>
+      </div>
+    </Router>
   );
 }
 

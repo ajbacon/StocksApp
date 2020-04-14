@@ -26,8 +26,8 @@ export const loadUser = () => async (dispatch) => {
     //   email: string,
     //   Date: datestring
     // }
-
     const res = await axios.get('/api/auth');
+
     dispatch({
       type: USER_LOADED,
       payload: res.data,
