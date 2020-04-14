@@ -10,7 +10,11 @@ const Landing = ({ isAuthenticated }) => {
     return <Redirect to='/dashboard' />;
   }
   return (
-    <div style={{ height: '75vh' }} className='container valign-wrapper'>
+    <div
+      data-test='component-landing'
+      style={{ height: '75vh' }}
+      className='container valign-wrapper'
+    >
       <div className='row'>
         <div className='col s12 center-align'>
           <h4>
@@ -22,11 +26,12 @@ const Landing = ({ isAuthenticated }) => {
           <br />
           <div className='col s6'>
             <Link
+              data-test='component-register-btn'
               to='/register'
               style={{
                 width: '140px',
                 borderRadius: '3px',
-                letterSpacing: '1.5px'
+                letterSpacing: '1.5px',
               }}
               className='btn btn-large waves-effect waves-light hoverable blue accent-3'
             >
@@ -35,11 +40,12 @@ const Landing = ({ isAuthenticated }) => {
           </div>
           <div className='col s6'>
             <Link
+              data-test='component-login-btn'
               to='/login'
               style={{
                 width: '140px',
                 borderRadius: '3px',
-                letterSpacing: '1.5px'
+                letterSpacing: '1.5px',
               }}
               className='btn btn-large waves-effect waves-light hoverable white black-text'
             >
@@ -53,10 +59,10 @@ const Landing = ({ isAuthenticated }) => {
 };
 
 Landing.propTypes = {
-  isAuthenticated: PropTypes.bool
+  isAuthenticated: PropTypes.bool,
 };
 
-const mapStateToProps = state => ({
-  isAuthenticated: state.auth.isAuthenticated
+const mapStateToProps = (state) => ({
+  isAuthenticated: state.auth.isAuthenticated,
 });
 export default connect(mapStateToProps)(Landing);

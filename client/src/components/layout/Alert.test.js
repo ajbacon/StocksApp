@@ -42,9 +42,16 @@ describe('<Alert />', () => {
       alert: [{ id: 1, msg: 'Alert msg 1' }],
     };
     wrapper = setup(initialState);
-    console.log(wrapper.text());
-    console.log(initialState.alert[0].msg);
     component = findByTestAttr(wrapper, 'component-alert');
     expect(wrapper.text()).toBe(initialState.alert[0].msg);
+  });
+
+  it('renders nothing if no alerts', () => {
+    const initialState = {
+      alert: [],
+    };
+    wrapper = setup(initialState);
+    component = findByTestAttr(wrapper, 'component-alert');
+    expect(component).toHaveLength(0);
   });
 });

@@ -11,7 +11,12 @@ const Navbar = ({ auth, logout }) => {
   const authLinks = (
     <ul className='right hide-on-med-and-down'>
       <li>
-        <Link onClick={logout} to='#!' className='black-text'>
+        <Link
+          data-test='component-logout-link'
+          onClick={logout}
+          to='#!'
+          className='black-text'
+        >
           Logout
         </Link>
       </li>
@@ -21,12 +26,20 @@ const Navbar = ({ auth, logout }) => {
   const guestLinks = (
     <ul className='right hide-on-med-and-down'>
       <li>
-        <Link to='/register' className='black-text'>
+        <Link
+          data-test='component-register-link'
+          to='/register'
+          className='black-text'
+        >
           Register
         </Link>
       </li>
       <li>
-        <Link to='/login' className='black-text'>
+        <Link
+          data-test='component-login-link'
+          to='/login'
+          className='black-text'
+        >
           Login
         </Link>
       </li>
@@ -35,7 +48,7 @@ const Navbar = ({ auth, logout }) => {
 
   return (
     <Fragment>
-      <nav>
+      <nav data-test='component-navbar'>
         <div className='nav-wrapper white'>
           <Link to='/' className='brand-logo black-text'>
             <i className='material-icons'>trending_up</i>
@@ -52,11 +65,11 @@ const Navbar = ({ auth, logout }) => {
 
 Navbar.propTypes = {
   logout: PropTypes.func.isRequired,
-  auth: PropTypes.object.isRequired
+  auth: PropTypes.object.isRequired,
 };
 
-const mapStateToProps = state => ({
-  auth: state.auth
+const mapStateToProps = (state) => ({
+  auth: state.auth,
 });
 
 export default connect(mapStateToProps, { logout })(Navbar);

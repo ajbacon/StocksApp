@@ -1,3 +1,4 @@
+/* istanbul ignore file */
 const fuzzysort = require('fuzzysort');
 const symbolsUS = require('./US');
 

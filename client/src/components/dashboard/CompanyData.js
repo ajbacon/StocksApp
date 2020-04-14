@@ -2,8 +2,6 @@ import React, { useEffect, useState } from 'react';
 import Classes from './CompanyData.module.css';
 
 const moment = require('moment');
-// todo:
-// change to async await?
 
 const CompanyData = ({ companyData }) => {
   const [currentQuote, setCurrentQuote] = useState([]);
@@ -51,7 +49,7 @@ const CompanyData = ({ companyData }) => {
     )}%)`;
 
     return (
-      <div className={`col l6 m7 s12`}>
+      <div data-test='component-company-data' className={`col l6 m7 s12`}>
         <div className='row'>
           <div className={`col s12 ${Classes.currentPrice} ${textColor}`}>
             <div style={{ fontSize: '40px', margin: '0 5px 0 0' }}>
