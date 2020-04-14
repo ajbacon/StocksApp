@@ -1,13 +1,10 @@
 import React from 'react';
-// import moxios from 'moxios';
 import axios from 'axios';
-// import MockAdapter from 'axios-mock-adapter';
 import { Provider } from 'react-redux';
 import { mount } from 'enzyme';
 
 import { findByTestAttr, storeFactory } from '../utils/testUtils';
 import App from '../App';
-import { JsonWebTokenError } from 'jsonwebtoken';
 
 const newUser = {
   firstName: 'Eric',
@@ -16,19 +13,33 @@ const newUser = {
   password: 'pass123',
   password2: 'pass123',
 };
+
+const setup = (initialState = {}) => {
+  const store = storeFactory(initialState);
+  const wrapper = mount(
+    <Provider store={store}>
+      <App />
+    </Provider>
+  );
+  return { wrapper, store };
+};
+
 jest.mock('axios');
 
 describe('<App />', () => {
   let component;
-  const resToken = { token: 'jwtheader.payload.signature' };
-  const resUser = {
-    _id: '1',
-    firstName: 'Eric',
-    surname: 'Cantona',
-    email: 'e_cantona@example.com',
-    Date: 'date',
-  };
+  let wrapper;
+
   describe('successful registration', () => {
+    const resToken = { token: 'jwtheader.payload.signature' };
+    const resUser = {
+      _id: '1',
+      firstName: newUser.firstName,
+      surname: newUser.surname,
+      email: newUser.email,
+      Date: 'date',
+    };
+
     axios.get.mockImplementation((url) => {
       switch (url) {
         case '/api/auth':
@@ -48,13 +59,7 @@ describe('<App />', () => {
     });
 
     it('updates state and redirects to dashboard component', async () => {
-      const store = storeFactory();
-      const wrapper = mount(
-        <Provider store={store}>
-          <App />
-        </Provider>
-      );
-
+      const { wrapper, store } = setup();
       component = findByTestAttr(wrapper, 'component-register-btn');
       component.at(0).simulate('click', { button: 0 });
 
@@ -69,7 +74,7 @@ describe('<App />', () => {
       const submitButton = findByTestAttr(wrapper, 'component-signup-btn');
 
       firstNameField.simulate('change', {
-        target: { value: 'Eric', id: 'firstName' },
+        target: { value: newUser.firstName, id: 'firstName' },
       });
       surnameField.simulate('change', {
         target: { value: newUser.surname, id: 'surname' },
