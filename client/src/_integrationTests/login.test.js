@@ -1,9 +1,6 @@
-import React from 'react';
 import axios from 'axios';
-import { Provider } from 'react-redux';
-import { mount } from 'enzyme';
 
-import { findByTestAttr, storeFactory } from '../utils/testUtils';
+import { findByTestAttr, integrationSetup } from '../utils/testUtils';
 import App from '../App';
 
 const existingUser = {
@@ -11,16 +8,6 @@ const existingUser = {
   surname: 'Cantona',
   email: 'e_cantona@example.com',
   password: 'pass123',
-};
-
-const setup = (initialState = {}) => {
-  const store = storeFactory(initialState);
-  const wrapper = mount(
-    <Provider store={store}>
-      <App />
-    </Provider>
-  );
-  return { wrapper, store };
 };
 
 jest.mock('axios');
@@ -57,7 +44,7 @@ describe('<App />', () => {
     });
 
     it('updates state and redirects to dashboard component', async () => {
-      const { wrapper, store } = setup();
+      const { wrapper, store } = integrationSetup(App);
       component = findByTestAttr(wrapper, 'component-login-btn');
       component.at(0).simulate('click', { button: 0 });
 
