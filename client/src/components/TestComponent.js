@@ -1,9 +1,10 @@
+/* istanbul ignore file */
 import React from 'react';
 import axios from 'axios';
 
 function TestComponent() {
   // const handleClick = async () => {
-  //   let url = `https://finnhub.io/api/v1/quote?symbol=BA&token=${process.env.REACT_APP_FINNHUB_API_KEY}`;
+  //   let url = `https://www.alphavantage.co/query?function=SYMBOL_SEARCH&keywords=BA&apikey=HE2XVCX2F9X3V8M1`;
 
   //   const res = await fetch(url);
   //   const data = await res.json();
@@ -14,7 +15,7 @@ function TestComponent() {
     let url = `https://finnhub.io/api/v1/quote?symbol=BA&token=${process.env.REACT_APP_FINNHUB_API_KEY}`;
 
     const res = await axios.get(url);
-    console.log(res);
+    console.log(res.data);
   };
 
   return (
@@ -25,3 +26,6 @@ function TestComponent() {
 }
 
 export default TestComponent;
+
+// `https://www.alphavantage.co/query?function=SYMBOL_SEARCH&keywords=BA&apikey=HE2XVCX2F9X3V8M1`
+// `https://finnhub.io/api/v1/quote?symbol=BA&token=${process.env.REACT_APP_FINNHUB_API_KEY}`

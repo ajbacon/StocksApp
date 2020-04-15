@@ -1,5 +1,14 @@
+import React from 'react';
+import axios from 'axios';
+import { Provider } from 'react-redux';
+import { mount } from 'enzyme';
+import { act } from 'react-dom/test-utils';
 import { mockAAPLQuote } from '../utils/mockTestData';
-import { findByTestAttr, integrationSetup } from '../utils/testUtils';
+import {
+  findByTestAttr,
+  integrationSetup,
+  storeFactory,
+} from '../utils/testUtils';
 import App from '../App';
 
 const existingUser = {
@@ -9,13 +18,24 @@ const existingUser = {
   password: 'pass123',
 };
 
+jest.mock('axios');
+
 describe('select company and show quote data', () => {
   let component;
+
+  axios.get.mockImplementation((url) => {
+    switch (url) {
+      case `https://finnhub.io/api/v1/quote?symbol=AAPL&token=${process.env.REACT_APP_FINNHUB_API_KEY}`:
+        return Promise.resolve({ data: mockAAPLQuote });
+      default:
+        return Promise.reject(new Error('Not Found'));
+    }
+  });
 
   // global.fetch = jest.fn(() => Promise.resolve({ json: () => mockAAPLQuote }));
 
   it('updates state and redirects to dashboard component', async () => {
-    const intitalState = {
+    const initialState = {
       alert: [],
       auth: {
         token: 'jwtheader.payload.signature',
@@ -30,7 +50,7 @@ describe('select company and show quote data', () => {
         },
       },
     };
-    const { wrapper, store } = integrationSetup(App, intitalState);
+    const { wrapper, store } = integrationSetup(App, initialState);
     component = findByTestAttr(wrapper, 'component-search-input');
     component.simulate('focus');
     component.simulate('change', {
@@ -38,9 +58,15 @@ describe('select company and show quote data', () => {
     });
     wrapper.update();
     const selection = wrapper.find('#item0');
-    await selection.simulate('click');
-    wrapper.update();
-    console.log(wrapper.debug());
-    console.log(process.env.REACT_APP_FINNHUB_API_KEY);
+    selection.simulate('click');
+
+    await act(async () => {
+      await Promise.resolve(wrapper);
+      await new Promise((resolve) => setImmediate(resolve));
+      wrapper.update();
+    });
+
+    const renderedComponent = findByTestAttr(wrapper, 'component-company-data');
+    expect(renderedComponent.length).toBe(1);
   });
 });
