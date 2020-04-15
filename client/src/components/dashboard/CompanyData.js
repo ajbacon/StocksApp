@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Classes from './CompanyData.module.css';
+import axios from 'axios';
 
 const moment = require('moment');
 
@@ -20,16 +21,17 @@ const CompanyData = ({ companyData }) => {
   }, []);
 
   useEffect(() => {
-    console.log(companyData.symbol);
-
     setLoading(true);
     localStorage.setItem('companyData', JSON.stringify(companyData));
 
     (async () => {
       let url = `https://finnhub.io/api/v1/quote?symbol=${companyData.symbol}&token=${process.env.REACT_APP_FINNHUB_API_KEY}`;
 
-      const res = await fetch(url);
-      const data = await res.json();
+      // const res = await fetch(url);
+      // const data = await res.json();
+      const res = await axios.get(url);
+      const data = await res.data;
+
       setCurrentQuote([data]);
       localStorage.setItem('currentQuoteData', JSON.stringify(data));
       setLoading(false);
@@ -49,7 +51,7 @@ const CompanyData = ({ companyData }) => {
     )}%)`;
 
     return (
-      <div data-test='component-company-data' className={`col l6 m7 s12`}>
+      <div className={`col l6 m7 s12`}>
         <div className='row'>
           <div className={`col s12 ${Classes.currentPrice} ${textColor}`}>
             <div style={{ fontSize: '40px', margin: '0 5px 0 0' }}>
@@ -70,7 +72,7 @@ const CompanyData = ({ companyData }) => {
   return loading ? (
     <div>Loading...</div>
   ) : (
-    <div>
+    <div data-test='component-company-data'>
       <h4 style={{ padding: '5px', borderBottom: '1px solid grey' }}>
         {companyData.description}
       </h4>

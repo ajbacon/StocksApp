@@ -1,4 +1,4 @@
-import { setup, findByTestAttr } from './test-helpers';
+import { setup, findByTestAttr } from './utils/testUtils';
 
 import App from './App';
 

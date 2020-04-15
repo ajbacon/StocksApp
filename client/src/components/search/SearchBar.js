@@ -17,6 +17,7 @@ const SearchBar = ({ setCompanyData }) => {
         <div
           className={Classes.resultItem}
           onClick={() => selectResult(item.obj)}
+          id={`item${i}`}
           key={i}
         >
           {item.obj.description}
@@ -29,7 +30,7 @@ const SearchBar = ({ setCompanyData }) => {
     const searchResults = fuzzysort.go(e.target.value, symbolsUS, {
       keys: ['description', 'symbol'],
       limit: 10,
-      threshold: -500,
+      threshold: -1000,
     });
     setSearch(searchResults);
   };
@@ -57,6 +58,7 @@ const SearchBar = ({ setCompanyData }) => {
             <div className={`nav-wrapper ${Classes.searchBar}`}>
               <div className='input-field'>
                 <input
+                  data-test='component-search-input'
                   id='search'
                   type='search'
                   placeholder='search...'
