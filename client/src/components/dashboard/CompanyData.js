@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import Classes from './CompanyData.module.css';
 import axios from 'axios';
+
+import Classes from './CompanyData.module.css';
+import getAlphaVantageKey from '../../utils/apiLoadBalancer';
+import setAuthToken from '../../utils/setAuthToken';
 
 const moment = require('moment');
 
@@ -25,12 +28,15 @@ const CompanyData = ({ companyData }) => {
     localStorage.setItem('companyData', JSON.stringify(companyData));
 
     (async () => {
+      // https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=IBM&apikey=demo
+      console.log(`${getAlphaVantageKey()}`);
       let url = `https://finnhub.io/api/v1/quote?symbol=${companyData.symbol}&token=${process.env.REACT_APP_FINNHUB_API_KEY}`;
-
       // const res = await fetch(url);
       // const data = await res.json();
+      delete axios.defaults.headers.common['x-auth-token'];
       const res = await axios.get(url);
       const data = await res.data;
+      setAuthToken(localStorage.token);
 
       setCurrentQuote([data]);
       localStorage.setItem('currentQuoteData', JSON.stringify(data));
