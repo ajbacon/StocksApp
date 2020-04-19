@@ -28,7 +28,9 @@ const CompanyData = ({ companyData }) => {
     localStorage.setItem('companyData', JSON.stringify(companyData));
 
     (async () => {
-      // https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=IBM&apikey=demo
+      let url2 = `https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=${
+        companyData.symbol
+      }&apikey=${getAlphaVantageKey()}`;
       console.log(`${getAlphaVantageKey()}`);
       let url = `https://finnhub.io/api/v1/quote?symbol=${companyData.symbol}&token=${process.env.REACT_APP_FINNHUB_API_KEY}`;
       // const res = await fetch(url);
@@ -36,6 +38,28 @@ const CompanyData = ({ companyData }) => {
       delete axios.defaults.headers.common['x-auth-token'];
       const res = await axios.get(url);
       const data = await res.data;
+
+      const res2 = await axios.get(url2);
+      const data2 = await res2.data;
+      const {
+        '01. symbol': symbol,
+        '02. open': open,
+        '03. high': high,
+        '04. low': low,
+      } = data2['Global Quote'];
+      // Global Quote:
+      //   01. symbol: "MSFT"
+      //   02. open: "179.5000"
+      //   03. high: "180.0000"
+      //   04. low: "175.8700"
+      //   05. price: "178.6000"
+      //   06. volume: "52273542"
+      //   07. latest trading day: "2020-04-17"
+      //   08. previous close: "177.0400"
+      //   09. change: "1.5600"
+      //   10. change percent: "0.8812%"
+
+      console.log(data2);
       setAuthToken(localStorage.token);
 
       setCurrentQuote([data]);
