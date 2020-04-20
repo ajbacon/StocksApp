@@ -7,6 +7,7 @@ const getAlphaVantageKey = () => {
     process.env.REACT_APP_AV_API_KEY5,
     process.env.REACT_APP_AV_API_KEY6,
     process.env.REACT_APP_AV_API_KEY7,
+    process.env.REACT_APP_AV_API_KEY8,
   ];
 
   const loadDist = Math.floor(Math.random() * AV_KEYS.length);

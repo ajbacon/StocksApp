@@ -12,12 +12,14 @@ const CompanyData = ({ companyData }) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // setLoading(true);
-    // const storageCurrentQuoteData = undefined = JSON.parse(localStorage.getItem('currentQuoteData'));
-    // if (storageCurrentQuoteData) {
-    //   setCurrentQuote([storageCurrentQuoteData]);
-    //   setLoading(false);
-    // }
+    setLoading(true);
+    const storageCurrentQuoteData = JSON.parse(
+      localStorage.getItem('currentQuoteData')
+    );
+    if (storageCurrentQuoteData) {
+      setCurrentQuote([storageCurrentQuoteData]);
+      setLoading(false);
+    }
   }, []);
 
   useEffect(() => {
@@ -25,21 +27,20 @@ const CompanyData = ({ companyData }) => {
     localStorage.setItem('companyData', JSON.stringify(companyData));
 
     (async () => {
-      let url2 = `https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=${
+      let url = `https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=${
         companyData.symbol
       }&apikey=${getAlphaVantageKey()}`;
 
       // remove default header for external API call
       delete axios.defaults.headers.common['x-auth-token'];
       try {
-        const res2 = await axios.get(url2);
-        const data2 = await res2.data;
-        setCurrentQuote([data2['Global Quote']]);
+        const res = await axios.get(url);
+        const data = await res.data;
+        setCurrentQuote([data['Global Quote']]);
         localStorage.setItem(
           'currentQuoteData',
-          JSON.stringify(data2['Global Quote'])
+          JSON.stringify(data['Global Quote'])
         );
-        console.log(data2);
       } catch (err) {
         console.log(err.data);
       }
@@ -118,7 +119,6 @@ const CompanyData = ({ companyData }) => {
       <h4 style={{ padding: '5px', borderBottom: '1px solid grey' }}>
         {companyData.description}
       </h4>
-
       <div className='row'>{renderCurrentPrice()}</div>
     </div>
   );
