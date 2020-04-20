@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, Fragment } from 'react';
 import axios from 'axios';
 
 import Classes from './CompanyData.module.css';
@@ -49,19 +49,18 @@ const CompanyData = ({ companyData }) => {
     })();
   }, [companyData]);
 
-  const renderCurrent = () => {
+  const renderCurrentPrice = () => {
     // this should probably be its own component at some point
     let {
       '02. open': open,
       '03. high': high,
       '04. low': low,
       '05. price': price,
-      '06. volume': volume,
-      '07. latest': latest,
       '08. previous close': previous,
-      '09. change': change,
-      '10. change percent': percentChange,
     } = currentQuote[0];
+    open = parseFloat(open);
+    high = parseFloat(high);
+    low = parseFloat(low);
     price = parseFloat(price);
     previous = parseFloat(previous);
 
@@ -74,21 +73,41 @@ const CompanyData = ({ companyData }) => {
       2
     )}%)`;
     return (
-      <div className={`col l6 m7 s12`}>
-        <div className='row'>
-          <div className={`col s12 ${Classes.currentPrice} ${textColor}`}>
-            <div style={{ fontSize: '40px', margin: '0 5px 0 0' }}>
-              <b>{price.toFixed(2)}</b>
+      <Fragment>
+        <div className={`col l6 m7 s12`}>
+          <div className='row'>
+            <div className={`col s12 ${Classes.currentPrice} ${textColor}`}>
+              <div style={{ fontSize: '40px', margin: '0 5px 0 0' }}>
+                <b>{price.toFixed(2)}</b>
+              </div>
+              <div style={{ fontSize: '20px', margin: '0 0 6px 0' }}>
+                {deltaStr}
+              </div>
             </div>
-            <div style={{ fontSize: '20px', margin: '0 0 6px 0' }}>
-              {deltaStr}
+            <div className={`col s12 ${Classes.quoteTimestamp}`}>
+              Last updated: {moment().format('LLL')}
             </div>
-          </div>
-          <div className={`col s12 ${Classes.quoteTimestamp}`}>
-            Last updated: {moment().format('LLL')}
           </div>
         </div>
-      </div>
+        <div className='col l6 m5 s10'>
+          <div className={`${Classes.infoItem}`}>
+            <div>Day Opening Price: </div>
+            <div className='right'>{open.toFixed(2)}</div>
+          </div>
+          <div className={Classes.infoItem}>
+            <div>Day High Price:</div>
+            <div>{high.toFixed(2)}</div>
+          </div>
+          <div className={Classes.infoItem}>
+            <div>Day Low Price:</div>
+            <div>{low.toFixed(2)}</div>
+          </div>
+          <div className={Classes.infoItem}>
+            <div>Previous Closing Price:</div>
+            <div>{previous.toFixed(2)}</div>
+          </div>
+        </div>
+      </Fragment>
     );
   };
 
@@ -100,27 +119,7 @@ const CompanyData = ({ companyData }) => {
         {companyData.description}
       </h4>
 
-      <div className='row'>
-        {renderCurrent()}
-        {/* <div className='col l6 m5 s10'>
-          <div className={`${Classes.infoItem}`}>
-            <div>Day Opening Price: </div>
-            <div className='right'>{currentQuote[0].o.toFixed(2)}</div>
-          </div>
-          <div className={Classes.infoItem}>
-            <div>Day High Price:</div>
-            <div>{currentQuote[0].h.toFixed(2)}</div>
-          </div>
-          <div className={Classes.infoItem}>
-            <div>Day Low Price:</div>
-            <div>{currentQuote[0].l.toFixed(2)}</div>
-          </div>
-          <div className={Classes.infoItem}>
-            <div>Previous Closing Price:</div>
-            <div>{currentQuote[0].pc.toFixed(2)}</div>
-          </div>
-        </div> */}
-      </div>
+      <div className='row'>{renderCurrentPrice()}</div>
     </div>
   );
 };
