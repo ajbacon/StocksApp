@@ -9,22 +9,20 @@ import { logout } from '../../actions/auth';
 const Navbar = ({ auth, logout }) => {
   const { isAuthenticated, loading } = auth;
   const authLinks = (
-    <ul className='right hide-on-med-and-down'>
-      <li>
-        <Link
-          data-test='component-logout-link'
-          onClick={logout}
-          to='#!'
-          className='black-text'
-        >
-          Logout
-        </Link>
-      </li>
-    </ul>
+    <li>
+      <Link
+        data-test='component-logout-link'
+        onClick={logout}
+        to='#!'
+        className='black-text'
+      >
+        Logout
+      </Link>
+    </li>
   );
 
   const guestLinks = (
-    <ul className='right hide-on-med-and-down'>
+    <Fragment>
       <li>
         <Link
           data-test='component-register-link'
@@ -43,7 +41,7 @@ const Navbar = ({ auth, logout }) => {
           Login
         </Link>
       </li>
-    </ul>
+    </Fragment>
   );
 
   return (
@@ -54,11 +52,28 @@ const Navbar = ({ auth, logout }) => {
             <i className='material-icons'>trending_up</i>
             StocksApp
           </Link>
-          {!loading && (
-            <Fragment>{isAuthenticated ? authLinks : guestLinks}</Fragment>
-          )}
+          <Link
+            to='#!'
+            data-target='mobile-demo'
+            className='sidenav-trigger black-text'
+          >
+            <i className='material-icons black-text'>menu</i>
+          </Link>
+          {/* <a href='#' data-target='mobile-demo' className='sidenav-trigger'>
+            <i className='material-icons black-text'>menu</i>
+          </a> */}
+          <ul className='right hide-on-med-and-down'>
+            {!loading && (
+              <Fragment>{isAuthenticated ? authLinks : guestLinks}</Fragment>
+            )}
+          </ul>
         </div>
       </nav>
+      <ul className='sidenav sidenav-close' id='mobile-demo'>
+        {!loading && (
+          <Fragment>{isAuthenticated ? authLinks : guestLinks}</Fragment>
+        )}
+      </ul>
     </Fragment>
   );
 };
