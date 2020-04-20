@@ -12,15 +12,12 @@ const CompanyData = ({ companyData }) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    setLoading(true);
-    const storageCurrentQuoteData = JSON.parse(
-      localStorage.getItem('currentQuoteData')
-    );
-
-    if (storageCurrentQuoteData) {
-      setCurrentQuote([storageCurrentQuoteData]);
-      setLoading(false);
-    }
+    // setLoading(true);
+    // const storageCurrentQuoteData = undefined = JSON.parse(localStorage.getItem('currentQuoteData'));
+    // if (storageCurrentQuoteData) {
+    //   setCurrentQuote([storageCurrentQuoteData]);
+    //   setLoading(false);
+    // }
   }, []);
 
   useEffect(() => {
@@ -31,68 +28,64 @@ const CompanyData = ({ companyData }) => {
       let url2 = `https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=${
         companyData.symbol
       }&apikey=${getAlphaVantageKey()}`;
-      console.log(`${getAlphaVantageKey()}`);
-      let url = `https://finnhub.io/api/v1/quote?symbol=${companyData.symbol}&token=${process.env.REACT_APP_FINNHUB_API_KEY}`;
-      // const res = await fetch(url);
-      // const data = await res.json();
+
+      // remove default header for external API call
       delete axios.defaults.headers.common['x-auth-token'];
-      const res = await axios.get(url);
-      const data = await res.data;
-
-      const res2 = await axios.get(url2);
-      const data2 = await res2.data;
-      const {
-        '01. symbol': symbol,
-        '02. open': open,
-        '03. high': high,
-        '04. low': low,
-      } = data2['Global Quote'];
-      // Global Quote:
-      //   01. symbol: "MSFT"
-      //   02. open: "179.5000"
-      //   03. high: "180.0000"
-      //   04. low: "175.8700"
-      //   05. price: "178.6000"
-      //   06. volume: "52273542"
-      //   07. latest trading day: "2020-04-17"
-      //   08. previous close: "177.0400"
-      //   09. change: "1.5600"
-      //   10. change percent: "0.8812%"
-
-      console.log(data2);
+      try {
+        const res2 = await axios.get(url2);
+        const data2 = await res2.data;
+        setCurrentQuote([data2['Global Quote']]);
+        localStorage.setItem(
+          'currentQuoteData',
+          JSON.stringify(data2['Global Quote'])
+        );
+        console.log(data2);
+      } catch (err) {
+        console.log(err.data);
+      }
+      // reset defaut header
       setAuthToken(localStorage.token);
-
-      setCurrentQuote([data]);
-      localStorage.setItem('currentQuoteData', JSON.stringify(data));
       setLoading(false);
     })();
   }, [companyData]);
 
   const renderCurrent = () => {
     // this should probably be its own component at some point
-    const { c, pc } = currentQuote[0];
-    const delta = c - pc;
-    const deltaPercent = (delta / pc) * 100;
+    let {
+      '02. open': open,
+      '03. high': high,
+      '04. low': low,
+      '05. price': price,
+      '06. volume': volume,
+      '07. latest': latest,
+      '08. previous close': previous,
+      '09. change': change,
+      '10. change percent': percentChange,
+    } = currentQuote[0];
+    price = parseFloat(price);
+    previous = parseFloat(previous);
+
+    const delta = price - previous;
+    const deltaPercent = (delta / previous) * 100;
     const sign = delta < 0 ? '' : '+';
     const textColor = delta < 0 ? Classes.redText : Classes.greenText;
 
     const deltaStr = `${sign}${delta.toFixed(2)} (${sign}${deltaPercent.toFixed(
       2
     )}%)`;
-
     return (
       <div className={`col l6 m7 s12`}>
         <div className='row'>
           <div className={`col s12 ${Classes.currentPrice} ${textColor}`}>
             <div style={{ fontSize: '40px', margin: '0 5px 0 0' }}>
-              <b>{c.toFixed(2)}</b>
+              <b>{price.toFixed(2)}</b>
             </div>
             <div style={{ fontSize: '20px', margin: '0 0 6px 0' }}>
               {deltaStr}
             </div>
           </div>
           <div className={`col s12 ${Classes.quoteTimestamp}`}>
-            Last updated: {moment.unix(currentQuote[0].t).format('LLL')}
+            Last updated: {moment().format('LLL')}
           </div>
         </div>
       </div>
@@ -109,7 +102,7 @@ const CompanyData = ({ companyData }) => {
 
       <div className='row'>
         {renderCurrent()}
-        <div className='col l6 m5 s10'>
+        {/* <div className='col l6 m5 s10'>
           <div className={`${Classes.infoItem}`}>
             <div>Day Opening Price: </div>
             <div className='right'>{currentQuote[0].o.toFixed(2)}</div>
@@ -126,7 +119,7 @@ const CompanyData = ({ companyData }) => {
             <div>Previous Closing Price:</div>
             <div>{currentQuote[0].pc.toFixed(2)}</div>
           </div>
-        </div>
+        </div> */}
       </div>
     </div>
   );
