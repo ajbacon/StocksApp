@@ -21,7 +21,7 @@ const Landing = ({ isAuthenticated }) => {
             <span>StocksApp</span>
           </h4>
           <p className='flow-text grey-text text-darken-1'>
-            Track stocks and shares and trade in a mock environment
+            Monitor stocks and shares and trade in a mock environment
           </p>
           <br />
           <div className='col s6'>
