@@ -1,5 +1,6 @@
 import React, { useEffect, useState, Fragment } from 'react';
 import axios from 'axios';
+import setAuthToken from '../../utils/setAuthToken';
 
 import Classes from './CompanyData.module.css';
 import getAlphaVantageKey from '../../utils/apiLoadBalancer';
