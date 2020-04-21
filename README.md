@@ -3,27 +3,61 @@
 
 ## Introduction
 
-A personal project, post Makers, to solidify knowlege in developing full-stack JavaScript application. The aim is to hit multiple other different endpoints, such as relevant stock market news feeds, to provide a rich user experience.
+A personal project, post Makers, to solidify knowlege in developing full-stack JavaScript applications. The aim is to provide an application where the user can search for company share prices, add them to a watch list  and trade with play money in a mock environment. External API end-points will be hit for the stocks/shares/company profiles and news feeds. My own API has been developed for user authentication and storing user data.  
 
 ## Deployed Application
 
 The live application is deployed [here](https://project-stocks-app.herokuapp.com/)
 
-## Features
+## Current Features
 
 - User Sign-up / Authentication
-- Save user preferences
-- get stock data from alphavantage api
-- Allow user to select stocks to watch
-- Allow user to set limits and set alerts when limits exceeded
 - Provide user with a smooth interface to search and view company share prices
+- get stock data from alphavantage api / finnhub api
+- Testing of both client and server
+
+## Next Implementations
+- Allow user to select stocks to add to watchlist
+- Update and save user profile
 - Have news feed with latest relevant stock market news
 - Provide a mock trading enviroment
-- Provide a way to buy stocks (??? definitely a stretch goal)
-- Provide trading tips (??? might be a stretch goal!)
+
+## Future Implmentations
 - deal with password resets etc
 - email confirmations
 - Google OAuth
+
+
+## Getting Started
+
+First, clone this repository, then:
+
+To install dependencies:
+```
+npm install
+```
+
+To run the app in development mode type in your terminal
+```
+npm run dev
+```
+and visit [http://localhost:3000](http://localhost:3000) to view it in the browser.
+
+
+## Running Tests
+
+To run all the tests, run the following command from the top level directory:
+
+```
+npm run test-all
+```
+
+Please note that a MongoDB server needs to be running for the server tests to complete, see this external [link](https://docs.mongodb.com/manual/installation/) for details on installation
+
+
+## Screenshots / GIFs
+
+<img src="images/stocksapp.gif" width="800"
 
 
 ## Technologies
