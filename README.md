@@ -54,7 +54,6 @@ npm run test-all
 
 Please note that a MongoDB server needs to be running for the server tests to complete, see this external [link](https://docs.mongodb.com/manual/installation/) for details on installation
 
-
 ## Screenshots / GIFs
 
 <img src="images/stocksapp.gif" width="800"
