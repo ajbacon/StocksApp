@@ -56,7 +56,7 @@ Please note that a MongoDB server needs to be running for the server tests to co
 
 ## Screenshots / GIFs
 
-<img src="images/stocksapp.gif" width="800"
+<img src="images/stocksapp.gif" width="800" />
 
 
 ## Technologies
