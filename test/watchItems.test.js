@@ -56,5 +56,29 @@ describe('login', () => {
       expect(items.length).toEqual(1);
       done();
     });
+
+    it('should not store a company symbol if already watched by the user', async (done) => {
+      // console.log(registerResponse);
+      const payload = { symbol: 'AAPL' };
+
+      const watchItemRes = await request
+        .post('/api/watchitems')
+        .set('x-auth-token', registerResponse.body.token)
+        .send(payload);
+
+      const watchItemRes2 = await request
+        .post('/api/watchitems')
+        .set('x-auth-token', registerResponse.body.token)
+        .send(payload);
+
+      const items = await WatchItem.find({ userId: authResponse.body._id });
+
+      expect(watchItemRes2.status).toEqual(400);
+      expect(watchItemRes2.error.text).toEqual(
+        '{"watchItem":"Company already on user watch list"}'
+      );
+      expect(items.length).toEqual(1);
+      done();
+    });
   });
 });
