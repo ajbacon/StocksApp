@@ -47,10 +47,13 @@ describe('login', () => {
         .set('x-auth-token', registerResponse.body.token)
         .send(payload);
 
+      const items = await WatchItem.find({ userId: authResponse.body._id });
+
       expect(watchItemRes.status).toEqual(200);
       expect(watchItemRes.error).toEqual(false);
       expect(watchItemRes.body.symbol).toEqual('AAPL');
       expect(watchItemRes.body.userId).toEqual(authResponse.body._id);
+      expect(items.length).toEqual(1);
       done();
     });
   });

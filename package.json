@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test:server": "jest",
+    "test:server": "jest --verbose",
     "test:client": "npm test a --prefix client",
     "test": "jest",
     "test-all": "npm run test:server && npm run test:client",
