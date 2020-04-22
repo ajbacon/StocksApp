@@ -17,11 +17,16 @@ process.env.TEST_ID = '';
 describe('login', () => {
   process.env.NODE_ENV = 'test';
   let registerResponse;
+  let authResponse;
 
   beforeEach(async (done) => {
     await User.deleteMany();
     await WatchItem.deleteMany();
     registerResponse = await request.post('/api/users/register').send(testUser);
+    authResponse = await request
+      .get('/api/auth')
+      .set('x-auth-token', registerResponse.body.token)
+      .send();
     done();
   });
 
@@ -35,15 +40,17 @@ describe('login', () => {
   describe('POST /api/watchitems', () => {
     it('should store and return a company symbol and user id', async (done) => {
       // console.log(registerResponse);
+      const payload = { symbol: 'AAPL' };
 
-      // const loginResponse = await request.post('/api/auth').send(loginTestUser);
+      const watchItemRes = await request
+        .post('/api/watchitems')
+        .set('x-auth-token', registerResponse.body.token)
+        .send(payload);
 
-      // expect(loginResponse.status).toEqual(200);
-      // expect(loginResponse.error).toEqual(false);
-      // expect(loginResponse.request._data.email).toEqual(
-      //   'test_user2@example.com'
-      // );
-      // expect(loginResponse.request._data.password).toEqual('pass123');
+      expect(watchItemRes.status).toEqual(200);
+      expect(watchItemRes.error).toEqual(false);
+      expect(watchItemRes.body.symbol).toEqual('AAPL');
+      expect(watchItemRes.body.userId).toEqual(authResponse.body._id);
       done();
     });
   });
