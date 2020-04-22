@@ -9,9 +9,18 @@ const WatchItem = require('../../models/WatchItem');
 
 router.post('/', auth, async (req, res) => {
   try {
-    const user = await User.findById(req.user.id).select('-password');
+    const userWatchItem = await WatchItem.findOne({
+      symbol: req.body.symbol,
+      userId: req.user.id,
+    });
 
-    console.log(user);
+    if (userWatchItem) {
+      return res
+        .status(400)
+        .json({ watchItem: 'Company already on user watch list' });
+    }
+
+    // console.log(watchItem);
 
     const newWatchItem = new WatchItem({
       symbol: req.body.symbol,
