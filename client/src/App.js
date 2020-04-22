@@ -28,13 +28,19 @@ function App() {
     <Router>
       <div className='App' data-test='component-app'>
         <Navbar />
-        <Alert />
-        <Switch>
-          <Route exact path='/' component={Landing} />
-          <Route exact path='/register' component={Register} />
-          <Route exact path='/login' component={Login} />
-          <PrivateRoute exact path='/dashboard' component={Dashboard} />
-        </Switch>
+        <div>
+          <div>
+            <Alert />
+          </div>
+          <div>
+            <Switch>
+              <Route exact path='/' component={Landing} />
+              <Route exact path='/register' component={Register} />
+              <Route exact path='/login' component={Login} />
+              <PrivateRoute exact path='/dashboard' component={Dashboard} />
+            </Switch>
+          </div>
+        </div>
       </div>
     </Router>
   );

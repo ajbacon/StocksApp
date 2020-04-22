@@ -2,6 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const passport = require('passport');
 const users = require('./routes/api/users');
+const watchItems = require('./routes/api/watchItems');
 const auth = require('./routes/api/auth');
 const connectDB = require('./config/db');
 var path = require('path');
@@ -22,6 +23,7 @@ require('./config/passport')(passport);
 // Routes
 app.use('/api/users', users);
 app.use('/api/auth', auth);
+app.use('/api/watchitems', watchItems);
 
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static('client/build'));
