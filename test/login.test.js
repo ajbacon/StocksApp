@@ -9,18 +9,18 @@ const testUser = {
   surname: 'user2',
   email: 'test_user2@example.com',
   password: 'pass123',
-  password2: 'pass123'
+  password2: 'pass123',
 };
 
 const loginTestUser = {
   email: 'test_user2@example.com',
-  password: 'pass123'
+  password: 'pass123',
 };
 
 describe('login', () => {
   process.env.NODE_ENV = 'test';
 
-  beforeEach(async done => {
+  beforeEach(async (done) => {
     await User.deleteMany();
     done();
   });
@@ -32,7 +32,7 @@ describe('login', () => {
   });
 
   describe('POST /api/auth', () => {
-    it('should return a response status of 200 when a valid user logs in', async done => {
+    it('should return a response status of 200 when a valid user logs in', async (done) => {
       const registerResponse = await request
         .post('/api/users/register')
         .send(testUser);
@@ -48,7 +48,7 @@ describe('login', () => {
       done();
     });
 
-    it('should return a jwt token', async done => {
+    it('should return a jwt token', async (done) => {
       const registerResponse = await request
         .post('/api/users/register')
         .send(testUser);
@@ -60,9 +60,9 @@ describe('login', () => {
       done();
     });
 
-    it('should return an error if an email is not specified and return status of 400', async done => {
+    it('should return an error if an email is not specified and return status of 400', async (done) => {
       const badLoginTestUser = {
-        password: 'pass123'
+        password: 'pass123',
       };
       const registerResponse = await request
         .post('/api/users/register')
@@ -80,10 +80,10 @@ describe('login', () => {
       done();
     });
 
-    it('should return an error if incorrect password and return status of 400', async done => {
+    it('should return an error if incorrect password and return status of 400', async (done) => {
       const badLoginTestUser = {
         email: 'test_user2@example.com',
-        password: 'wrongPassword'
+        password: 'wrongPassword',
       };
       const registerResponse = await request
         .post('/api/users/register')
@@ -99,10 +99,10 @@ describe('login', () => {
       done();
     });
 
-    it('should return an error if email doesnt exist in database and return status of 400', async done => {
+    it('should return an error if email doesnt exist in database and return status of 400', async (done) => {
       const badLoginTestUser = {
         email: 'doesnt_exist@example.com',
-        password: 'pass123'
+        password: 'pass123',
       };
       const registerResponse = await request
         .post('/api/users/register')
