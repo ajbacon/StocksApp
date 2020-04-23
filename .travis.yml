@@ -11,5 +11,6 @@ cache:
   - client/node_modules
 before_script:
   - cd ./client && npm install
+  - cd ..
 script: 
   - npm test
