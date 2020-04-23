@@ -32,8 +32,9 @@ describe('<Navbar />', () => {
     wrapper = setup(initialState);
     const loginLink = findByTestAttr(wrapper, 'component-login-link');
     const registerLink = findByTestAttr(wrapper, 'component-register-link');
-    expect(loginLink).toHaveLength(1);
-    expect(registerLink).toHaveLength(1);
+    // 2 links because of the hidden mobile view links
+    expect(loginLink).toHaveLength(2);
+    expect(registerLink).toHaveLength(2);
   });
 
   it('renders the logout link when user is authorised', () => {
@@ -42,6 +43,7 @@ describe('<Navbar />', () => {
     };
     wrapper = setup(initialState);
     const logoutLink = findByTestAttr(wrapper, 'component-logout-link');
-    expect(logoutLink).toHaveLength(1);
+    // 2 links because of the hidden mobile view links
+    expect(logoutLink).toHaveLength(2);
   });
 });

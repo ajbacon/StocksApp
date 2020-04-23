@@ -1,7 +1,4 @@
-import React from 'react';
 import axios from 'axios';
-import { Provider } from 'react-redux';
-import { mount } from 'enzyme';
 import { act } from 'react-dom/test-utils';
 import { mockAAPLQuote } from '../utils/mockTestData';
 import {
@@ -23,18 +20,10 @@ jest.mock('axios');
 describe('select company and show quote data', () => {
   let component;
 
-  axios.get.mockImplementation((url) => {
-    switch (url) {
-      case `https://finnhub.io/api/v1/quote?symbol=AAPL&token=${process.env.REACT_APP_FINNHUB_API_KEY}`:
-        return Promise.resolve({ data: mockAAPLQuote });
-      default:
-        return Promise.reject(new Error('Not Found'));
-    }
-  });
-
-  // global.fetch = jest.fn(() => Promise.resolve({ json: () => mockAAPLQuote }));
-
   it('updates state and redirects to dashboard component', async () => {
+    axios.get.mockImplementation(() =>
+      Promise.resolve({ data: mockAAPLQuote })
+    );
     const initialState = {
       alert: [],
       auth: {

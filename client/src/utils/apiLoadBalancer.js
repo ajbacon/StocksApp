@@ -11,7 +11,6 @@ const getAlphaVantageKey = () => {
   ];
 
   const loadDist = Math.floor(Math.random() * AV_KEYS.length);
-  console.log(loadDist);
   return `${AV_KEYS[loadDist]}`;
 };
 

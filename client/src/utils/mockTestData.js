@@ -1,10 +1,11 @@
 export const mockAAPLQuote = {
-  c: 287.05,
-  h: 288.25,
-  l: 278.05,
-  o: 280,
-  pc: 273.25,
-  t: 1586931402,
+  'Global Quote': {
+    '02. open': 280,
+    '03. high': 288.25,
+    '04. low': 278.05,
+    '05. price': 287.05,
+    '08. previous close': 273.25,
+  },
 };
 
 export const mockMSFTQuote = {
