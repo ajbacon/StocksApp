@@ -9,16 +9,27 @@ import { logout } from '../../actions/auth';
 const Navbar = ({ auth, logout }) => {
   const { isAuthenticated, loading } = auth;
   const authLinks = (
-    <li>
-      <Link
-        data-test='component-logout-link'
-        onClick={logout}
-        to='#!'
-        className='black-text'
-      >
-        Logout
-      </Link>
-    </li>
+    <Fragment>
+      <li>
+        <Link
+          data-test='component-watchlist-link'
+          to='/watchlist'
+          className='black-text'
+        >
+          Watch List
+        </Link>
+      </li>
+      <li>
+        <Link
+          data-test='component-logout-link'
+          onClick={logout}
+          to='#!'
+          className='black-text'
+        >
+          Logout
+        </Link>
+      </li>
+    </Fragment>
   );
 
   const guestLinks = (

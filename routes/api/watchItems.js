@@ -36,4 +36,18 @@ router.post('/', auth, async (req, res) => {
   }
 });
 
+// @route     GET api/watchitems
+// @desc      retrieve user saved watchlist items
+// @access    private
+
+router.get('/', auth, async (req, res) => {
+  try {
+    const items = await WatchItem.find({ userId: req.user.id });
+    res.json(items);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send('server error');
+  }
+});
+
 module.exports = router;

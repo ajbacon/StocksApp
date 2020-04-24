@@ -50,6 +50,19 @@ const CompanyData = ({ companyData }) => {
     })();
   }, [companyData]);
 
+  const watchItemClickHandler = async () => {
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    };
+    const body = {
+      symbol: companyData.symbol,
+    };
+    const res = await axios.post('/api/watchitems', body, config);
+    console.log(res);
+  };
+
   const renderCurrentPrice = () => {
     // this should probably be its own component at some point
     let {
@@ -87,6 +100,11 @@ const CompanyData = ({ companyData }) => {
             </div>
             <div className={`col s12 ${Classes.quoteTimestamp}`}>
               Last updated: {moment().format('LLL')}
+            </div>
+            <div>
+              <button onClick={() => watchItemClickHandler()}>
+                Watch List
+              </button>
             </div>
           </div>
         </div>
