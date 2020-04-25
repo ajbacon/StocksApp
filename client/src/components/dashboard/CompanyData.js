@@ -101,11 +101,6 @@ const CompanyData = ({ companyData }) => {
             <div className={`col s12 ${Classes.quoteTimestamp}`}>
               Last updated: {moment().format('LLL')}
             </div>
-            <div>
-              <button onClick={() => watchItemClickHandler()}>
-                Watch List
-              </button>
-            </div>
           </div>
         </div>
         <div className='col l6 m5 s10'>
@@ -134,9 +129,25 @@ const CompanyData = ({ companyData }) => {
     <div>Loading...</div>
   ) : (
     <div data-test='component-company-data'>
-      <h4 style={{ padding: '5px', borderBottom: '1px solid grey' }}>
-        {companyData.description}
-      </h4>
+      <div
+        className={`row ${Classes.companyHeader} `}
+        style={{ borderBottom: '1px solid grey' }}
+      >
+        <div className={`col s9 ${Classes.companyTitle}`}>
+          {companyData.description}
+        </div>
+        <div className={`col s3 ${Classes.watchBtnContainer}`}>
+          <button
+            className={
+              'btn btn-small waves-effect waves-light white black-text'
+            }
+            onClick={() => watchItemClickHandler()}
+          >
+            Watch
+          </button>
+        </div>
+      </div>
+
       <div className='row'>{renderCurrentPrice()}</div>
     </div>
   );

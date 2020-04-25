@@ -1,3 +1,13 @@
+.companyHeader {
+  display: flex;
+  justify-content: space-between;
+}
+
+.companyTitle {
+  font-size: 16px;
+  font-weight: bold;
+}
+
 .currentPrice {
   display: flex;
   align-items: flex-end;
@@ -10,6 +20,12 @@
   display: flex;
   justify-content: space-between;
 }
+
+.watchBtnContainer {
+  display: flex;
+  justify-content: flex-end;
+}
+
 
 .quoteTimestamp {
   color: grey

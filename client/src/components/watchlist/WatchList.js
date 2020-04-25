@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 // import PropTypes from 'prop-types';
 
+import Classes from './WatchList.module.css';
+
 function WatchList(props) {
   const [watchItems, setWatchItems] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -13,7 +15,6 @@ function WatchList(props) {
       try {
         const res = await axios.get('/api/watchitems');
         setWatchItems(res.data);
-        console.log(res);
       } catch (err) {
         console.log(err.data);
       }
@@ -27,7 +28,15 @@ function WatchList(props) {
     });
   };
 
-  return loading ? <div>Loading...</div> : <div>{renderItems()}</div>;
+  return loading ? (
+    <div className={`container ${Classes.loadingBar}`}>
+      <div className={`progress`}>
+        <div class='indeterminate'></div>
+      </div>
+    </div>
+  ) : (
+    <div>{renderItems()}</div>
+  );
 }
 
 // WatchList.propTypes = {};
