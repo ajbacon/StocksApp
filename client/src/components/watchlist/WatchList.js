@@ -1,38 +1,50 @@
-import React from 'react';
-import { Collapsible, CollapsibleItem, Icon } from 'react-materialize';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+// import PropTypes from 'prop-types';
 
+import Classes from './WatchList.module.css';
+const $ = window.$;
 // import PropTypes from 'prop-types';
 
 function WatchList(props) {
-  return (
-    <Collapsible accordion={false}>
-      <CollapsibleItem
-        expanded={false}
-        header="Better safe than sorry. That's my motto."
-        icon={<Icon>filter_drama</Icon>}
-        node='div'
-      >
-        Better safe than sorry. That's my motto.
-      </CollapsibleItem>
-      <CollapsibleItem
-        expanded={false}
-        header="Yeah, you do seem to have a little 'shit creek' action going."
-        icon={<Icon>place</Icon>}
-        node='div'
-      >
-        Yeah, you do seem to have a little 'shit creek' action going.
-      </CollapsibleItem>
-      <CollapsibleItem
-        expanded={false}
-        header='You know, FYI, you can buy a paddle. Did you not plan for this contingency?'
-        icon={<Icon>whatshot</Icon>}
-        node='div'
-      >
-        You know, FYI, you can buy a paddle. Did you not plan for this
-        contingency?
-      </CollapsibleItem>
-    </Collapsible>
-  );
+  const [watchItems, setWatchItems] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    $('.collapsible').collapsible();
+  }, []);
+
+  useEffect(() => {
+    setLoading(true);
+
+    (async () => {
+      try {
+        const res = await axios.get('/api/watchitems');
+        setWatchItems(res.data);
+      } catch (err) {
+        console.log(err.data);
+      }
+      setLoading(false);
+    })();
+  }, []);
+
+  const renderItems = () => {
+    return watchItems.map((item, i) => {
+      return (
+        <li key={i}>
+          <div className={`collapsible-header`}>{item.symbol}</div>
+          <div className={`collapsible-body`}>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Est
+            voluptas libero iste, adipisci assumenda eos accusamus reiciendis
+            quod consequuntur alias natus dolorem quos? Dolore animi,
+            necessitatibus odio tempora modi soluta?
+          </div>
+        </li>
+      );
+    });
+  };
+
+  return <ul class='collapsible'>{renderItems()}</ul>;
 }
 
 // WatchList.propTypes = {};
