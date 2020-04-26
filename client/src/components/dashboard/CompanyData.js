@@ -130,7 +130,7 @@ const CompanyData = ({ companyData }) => {
   ) : (
     <div data-test='component-company-data'>
       <div
-        className={`row ${Classes.companyHeader} `}
+        className={`${Classes.companyHeader} `}
         style={{ borderBottom: '1px solid grey' }}
       >
         <div className={`col s9 ${Classes.companyTitle}`}>
