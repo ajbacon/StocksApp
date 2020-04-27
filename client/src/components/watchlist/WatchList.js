@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 // import PropTypes from 'prop-types';
 
-import Classes from './WatchList.module.css';
+import LoadingBar from '../layout/LoadingBar';
 import './WatchList.css';
 const $ = window.$;
 
@@ -48,11 +48,7 @@ function WatchList(props) {
   };
 
   return loading ? (
-    <div className={`container ${Classes.loadingBar}`}>
-      <div className={`progress`}>
-        <div className='indeterminate'></div>
-      </div>
-    </div>
+    <LoadingBar />
   ) : (
     <ul className='collapsible expandable'>{renderItems()}</ul>
   );

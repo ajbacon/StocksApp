@@ -1,6 +1,7 @@
 import React, { useEffect, useState, Fragment } from 'react';
 import axios from 'axios';
 
+import LoadingBar from '../layout/LoadingBar';
 import Classes from './CompanyData.module.css';
 import getAlphaVantageKey from '../../utils/apiLoadBalancer';
 import setAuthToken from '../../utils/setAuthToken';
@@ -126,11 +127,7 @@ const CompanyData = ({ companyData }) => {
   };
 
   return loading ? (
-    <div className={`container ${Classes.loadingBar}`}>
-      <div className={`progress`}>
-        <div className='indeterminate'></div>
-      </div>
-    </div>
+    <LoadingBar />
   ) : (
     <div data-test='component-company-data'>
       <div
