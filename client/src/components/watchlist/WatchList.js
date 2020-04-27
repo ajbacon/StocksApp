@@ -15,7 +15,7 @@ function WatchList(props) {
     $('.collapsible').collapsible({
       accordion: false,
     });
-  }, []);
+  });
 
   useEffect(() => {
     setLoading(true);
@@ -50,7 +50,15 @@ function WatchList(props) {
     });
   };
 
-  return <ul class='collapsible expandable'>{renderItems()}</ul>;
+  return loading ? (
+    <div className={`container ${Classes.loadingBar}`}>
+      <div className={`progress`}>
+        <div className='indeterminate'></div>
+      </div>
+    </div>
+  ) : (
+    <ul className='collapsible expandable'>{renderItems()}</ul>
+  );
 }
 
 // WatchList.propTypes = {};
