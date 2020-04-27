@@ -1,0 +1,10 @@
+.collapsible li.active i.expand {
+  -webkit-transform: rotate(180deg); /* Chrome, Safari, Opera */
+  transition: transform 200ms;
+  transform: rotate(180deg);
+}
+
+.collapsible li i.expand {
+  transition: transform 200ms;
+}
+

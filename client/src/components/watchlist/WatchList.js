@@ -3,6 +3,7 @@ import axios from 'axios';
 // import PropTypes from 'prop-types';
 
 import Classes from './WatchList.module.css';
+import './WatchList.css';
 const $ = window.$;
 // import PropTypes from 'prop-types';
 
@@ -32,7 +33,11 @@ function WatchList(props) {
     return watchItems.map((item, i) => {
       return (
         <li key={i}>
-          <div className={`collapsible-header`}>{item.symbol}</div>
+          <div className={`collapsible-header`}>
+            <i className='material-icons expand'>expand_less</i>
+            {item.symbol}
+            <i className='material-icons right'>audiotrack</i>
+          </div>
           <div className={`collapsible-body`}>
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Est
             voluptas libero iste, adipisci assumenda eos accusamus reiciendis
