@@ -26,7 +26,6 @@
   justify-content: flex-end;
 }
 
-
 .quoteTimestamp {
   color: grey
 }
@@ -37,4 +36,8 @@
 
 .greenText {
   color: green
+}
+
+.loadingBar {
+  padding: 50px 0 50px 0
 }

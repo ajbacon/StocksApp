@@ -5,7 +5,6 @@ import axios from 'axios';
 import Classes from './WatchList.module.css';
 import './WatchList.css';
 const $ = window.$;
-// import PropTypes from 'prop-types';
 
 function WatchList(props) {
   const [watchItems, setWatchItems] = useState([]);
@@ -40,10 +39,8 @@ function WatchList(props) {
             {item.symbol}
           </div>
           <div className={`collapsible-body`}>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Est
-            voluptas libero iste, adipisci assumenda eos accusamus reiciendis
-            quod consequuntur alias natus dolorem quos? Dolore animi,
-            necessitatibus odio tempora modi soluta?
+            This drop down will contain more market data and news articles
+            related to the company
           </div>
         </li>
       );

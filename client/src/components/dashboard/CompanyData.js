@@ -126,7 +126,11 @@ const CompanyData = ({ companyData }) => {
   };
 
   return loading ? (
-    <div>Loading...</div>
+    <div className={`container ${Classes.loadingBar}`}>
+      <div className={`progress`}>
+        <div className='indeterminate'></div>
+      </div>
+    </div>
   ) : (
     <div data-test='component-company-data'>
       <div
