@@ -12,7 +12,9 @@ function WatchList(props) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    $('.collapsible').collapsible();
+    $('.collapsible').collapsible({
+      accordion: false,
+    });
   }, []);
 
   useEffect(() => {
@@ -36,7 +38,6 @@ function WatchList(props) {
           <div className={`collapsible-header`}>
             <i className='material-icons expand'>expand_less</i>
             {item.symbol}
-            <i className='material-icons right'>audiotrack</i>
           </div>
           <div className={`collapsible-body`}>
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Est
@@ -49,7 +50,7 @@ function WatchList(props) {
     });
   };
 
-  return <ul class='collapsible'>{renderItems()}</ul>;
+  return <ul class='collapsible expandable'>{renderItems()}</ul>;
 }
 
 // WatchList.propTypes = {};
