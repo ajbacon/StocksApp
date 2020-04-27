@@ -7,7 +7,7 @@ import { connect } from 'react-redux';
 
 const Landing = ({ isAuthenticated }) => {
   if (isAuthenticated) {
-    return <Redirect to='/dashboard' />;
+    return <Redirect to='/home' />;
   }
   return (
     <div

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import CompanyData from './CompanyData';
+import CompanyData from '../search/SearchQuoteData';
 import SearchBar from '../search/SearchBar';
 import PropTypes from 'prop-types';
 // import Classes from './Dashboard.module.css';
@@ -8,10 +8,7 @@ import { connect } from 'react-redux';
 
 const capitalize = require('../../utils/capitalize');
 
-// todo:
-// improve visually
-
-const Dashboard = ({ auth: { user } }) => {
+const Home = ({ auth: { user } }) => {
   const [companyData, setCompanyData] = useState([]);
 
   useEffect(() => {
@@ -23,7 +20,7 @@ const Dashboard = ({ auth: { user } }) => {
   }, []);
 
   return (
-    <div data-test='component-dashboard' className='container'>
+    <div data-test='component-home' className='container'>
       <h3>Welcome, {user && capitalize(user.firstName)}</h3>
       <SearchBar
         data-test='component-search-bar'
@@ -36,7 +33,7 @@ const Dashboard = ({ auth: { user } }) => {
   );
 };
 
-Dashboard.propTypes = {
+Home.propTypes = {
   auth: PropTypes.object.isRequired,
 };
 
@@ -44,4 +41,4 @@ const mapStateToProps = (state) => ({
   auth: state.auth,
 });
 
-export default connect(mapStateToProps)(Dashboard);
+export default connect(mapStateToProps)(Home);

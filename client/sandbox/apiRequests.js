@@ -12,3 +12,9 @@ const onClickEvent = () => {
 };
 
 onClickEvent();
+
+//https://www.alphavantage.co/query?function=BATCH_STOCK_QUOTES&apikey=HE2XVCX2F9X3V8M1&symbols=MSFT,AAPL,FB
+
+//https://cloud.iexapis.com/stable/stock/twtr/quote?token=pk_40756e5fcd174462a568139fcda8121e
+
+// /https://cloud.iexapis.com/stable/stock/aapl/news?token=pk_40756e5fcd174462a568139fcda8121e

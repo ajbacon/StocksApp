@@ -2,13 +2,13 @@ import React, { useEffect, useState, Fragment } from 'react';
 import axios from 'axios';
 
 import LoadingBar from '../layout/LoadingBar';
-import Classes from './CompanyData.module.css';
+import Classes from './SearchQuoteData.module.css';
 import getAlphaVantageKey from '../../utils/apiLoadBalancer';
 import setAuthToken from '../../utils/setAuthToken';
 
 const moment = require('moment');
 
-const CompanyData = ({ companyData }) => {
+const SearchQuoteData = ({ companyData }) => {
   const [currentQuote, setCurrentQuote] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -154,4 +154,4 @@ const CompanyData = ({ companyData }) => {
   );
 };
 
-export default CompanyData;
+export default SearchQuoteData;

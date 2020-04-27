@@ -2,26 +2,26 @@ import React from 'react';
 import { shallow } from 'enzyme';
 
 import { storeFactory, findByTestAttr } from '../../utils/testUtils';
-import Dashboard from './Dashboard';
+import Home from './Home';
 
 const setup = (state = {}) => {
   const store = storeFactory(state);
-  const wrapper = shallow(<Dashboard store={store} />)
+  const wrapper = shallow(<Home store={store} />)
     .dive()
     .dive();
   return wrapper;
 };
 
-describe('<Dashboard />', () => {
+describe('<Home />', () => {
   let wrapper;
   let component;
 
-  it('renders the Dashboard page without crashing if the user is authenticated', () => {
+  it('renders the Home page without crashing if the user is authenticated', () => {
     const initialState = {
       auth: { isAuthenticated: true },
     };
     wrapper = setup(initialState);
-    component = findByTestAttr(wrapper, 'component-dashboard');
+    component = findByTestAttr(wrapper, 'component-home');
     expect(component).toHaveLength(1);
   });
 
