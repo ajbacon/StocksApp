@@ -65,7 +65,7 @@ describe('<App />', () => {
       expect(store.getState().auth.isAuthenticated).toBe(true);
       expect(store.getState().auth.loading).toBe(false);
       expect(store.getState().auth.user).toBe(resUser);
-      expect(window.location.href).toBe('http://localhost/dashboard');
+      expect(window.location.href).toBe('http://localhost/home');
     });
   });
 });
