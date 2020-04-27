@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import CompanyData from './CompanyData';
+import CompanyData from '../search/SearchQuoteData';
 import SearchBar from '../search/SearchBar';
 import PropTypes from 'prop-types';
 // import Classes from './Dashboard.module.css';
