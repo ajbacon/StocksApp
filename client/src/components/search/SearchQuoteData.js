@@ -31,7 +31,7 @@ const SearchQuoteData = ({ loadSearchQuote, companyData, searchQuoteData }) => {
     const body = {
       symbol: companyData.symbol,
     };
-    const res = await axios.post('/api/watchitems', body, config);
+    await axios.post('/api/watchitems', body, config);
   };
 
   const renderCurrentPrice = () => {

@@ -35,7 +35,7 @@ function WatchList(props) {
       return (
         <li key={i}>
           <div className={`collapsible-header`}>
-            <i className='material-icons expand'>expand_less</i>
+            <i className='material-icons expand'>expand_more</i>
             {item.symbol}
           </div>
           <div className={`collapsible-body`}>
