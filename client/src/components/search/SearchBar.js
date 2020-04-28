@@ -20,7 +20,7 @@ const SearchBar = ({ setCompanyData }) => {
           id={`item${i}`}
           key={i}
         >
-          {item.obj.description}
+          <b>{`${item.obj.symbol} - ${item.obj.description}`}</b>
         </div>
       );
     });
