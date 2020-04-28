@@ -10,7 +10,12 @@ import { loadSearchQuote } from '../../actions/iexAPI';
 
 const moment = require('moment');
 
-const SearchQuoteData = ({ companyData }) => {
+const SearchQuoteData = ({
+  loadSearchQuote,
+  companyData,
+  searchQuoteData,
+  isLoading,
+}) => {
   const [currentQuote, setCurrentQuote] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -25,7 +30,12 @@ const SearchQuoteData = ({ companyData }) => {
     }
   }, []);
 
-  useEffect(() => {}, [companyData]);
+  useEffect(() => {
+    const loadData = async () => {
+      loadSearchQuote(companyData.symbol);
+    };
+    loadData();
+  }, [companyData]);
 
   const watchItemClickHandler = async () => {
     const config = {
@@ -48,7 +58,7 @@ const SearchQuoteData = ({ companyData }) => {
       '04. low': low,
       '05. price': price,
       '08. previous close': previous,
-    } = currentQuote[0];
+    } = searchQuoteData;
     open = parseFloat(open);
     high = parseFloat(high);
     low = parseFloat(low);
@@ -102,7 +112,7 @@ const SearchQuoteData = ({ companyData }) => {
     );
   };
 
-  return loading ? (
+  return isLoading ? (
     <LoadingBar />
   ) : (
     <div data-test='component-company-data'>
@@ -130,4 +140,9 @@ const SearchQuoteData = ({ companyData }) => {
   );
 };
 
-export default SearchQuoteData;
+const mapStateToProps = (state) => ({
+  searchQuoteData: state.iexAPI.searchQuoteData,
+  isLoading: state.iexAPI.loading,
+});
+
+export default connect(mapStateToProps, { loadSearchQuote })(SearchQuoteData);
