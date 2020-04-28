@@ -1,5 +1,6 @@
 import React, { useEffect, useState, Fragment } from 'react';
 import axios from 'axios';
+import PropTypes from 'prop-types';
 
 import LoadingBar from '../layout/LoadingBar';
 import Classes from './SearchQuoteData.module.css';
@@ -111,6 +112,11 @@ const SearchQuoteData = ({ loadSearchQuote, companyData, searchQuoteData }) => {
       <div className='row'>{renderCurrentPrice()}</div>
     </div>
   );
+};
+
+SearchQuoteData.propTypes = {
+  searchQuoteData: PropTypes.object,
+  companyData: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = (state) => ({
