@@ -3,8 +3,10 @@ import axios from 'axios';
 
 import LoadingBar from '../layout/LoadingBar';
 import Classes from './SearchQuoteData.module.css';
-import getAlphaVantageKey from '../../utils/apiLoadBalancer';
-import setAuthToken from '../../utils/setAuthToken';
+
+//redux
+import { connect } from 'react-redux';
+import { loadSearchQuote } from '../../actions/iexAPI';
 
 const moment = require('moment');
 
@@ -23,33 +25,7 @@ const SearchQuoteData = ({ companyData }) => {
     }
   }, []);
 
-  useEffect(() => {
-    setLoading(true);
-    localStorage.setItem('companyData', JSON.stringify(companyData));
-
-    (async () => {
-      let url = `https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=${
-        companyData.symbol
-      }&apikey=${getAlphaVantageKey()}`;
-
-      // remove default header for external API call
-      delete axios.defaults.headers.common['x-auth-token'];
-      try {
-        const res = await axios.get(url);
-        const data = await res.data;
-        setCurrentQuote([data['Global Quote']]);
-        localStorage.setItem(
-          'currentQuoteData',
-          JSON.stringify(data['Global Quote'])
-        );
-      } catch (err) {
-        console.log(err.data);
-      }
-      // reset defaut header
-      setAuthToken(localStorage.token);
-      setLoading(false);
-    })();
-  }, [companyData]);
+  useEffect(() => {}, [companyData]);
 
   const watchItemClickHandler = async () => {
     const config = {
