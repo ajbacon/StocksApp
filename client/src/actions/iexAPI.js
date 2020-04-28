@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 import getAlphaVantageKey from '../../utils/apiLoadBalancer';
-import { SEARCH_QUOTE } from './types';
+import { SEARCH_QUOTE, SEARCH_QUOTE_ERROR } from './types';
 import setAuthToken from '../utils/setAuthToken';
 
 export const loadSearchQuote = (symbol) => async (dispatch) => {
