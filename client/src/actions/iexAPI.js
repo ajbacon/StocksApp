@@ -10,10 +10,25 @@ export const loadSearchQuote = (symbol) => async (dispatch) => {
     let url = `https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=${symbol}&apikey=${getAlphaVantageKey()}`;
 
     const res = await axios.get(url);
-    console.log(res);
+    let {
+      '02. open': open,
+      '03. high': high,
+      '04. low': low,
+      '05. price': price,
+      '08. previous close': previous,
+    } = res.data['Global Quote'];
+
+    const data = {
+      open: parseFloat(open),
+      high: parseFloat(high),
+      low: parseFloat(low),
+      price: parseFloat(price),
+      previous: parseFloat(previous),
+    };
+
     dispatch({
       type: SEARCH_QUOTE,
-      payload: res.data['Global Quote'],
+      payload: data,
     });
   } catch (err) {
     dispatch({

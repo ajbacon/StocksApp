@@ -12,7 +12,10 @@ const Home = ({ auth: { user } }) => {
   const [companyData, setCompanyData] = useState([]);
 
   useEffect(() => {
-    const storageCompanyData = JSON.parse(localStorage.getItem('companyData'));
+    let storageCompanyData;
+    try {
+      storageCompanyData = JSON.parse(localStorage.getItem('companyData'));
+    } catch (err) {}
 
     if (storageCompanyData) {
       setCompanyData([storageCompanyData]);

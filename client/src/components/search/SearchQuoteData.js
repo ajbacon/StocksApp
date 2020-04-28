@@ -10,32 +10,17 @@ import { loadSearchQuote } from '../../actions/iexAPI';
 
 const moment = require('moment');
 
-const SearchQuoteData = ({
-  loadSearchQuote,
-  companyData,
-  searchQuoteData,
-  isLoading,
-}) => {
-  const [currentQuote, setCurrentQuote] = useState([]);
-  const [loading, setLoading] = useState(true);
+const SearchQuoteData = ({ loadSearchQuote, companyData, searchQuoteData }) => {
+  const [isLoading, setLoading] = useState(true);
 
   useEffect(() => {
     setLoading(true);
-    const storageCurrentQuoteData = JSON.parse(
-      localStorage.getItem('currentQuoteData')
-    );
-    if (storageCurrentQuoteData) {
-      setCurrentQuote([storageCurrentQuoteData]);
-      setLoading(false);
-    }
-  }, []);
-
-  useEffect(() => {
     const loadData = async () => {
-      loadSearchQuote(companyData.symbol);
+      await loadSearchQuote(companyData.symbol);
+      setLoading(false);
     };
     loadData();
-  }, [companyData]);
+  }, [companyData, loadSearchQuote]);
 
   const watchItemClickHandler = async () => {
     const config = {
@@ -47,23 +32,11 @@ const SearchQuoteData = ({
       symbol: companyData.symbol,
     };
     const res = await axios.post('/api/watchitems', body, config);
-    console.log(res);
   };
 
   const renderCurrentPrice = () => {
     // this should probably be its own component at some point
-    let {
-      '02. open': open,
-      '03. high': high,
-      '04. low': low,
-      '05. price': price,
-      '08. previous close': previous,
-    } = searchQuoteData;
-    open = parseFloat(open);
-    high = parseFloat(high);
-    low = parseFloat(low);
-    price = parseFloat(price);
-    previous = parseFloat(previous);
+    let { open, high, low, price, previous } = searchQuoteData;
 
     const delta = price - previous;
     const deltaPercent = (delta / previous) * 100;
@@ -142,7 +115,6 @@ const SearchQuoteData = ({
 
 const mapStateToProps = (state) => ({
   searchQuoteData: state.iexAPI.searchQuoteData,
-  isLoading: state.iexAPI.loading,
 });
 
 export default connect(mapStateToProps, { loadSearchQuote })(SearchQuoteData);

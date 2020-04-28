@@ -47,6 +47,7 @@ const SearchBar = ({ setCompanyData }) => {
 
   const selectResult = (obj) => {
     setCompanyData([obj]);
+    localStorage.setItem('companyData', JSON.stringify(obj));
     setSearchFocus(false);
   };
 
