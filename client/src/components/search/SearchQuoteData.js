@@ -115,6 +115,7 @@ const SearchQuoteData = ({ loadSearchQuote, companyData, searchQuoteData }) => {
 };
 
 SearchQuoteData.propTypes = {
+  loadSearchQuote: PropTypes.func.isRequired,
   searchQuoteData: PropTypes.object,
   companyData: PropTypes.object.isRequired,
 };
