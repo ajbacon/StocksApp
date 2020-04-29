@@ -10,7 +10,7 @@ export const addWatchItem = (symbol) => async (dispatch) => {
     },
   };
   const body = {
-    symbol: companyData.symbol,
+    symbol: symbol,
   };
 
   try {
