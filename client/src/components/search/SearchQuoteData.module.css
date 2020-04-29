@@ -37,3 +37,7 @@
 .greenText {
   color: green
 }
+
+.watchListStar {
+  cursor: pointer;
+}

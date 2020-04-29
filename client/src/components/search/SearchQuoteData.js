@@ -97,14 +97,20 @@ const SearchQuoteData = ({
           {companyData.description}
         </div>
         <div className={`col s3 ${Classes.watchBtnContainer}`}>
-          <button
+          <i
+            class={`small material-icons blue-text ${Classes.watchListStar}`}
+            onClick={() => watchItemClickHandler()}
+          >
+            star_border
+          </i>
+          {/* <button
             className={
               'btn btn-small waves-effect waves-light white black-text'
             }
             onClick={() => watchItemClickHandler()}
           >
             Watch
-          </button>
+          </button> */}
         </div>
       </div>
 
