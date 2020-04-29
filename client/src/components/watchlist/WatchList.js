@@ -1,13 +1,18 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+// import axios from 'axios';
 // import PropTypes from 'prop-types';
 
 import LoadingBar from '../layout/LoadingBar';
 import './WatchList.css';
+
+//redux
+import { connect } from 'react-redux';
+import { getWatchList } from '../../actions/watchList';
+
 const $ = window.$;
 
-function WatchList(props) {
-  const [watchItems, setWatchItems] = useState([]);
+function WatchList({ getWatchList, watchListData }) {
+  // const [watchItems, setWatchItems] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -19,23 +24,19 @@ function WatchList(props) {
   useEffect(() => {
     setLoading(true);
 
-    (async () => {
-      try {
-        const res = await axios.get('/api/watchitems');
-        setWatchItems(res.data);
-      } catch (err) {
-        console.log(err.data);
-      }
+    const loadData = async () => {
+      await getWatchList();
       setLoading(false);
-    })();
-  }, []);
+    };
+    loadData();
+  }, [getWatchList]);
 
   const renderItems = () => {
-    return watchItems.map((item, i) => {
+    return watchListData.map((item, i) => {
       return (
         <li key={i}>
           <div className={`collapsible-header`}>
-            <i className='material-icons expand'>expand_less</i>
+            <i className='material-icons expand'>expand_more</i>
             {item.symbol}
           </div>
           <div className={`collapsible-body`}>
@@ -56,4 +57,8 @@ function WatchList(props) {
 
 // WatchList.propTypes = {};
 
-export default WatchList;
+const mapStateToProps = (state) => ({
+  watchListData: state.watchList.watchListData,
+});
+
+export default connect(mapStateToProps, { getWatchList })(WatchList);

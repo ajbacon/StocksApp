@@ -1,83 +1,42 @@
 import React, { useEffect, useState, Fragment } from 'react';
 import axios from 'axios';
+import PropTypes from 'prop-types';
 
 import LoadingBar from '../layout/LoadingBar';
 import Classes from './SearchQuoteData.module.css';
-import getAlphaVantageKey from '../../utils/apiLoadBalancer';
-import setAuthToken from '../../utils/setAuthToken';
+
+//redux
+import { connect } from 'react-redux';
+import { loadSearchQuote } from '../../actions/iexAPI';
+import { addWatchItem } from '../../actions/watchList';
 
 const moment = require('moment');
 
-const SearchQuoteData = ({ companyData }) => {
-  const [currentQuote, setCurrentQuote] = useState([]);
-  const [loading, setLoading] = useState(true);
+const SearchQuoteData = ({
+  loadSearchQuote,
+  addWatchItem,
+  companyData,
+  searchQuoteData,
+  watchListData,
+}) => {
+  const [isLoading, setLoading] = useState(true);
 
   useEffect(() => {
     setLoading(true);
-    const storageCurrentQuoteData = JSON.parse(
-      localStorage.getItem('currentQuoteData')
-    );
-    if (storageCurrentQuoteData) {
-      setCurrentQuote([storageCurrentQuoteData]);
+    const loadData = async () => {
+      await loadSearchQuote(companyData.symbol);
       setLoading(false);
-    }
-  }, []);
-
-  useEffect(() => {
-    setLoading(true);
-    localStorage.setItem('companyData', JSON.stringify(companyData));
-
-    (async () => {
-      let url = `https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=${
-        companyData.symbol
-      }&apikey=${getAlphaVantageKey()}`;
-
-      // remove default header for external API call
-      delete axios.defaults.headers.common['x-auth-token'];
-      try {
-        const res = await axios.get(url);
-        const data = await res.data;
-        setCurrentQuote([data['Global Quote']]);
-        localStorage.setItem(
-          'currentQuoteData',
-          JSON.stringify(data['Global Quote'])
-        );
-      } catch (err) {
-        console.log(err.data);
-      }
-      // reset defaut header
-      setAuthToken(localStorage.token);
-      setLoading(false);
-    })();
-  }, [companyData]);
+    };
+    loadData();
+  }, [companyData, loadSearchQuote]);
 
   const watchItemClickHandler = async () => {
-    const config = {
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    };
-    const body = {
-      symbol: companyData.symbol,
-    };
-    const res = await axios.post('/api/watchitems', body, config);
-    console.log(res);
+    await addWatchItem(companyData.symbol);
   };
 
   const renderCurrentPrice = () => {
     // this should probably be its own component at some point
-    let {
-      '02. open': open,
-      '03. high': high,
-      '04. low': low,
-      '05. price': price,
-      '08. previous close': previous,
-    } = currentQuote[0];
-    open = parseFloat(open);
-    high = parseFloat(high);
-    low = parseFloat(low);
-    price = parseFloat(price);
-    previous = parseFloat(previous);
+    let { open, high, low, price, previous } = searchQuoteData;
 
     const delta = price - previous;
     const deltaPercent = (delta / previous) * 100;
@@ -126,7 +85,7 @@ const SearchQuoteData = ({ companyData }) => {
     );
   };
 
-  return loading ? (
+  return isLoading ? (
     <LoadingBar />
   ) : (
     <div data-test='component-company-data'>
@@ -154,4 +113,18 @@ const SearchQuoteData = ({ companyData }) => {
   );
 };
 
-export default SearchQuoteData;
+SearchQuoteData.propTypes = {
+  loadSearchQuote: PropTypes.func.isRequired,
+  addWatchItem: PropTypes.func.isRequired,
+  searchQuoteData: PropTypes.object,
+  companyData: PropTypes.object.isRequired,
+};
+
+const mapStateToProps = (state) => ({
+  searchQuoteData: state.iexAPI.searchQuoteData,
+  watchListData: state.watchList.watchListData,
+});
+
+export default connect(mapStateToProps, { loadSearchQuote, addWatchItem })(
+  SearchQuoteData
+);

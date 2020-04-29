@@ -20,7 +20,7 @@ const SearchBar = ({ setCompanyData }) => {
           id={`item${i}`}
           key={i}
         >
-          {item.obj.description}
+          <b>{`${item.obj.symbol} - ${item.obj.description}`}</b>
         </div>
       );
     });
@@ -47,6 +47,7 @@ const SearchBar = ({ setCompanyData }) => {
 
   const selectResult = (obj) => {
     setCompanyData([obj]);
+    localStorage.setItem('companyData', JSON.stringify(obj));
     setSearchFocus(false);
   };
 
