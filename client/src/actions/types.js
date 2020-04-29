@@ -9,3 +9,5 @@ export const LOGIN_FAIL = 'LOGIN_FAIL';
 export const LOGOUT = 'LOGOUT';
 export const SEARCH_QUOTE = 'SEARCH_QUOTE';
 export const SEARCH_QUOTE_ERROR = 'SEARCH_QUOTE_ERROR';
+export const ADD_WATCH_ITEM = 'ADD_WATCH_ITEM';
+export const GET_WATCH_LIST = 'GET_WATCH_LIST';
