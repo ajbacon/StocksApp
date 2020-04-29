@@ -8,10 +8,17 @@ import Classes from './SearchQuoteData.module.css';
 //redux
 import { connect } from 'react-redux';
 import { loadSearchQuote } from '../../actions/iexAPI';
+import { addWatchItem } from '../../actions/watchList';
 
 const moment = require('moment');
 
-const SearchQuoteData = ({ loadSearchQuote, companyData, searchQuoteData }) => {
+const SearchQuoteData = ({
+  loadSearchQuote,
+  addWatchItem,
+  companyData,
+  searchQuoteData,
+  watchListData,
+}) => {
   const [isLoading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -24,15 +31,7 @@ const SearchQuoteData = ({ loadSearchQuote, companyData, searchQuoteData }) => {
   }, [companyData, loadSearchQuote]);
 
   const watchItemClickHandler = async () => {
-    const config = {
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    };
-    const body = {
-      symbol: companyData.symbol,
-    };
-    await axios.post('/api/watchitems', body, config);
+    await addWatchItem(companyData.symbol);
   };
 
   const renderCurrentPrice = () => {
@@ -116,12 +115,16 @@ const SearchQuoteData = ({ loadSearchQuote, companyData, searchQuoteData }) => {
 
 SearchQuoteData.propTypes = {
   loadSearchQuote: PropTypes.func.isRequired,
+  addWatchItem: PropTypes.func.isRequired,
   searchQuoteData: PropTypes.object,
   companyData: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   searchQuoteData: state.iexAPI.searchQuoteData,
+  watchListData: state.watchList.watchListData,
 });
 
-export default connect(mapStateToProps, { loadSearchQuote })(SearchQuoteData);
+export default connect(mapStateToProps, { loadSearchQuote, addWatchItem })(
+  SearchQuoteData
+);

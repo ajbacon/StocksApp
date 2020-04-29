@@ -1,7 +1,7 @@
 import { GET_WATCH_LIST } from '../actions/types';
 
 const initialState = {
-  watchList: [],
+  watchListData: [],
 };
 
 export default function (state = initialState, action) {
@@ -10,7 +10,7 @@ export default function (state = initialState, action) {
     case GET_WATCH_LIST:
       return {
         ...state,
-        watchList: payload,
+        watchListData: payload,
       };
     default:
       return state;
