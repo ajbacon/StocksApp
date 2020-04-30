@@ -4,13 +4,6 @@ import { mockAAPLQuote } from '../utils/mockTestData';
 import { findByTestAttr, integrationSetup } from '../utils/testUtils';
 import App from '../App';
 
-const existingUser = {
-  firstName: 'Eric',
-  surname: 'Cantona',
-  email: 'e_cantona@example.com',
-  password: 'pass123',
-};
-
 jest.mock('axios');
 
 describe('select company and show quote data', () => {

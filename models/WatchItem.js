@@ -6,6 +6,10 @@ const WatchItemSchema = new Schema({
     type: String,
     required: true,
   },
+  description: {
+    type: String,
+    required: true,
+  },
   userId: {
     type: String,
     required: true,

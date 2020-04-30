@@ -11,6 +11,7 @@ router.post('/', auth, async (req, res) => {
   try {
     const userWatchItem = await WatchItem.findOne({
       symbol: req.body.symbol,
+      description: req.body.description,
       userId: req.user.id,
     });
 
@@ -24,6 +25,7 @@ router.post('/', auth, async (req, res) => {
 
     const newWatchItem = new WatchItem({
       symbol: req.body.symbol,
+      description: req.body.description,
       userId: req.user.id,
     });
 

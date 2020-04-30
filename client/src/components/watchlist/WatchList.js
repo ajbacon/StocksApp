@@ -37,7 +37,7 @@ function WatchList({ getWatchList, watchListData }) {
         <li key={i}>
           <div className={`collapsible-header`}>
             <i className='material-icons expand'>expand_more</i>
-            {item.symbol}
+            <b>{`${item.symbol} - ${item.description}`}</b>
           </div>
           <div className={`collapsible-body`}>
             This drop down will contain more market data and news articles
