@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 
 import Classes from './WatchButton.module.css';
@@ -44,7 +44,11 @@ function WatchButton({
   );
 }
 
-// watchButton.propTypes = {};
+WatchButton.propTypes = {
+  addWatchItem: PropTypes.func.isRequired,
+  getWatchList: PropTypes.func.isRequired,
+  watchListData: PropTypes.array,
+};
 
 const mapStateToProps = (state) => ({
   watchListData: state.watchList.watchListData,

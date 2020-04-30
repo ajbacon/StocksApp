@@ -31,10 +31,6 @@ const SearchQuoteData = ({
     loadData();
   }, [companyData, loadSearchQuote]);
 
-  // const watchItemClickHandler = async () => {
-  //   await addWatchItem(companyData.symbol);
-  // };
-
   const renderCurrentPrice = () => {
     // this should probably be its own component at some point
     let { open, high, low, price, previous } = searchQuoteData;
@@ -97,7 +93,7 @@ const SearchQuoteData = ({
         <div className={`col s9 ${Classes.companyTitle}`}>
           {companyData.description}
         </div>
-        <WatchButton companyData={companyData} watchListData={watchListData} />
+        <WatchButton companyData={companyData} />
       </div>
 
       <div className='row'>{renderCurrentPrice()}</div>
