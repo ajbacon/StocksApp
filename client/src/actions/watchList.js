@@ -3,14 +3,16 @@ import axios from 'axios';
 import { GET_WATCH_LIST } from './types';
 
 // add a watch item
-export const addWatchItem = (symbol) => async (dispatch) => {
+export const addWatchItem = (companyData) => async (dispatch) => {
+  const { symbol, description } = companyData;
   const config = {
     headers: {
       'Content-Type': 'application/json',
     },
   };
   const body = {
-    symbol: symbol,
+    symbol,
+    description,
   };
 
   try {

@@ -29,7 +29,7 @@ function WatchButton({
   };
 
   const watchItemClickHandler = async () => {
-    await addWatchItem(companyData.symbol);
+    await addWatchItem(companyData);
   };
 
   return (
