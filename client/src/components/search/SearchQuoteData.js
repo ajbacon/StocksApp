@@ -8,13 +8,13 @@ import Classes from './SearchQuoteData.module.css';
 //redux
 import { connect } from 'react-redux';
 import { loadSearchQuote } from '../../actions/iexAPI';
-import { addWatchItem } from '../../actions/watchList';
+import { getWatchList } from '../../actions/watchList';
 
 const moment = require('moment');
 
 const SearchQuoteData = ({
   loadSearchQuote,
-  addWatchItem,
+  getWatchList,
   companyData,
   searchQuoteData,
   watchListData,
@@ -25,14 +25,15 @@ const SearchQuoteData = ({
     setLoading(true);
     const loadData = async () => {
       await loadSearchQuote(companyData.symbol);
+      await getWatchList();
       setLoading(false);
     };
     loadData();
   }, [companyData, loadSearchQuote]);
 
-  const watchItemClickHandler = async () => {
-    await addWatchItem(companyData.symbol);
-  };
+  // const watchItemClickHandler = async () => {
+  //   await addWatchItem(companyData.symbol);
+  // };
 
   const renderCurrentPrice = () => {
     // this should probably be its own component at some point
@@ -96,7 +97,7 @@ const SearchQuoteData = ({
         <div className={`col s9 ${Classes.companyTitle}`}>
           {companyData.description}
         </div>
-        <WatchButton companyData={companyData} />
+        <WatchButton companyData={companyData} watchListData={watchListData} />
       </div>
 
       <div className='row'>{renderCurrentPrice()}</div>
@@ -116,6 +117,7 @@ const mapStateToProps = (state) => ({
   watchListData: state.watchList.watchListData,
 });
 
-export default connect(mapStateToProps, { loadSearchQuote, addWatchItem })(
-  SearchQuoteData
-);
+export default connect(mapStateToProps, {
+  loadSearchQuote,
+  getWatchList,
+})(SearchQuoteData);

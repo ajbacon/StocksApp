@@ -5,18 +5,28 @@ import Classes from './WatchButton.module.css';
 
 //redux
 import { connect } from 'react-redux';
-import { addWatchItem } from '../../actions/watchList';
-import { getWatchList } from '../../actions/watchList';
+import { addWatchItem, getWatchList } from '../../actions/watchList';
 
-function WatchButton({ addWatchItem, companyData }) {
-  // useEffect(() => {
-  //   setLoading(true);
-  //   const loadData = async () => {
-  //     await loadSearchQuote(companyData.symbol);
-  //     setLoading(false);
-  //   };
-  //   loadData();
-  // }, [companyData, loadSearchQuote]);
+function WatchButton({
+  addWatchItem,
+  getWatchList,
+  companyData,
+  watchListData,
+}) {
+  useEffect(() => {
+    const loadData = async () => {
+      await getWatchList();
+    };
+    loadData();
+  }, [addWatchItem]);
+
+  const renderStar = () => {
+    return watchListData.find(
+      (element) => element.symbol === companyData.symbol
+    )
+      ? 'star'
+      : 'star_border';
+  };
 
   const watchItemClickHandler = async () => {
     await addWatchItem(companyData.symbol);
@@ -25,10 +35,10 @@ function WatchButton({ addWatchItem, companyData }) {
   return (
     <div className={`col s3 ${Classes.watchBtnContainer}`}>
       <i
-        class={`small material-icons blue-text ${Classes.watchListStar}`}
+        className={`small material-icons blue-text ${Classes.watchListStar}`}
         onClick={() => watchItemClickHandler()}
       >
-        star_border
+        {renderStar()}
       </i>
     </div>
   );
@@ -36,4 +46,10 @@ function WatchButton({ addWatchItem, companyData }) {
 
 // watchButton.propTypes = {};
 
-export default connect(null, { addWatchItem })(WatchButton);
+const mapStateToProps = (state) => ({
+  watchListData: state.watchList.watchListData,
+});
+
+export default connect(mapStateToProps, { addWatchItem, getWatchList })(
+  WatchButton
+);
