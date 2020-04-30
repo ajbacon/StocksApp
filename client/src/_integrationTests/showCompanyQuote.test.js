@@ -14,9 +14,9 @@ const existingUser = {
 jest.mock('axios');
 
 describe('select company and show quote data', () => {
+  let component;
   const alphaVantageUrl =
     'https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=AAPL&apikey=';
-  let component;
 
   it('updates state and redirects to dashboard component', async () => {
     axios.get.mockImplementation((url) => {
