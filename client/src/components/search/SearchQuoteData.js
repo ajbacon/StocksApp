@@ -1,8 +1,8 @@
 import React, { useEffect, useState, Fragment } from 'react';
-import axios from 'axios';
 import PropTypes from 'prop-types';
 
 import LoadingBar from '../layout/LoadingBar';
+import WatchButton from '../watchlist/WatchButton';
 import Classes from './SearchQuoteData.module.css';
 
 //redux
@@ -96,22 +96,7 @@ const SearchQuoteData = ({
         <div className={`col s9 ${Classes.companyTitle}`}>
           {companyData.description}
         </div>
-        <div className={`col s3 ${Classes.watchBtnContainer}`}>
-          <i
-            class={`small material-icons blue-text ${Classes.watchListStar}`}
-            onClick={() => watchItemClickHandler()}
-          >
-            star_border
-          </i>
-          {/* <button
-            className={
-              'btn btn-small waves-effect waves-light white black-text'
-            }
-            onClick={() => watchItemClickHandler()}
-          >
-            Watch
-          </button> */}
-        </div>
+        <WatchButton companyData={companyData} />
       </div>
 
       <div className='row'>{renderCurrentPrice()}</div>

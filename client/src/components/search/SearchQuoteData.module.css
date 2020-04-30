@@ -21,11 +21,6 @@
   justify-content: space-between;
 }
 
-.watchBtnContainer {
-  display: flex;
-  justify-content: flex-end;
-}
-
 .quoteTimestamp {
   color: grey
 }
@@ -36,8 +31,4 @@
 
 .greenText {
   color: green
-}
-
-.watchListStar {
-  cursor: pointer;
 }
