@@ -17,7 +17,6 @@ const SearchQuoteData = ({
   getWatchList,
   companyData,
   searchQuoteData,
-  watchListData,
 }) => {
   const [isLoading, setLoading] = useState(true);
 
@@ -29,7 +28,7 @@ const SearchQuoteData = ({
       setLoading(false);
     };
     loadData();
-  }, [companyData, loadSearchQuote]);
+  }, [companyData, loadSearchQuote, getWatchList]);
 
   const renderCurrentPrice = () => {
     // this should probably be its own component at some point
@@ -103,14 +102,12 @@ const SearchQuoteData = ({
 
 SearchQuoteData.propTypes = {
   loadSearchQuote: PropTypes.func.isRequired,
-  addWatchItem: PropTypes.func.isRequired,
   searchQuoteData: PropTypes.object,
   companyData: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   searchQuoteData: state.iexAPI.searchQuoteData,
-  watchListData: state.watchList.watchListData,
 });
 
 export default connect(mapStateToProps, {

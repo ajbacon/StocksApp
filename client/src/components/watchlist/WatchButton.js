@@ -18,7 +18,7 @@ function WatchButton({
       await getWatchList();
     };
     loadData();
-  }, [addWatchItem]);
+  }, [addWatchItem, getWatchList]);
 
   const renderStar = () => {
     return watchListData.find(
