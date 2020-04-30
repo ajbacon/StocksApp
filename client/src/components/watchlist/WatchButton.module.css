@@ -1,0 +1,8 @@
+.watchBtnContainer {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.watchListStar {
+  cursor: pointer;
+}

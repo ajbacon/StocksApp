@@ -1,23 +1,22 @@
 import React, { useEffect, useState, Fragment } from 'react';
-import axios from 'axios';
 import PropTypes from 'prop-types';
 
 import LoadingBar from '../layout/LoadingBar';
+import WatchButton from '../watchlist/WatchButton';
 import Classes from './SearchQuoteData.module.css';
 
 //redux
 import { connect } from 'react-redux';
 import { loadSearchQuote } from '../../actions/iexAPI';
-import { addWatchItem } from '../../actions/watchList';
+import { getWatchList } from '../../actions/watchList';
 
 const moment = require('moment');
 
 const SearchQuoteData = ({
   loadSearchQuote,
-  addWatchItem,
+  getWatchList,
   companyData,
   searchQuoteData,
-  watchListData,
 }) => {
   const [isLoading, setLoading] = useState(true);
 
@@ -25,14 +24,11 @@ const SearchQuoteData = ({
     setLoading(true);
     const loadData = async () => {
       await loadSearchQuote(companyData.symbol);
+      await getWatchList();
       setLoading(false);
     };
     loadData();
-  }, [companyData, loadSearchQuote]);
-
-  const watchItemClickHandler = async () => {
-    await addWatchItem(companyData.symbol);
-  };
+  }, [companyData, loadSearchQuote, getWatchList]);
 
   const renderCurrentPrice = () => {
     // this should probably be its own component at some point
@@ -96,16 +92,7 @@ const SearchQuoteData = ({
         <div className={`col s9 ${Classes.companyTitle}`}>
           {companyData.description}
         </div>
-        <div className={`col s3 ${Classes.watchBtnContainer}`}>
-          <button
-            className={
-              'btn btn-small waves-effect waves-light white black-text'
-            }
-            onClick={() => watchItemClickHandler()}
-          >
-            Watch
-          </button>
-        </div>
+        <WatchButton companyData={companyData} />
       </div>
 
       <div className='row'>{renderCurrentPrice()}</div>
@@ -115,16 +102,15 @@ const SearchQuoteData = ({
 
 SearchQuoteData.propTypes = {
   loadSearchQuote: PropTypes.func.isRequired,
-  addWatchItem: PropTypes.func.isRequired,
   searchQuoteData: PropTypes.object,
   companyData: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = (state) => ({
   searchQuoteData: state.iexAPI.searchQuoteData,
-  watchListData: state.watchList.watchListData,
 });
 
-export default connect(mapStateToProps, { loadSearchQuote, addWatchItem })(
-  SearchQuoteData
-);
+export default connect(mapStateToProps, {
+  loadSearchQuote,
+  getWatchList,
+})(SearchQuoteData);

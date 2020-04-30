@@ -1,11 +1,7 @@
 import axios from 'axios';
 import { act } from 'react-dom/test-utils';
 import { mockAAPLQuote } from '../utils/mockTestData';
-import {
-  findByTestAttr,
-  integrationSetup,
-  storeFactory,
-} from '../utils/testUtils';
+import { findByTestAttr, integrationSetup } from '../utils/testUtils';
 import App from '../App';
 
 const existingUser = {
@@ -19,11 +15,26 @@ jest.mock('axios');
 
 describe('select company and show quote data', () => {
   let component;
+  const alphaVantageUrl =
+    'https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=AAPL&apikey=';
 
   it('updates state and redirects to dashboard component', async () => {
-    axios.get.mockImplementation(() =>
-      Promise.resolve({ data: mockAAPLQuote })
-    );
+    axios.get.mockImplementation((url) => {
+      let mockUrl;
+      if (url.includes(alphaVantageUrl)) {
+        mockUrl = alphaVantageUrl;
+      } else {
+        mockUrl = url;
+      }
+
+      switch (mockUrl) {
+        case alphaVantageUrl:
+          return Promise.resolve({ data: mockAAPLQuote });
+        case '/api/watchitems':
+          return Promise.resolve({ data: [] });
+        default:
+      }
+    });
     const initialState = {
       alert: [],
       auth: {
@@ -37,6 +48,12 @@ describe('select company and show quote data', () => {
           email: 'e_cantona@example.com',
           Date: 'date',
         },
+      },
+      iexAPI: {
+        searchQuoteData: null,
+      },
+      watchList: {
+        watchListData: [],
       },
     };
     const { wrapper, store } = integrationSetup(App, initialState);
