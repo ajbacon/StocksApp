@@ -1,3 +1,5 @@
+// Production only code - ignore from test coverage
+/* istanbul ignore next */
 if (process.env.NODE_ENV === 'production') {
   // production set of keys
   module.exports = require('./prod');

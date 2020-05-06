@@ -18,8 +18,7 @@ connectDB();
 
 // Passport middleware
 app.use(passport.initialize());
-// Passport config
-require('./config/passport')(passport);
+
 // Routes
 app.use('/api/users', users);
 app.use('/api/auth', auth);
