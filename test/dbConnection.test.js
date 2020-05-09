@@ -1,7 +1,4 @@
-// import mongoose from 'mongoose';
-// import { MongoError } from 'mongodb';
 const mongoose = require('mongoose');
-const mongodb = require('mongodb');
 const connectDB = require('../config/db');
 
 jest.mock('mongoose');
@@ -18,13 +15,10 @@ describe('connectDB', () => {
         throw new Error('message');
       });
 
-    // console.log(mongooseConnectSpyOn);
     await connectDB();
 
     expect(mongooseConnectSpyOn).toHaveBeenCalled();
     expect(mockConsoleExit).toHaveBeenCalledWith('message');
     expect(mockExit).toHaveBeenCalledWith(1);
-
-    // console.log(mongooseConnectSpyOn.getMockImplementation());
   });
 });
