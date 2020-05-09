@@ -4,7 +4,7 @@ const connectDB = require('../config/db');
 jest.mock('mongoose');
 
 describe('connectDB', () => {
-  it('should connect to the database successfully', async () => {
+  it('should exit with error code 1 with unsuccessful database connection', async () => {
     const mockExit = jest.spyOn(process, 'exit').mockImplementation(() => {});
     const mockConsoleExit = jest
       .spyOn(console, 'error')
