@@ -81,4 +81,35 @@ describe('watchItems', () => {
       done();
     });
   });
+
+  describe('GET /api/watchitems', () => {
+    it('should return an array of watch items for the user', async (done) => {
+      const payload1 = { symbol: 'AAPL', description: 'APPLE INC' };
+      const payload2 = { symbol: 'AMZN', description: 'AMAZON INC' };
+
+      await request
+        .post('/api/watchitems')
+        .set('x-auth-token', registerResponse.body.token)
+        .send(payload1);
+
+      await request
+        .post('/api/watchitems')
+        .set('x-auth-token', registerResponse.body.token)
+        .send(payload2);
+
+      const watchItemRes = await request
+        .get('/api/watchitems')
+        .set('x-auth-token', registerResponse.body.token)
+        .send();
+
+      const items = await WatchItem.find({ userId: authResponse.body._id });
+
+      expect(watchItemRes.status).toEqual(200);
+      expect(JSON.stringify(watchItemRes.body)).toEqual(JSON.stringify(items));
+      // expect(watchItemRes.body.symbol).toEqual('AAPL');
+      // expect(watchItemRes.body.userId).toEqual(authResponse.body._id);
+      // expect(items.length).toEqual(1);
+      done();
+    });
+  });
 });
