@@ -127,5 +127,17 @@ describe('register', () => {
       );
       done();
     });
+
+    it('should return an error if email already exists and return status of 400', async (done) => {
+      const response = await request.post('/api/users/register').send(testUser);
+      expect(response.status).toEqual(200);
+
+      const response2 = await request
+        .post('/api/users/register')
+        .send(testUser);
+      expect(response2.status).toEqual(400);
+      expect(response2.error.text).toEqual('{"email":"Email already exists"}');
+      done();
+    });
   });
 });

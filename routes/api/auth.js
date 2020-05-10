@@ -17,6 +17,7 @@ router.get('/', auth, async (req, res) => {
   try {
     const user = await User.findById(req.user.id).select('-password');
     res.json(user);
+    console.log('here');
   } catch (err) {
     console.error(err.message);
     res.status(500).send('server error');
@@ -54,8 +55,8 @@ router.post('/', async (req, res) => {
     }
     const payload = {
       user: {
-        id: user.id
-      }
+        id: user.id,
+      },
     };
 
     jwt.sign(payload, keys.secretOrKey, { expiresIn: 360000 }, (err, token) => {

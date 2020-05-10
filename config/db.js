@@ -2,7 +2,6 @@ const mongoose = require('mongoose');
 const keys = require('./keys');
 
 const db = keys.mongoURI;
-console.log(db);
 
 const connectDB = async () => {
   try {
