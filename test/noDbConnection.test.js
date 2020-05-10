@@ -12,6 +12,11 @@ describe('When no mongoose connection', () => {
   let app;
   let request;
 
+  const loginTestUser = {
+    email: 'test_user2@example.com',
+    password: 'pass123',
+  };
+
   beforeAll(() => {
     mockExit = jest.spyOn(process, 'exit').mockImplementation(() => {});
     mockConsoleError = jest
@@ -38,6 +43,16 @@ describe('When no mongoose connection', () => {
         .send();
 
       expect(authenticateRes.status).toBe(500);
+    });
+  });
+
+  describe('POST /api/auth', () => {
+    it('should return a status code of 500', async () => {
+      const payload = { test: 'test' };
+
+      const loginResponse = await request.post('/api/auth').send(loginTestUser);
+
+      expect(loginResponse.status).toBe(500);
     });
   });
 });
