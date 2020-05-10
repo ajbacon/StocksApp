@@ -17,7 +17,7 @@ const loginTestUser = {
   password: 'pass123',
 };
 
-describe('login', () => {
+describe('Authenticate User', () => {
   let registerResponse;
   beforeAll(async (done) => {
     registerResponse = await request.post('/api/users/register').send(testUser);
