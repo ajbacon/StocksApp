@@ -12,6 +12,14 @@ describe('When no mongoose connection', () => {
   let app;
   let request;
 
+  const testUser = {
+    firstName: 'test',
+    surname: 'user',
+    email: 'test_user@example.com',
+    password: 'pass123',
+    password2: 'pass123',
+  };
+
   const loginTestUser = {
     email: 'test_user2@example.com',
     password: 'pass123',
@@ -37,22 +45,28 @@ describe('When no mongoose connection', () => {
 
       const token = jwt.sign(payload, keys.secretOrKey, { expiresIn: 360000 });
 
-      const authenticateRes = await request
+      const response = await request
         .get('/api/auth')
         .set('x-auth-token', token)
         .send();
 
-      expect(authenticateRes.status).toBe(500);
+      expect(response.status).toBe(500);
     });
   });
 
   describe('POST /api/auth', () => {
     it('should return a status code of 500', async () => {
-      const payload = { test: 'test' };
+      const response = await request.post('/api/auth').send(loginTestUser);
 
-      const loginResponse = await request.post('/api/auth').send(loginTestUser);
+      expect(response.status).toBe(500);
+    });
+  });
 
-      expect(loginResponse.status).toBe(500);
+  describe('POST /api/users/register', () => {
+    it('should return a status code of 500', async () => {
+      const response = await request.post('/api/users/register').send(testUser);
+
+      expect(response.status).toBe(500);
     });
   });
 });
