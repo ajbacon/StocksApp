@@ -14,7 +14,7 @@ const testUser = {
 };
 process.env.TEST_ID = '';
 
-describe('login', () => {
+describe('watchItems', () => {
   process.env.NODE_ENV = 'test';
   let registerResponse;
   let authResponse;
