@@ -39,7 +39,6 @@ describe('watchItems', () => {
 
   describe('POST /api/watchitems', () => {
     it('should store and return a company symbol and user id', async (done) => {
-      // console.log(registerResponse);
       const payload = { symbol: 'AAPL', description: 'APPLE INC' };
 
       const watchItemRes = await request
@@ -58,7 +57,6 @@ describe('watchItems', () => {
     });
 
     it('should not store a company symbol if already watched by the user', async (done) => {
-      // console.log(registerResponse);
       const payload = { symbol: 'AAPL', description: 'APPLE INC' };
 
       const watchItemRes = await request
@@ -82,7 +80,6 @@ describe('watchItems', () => {
     });
 
     it('should deny authentication if no x-auth-token provided in the header', async (done) => {
-      // console.log(registerResponse);
       const payload = { symbol: 'AAPL', description: 'APPLE INC' };
 
       const watchItemRes = await request.post('/api/watchitems').send(payload);
