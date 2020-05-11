@@ -12,11 +12,6 @@ const testUser = {
   password2: 'pass123',
 };
 
-const loginTestUser = {
-  email: 'test_user2@example.com',
-  password: 'pass123',
-};
-
 describe('Authenticate User', () => {
   let registerResponse;
   beforeAll(async (done) => {
@@ -48,6 +43,16 @@ describe('Authenticate User', () => {
 
         expect(authenticateRes.status).toBe(401);
         expect(authenticateRes.body.msg).toBe('No token, authorisation denied');
+      });
+
+      it('should deny authentication if x-auth-token is an invalid jwt', async () => {
+        const authenticateRes = await request
+          .get('/api/auth')
+          .set('x-auth-token', 'invalidToken')
+          .send();
+
+        expect(authenticateRes.status).toBe(401);
+        expect(authenticateRes.body.msg).toBe('Token in not valid');
       });
     });
   });
