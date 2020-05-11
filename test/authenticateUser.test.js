@@ -32,10 +32,6 @@ describe('Authenticate User', () => {
   describe('GET /api/auth', () => {
     describe('with successful mongoose connection', () => {
       it('should return the authenticated user', async () => {
-        // const registerResponse = await request
-        //   .post('/api/users/register')
-        //   .send(testUser);
-
         const authenticateRes = await request
           .get('/api/auth')
           .set('x-auth-token', registerResponse.body.token)
@@ -45,6 +41,13 @@ describe('Authenticate User', () => {
         expect(authenticateRes.body.firstName).toBe('test');
         expect(authenticateRes.body.surname).toBe('user2');
         expect(authenticateRes.body.email).toBe('test_user2@example.com');
+      });
+
+      it('should deny authentication if no x-auth-token provided in the header', async () => {
+        const authenticateRes = await request.get('/api/auth').send();
+
+        expect(authenticateRes.status).toBe(401);
+        expect(authenticateRes.body.msg).toBe('No token, authorisation denied');
       });
     });
   });
