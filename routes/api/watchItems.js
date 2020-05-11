@@ -16,6 +16,7 @@ router.post('/', auth, async (req, res) => {
     });
 
     if (userWatchItem) {
+      console.log('here');
       return res
         .status(400)
         .json({ watchItem: 'Company already on user watch list' });

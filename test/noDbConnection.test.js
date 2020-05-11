@@ -11,6 +11,7 @@ describe('When no mongoose connection', () => {
   let mongooseConnectSpyOn;
   let app;
   let request;
+  let token;
 
   const testUser = {
     firstName: 'test',
@@ -37,14 +38,13 @@ describe('When no mongoose connection', () => {
       });
     app = require('../server');
     request = supertest(app);
+
+    const payload = { test: 'test' };
+    token = jwt.sign(payload, keys.secretOrKey, { expiresIn: 360000 });
   });
 
   describe('GET /api/auth', () => {
     it('should return a status code of 500', async () => {
-      const payload = { test: 'test' };
-
-      const token = jwt.sign(payload, keys.secretOrKey, { expiresIn: 360000 });
-
       const response = await request
         .get('/api/auth')
         .set('x-auth-token', token)
@@ -67,6 +67,19 @@ describe('When no mongoose connection', () => {
       const response = await request.post('/api/users/register').send(testUser);
 
       expect(response.status).toBe(500);
+    });
+  });
+
+  describe('POST /api/watchItems', () => {
+    it('should return a status code of 500', async () => {
+      const symbolPayload = { symbol: 'AAPL', description: 'APPLE INC' };
+      const response = await request
+        .post('/api/watchItems')
+        .set('x-auth-token', token)
+        .send(symbolPayload);
+
+      expect(response.status).toBe(500);
+      expect(response.text).toBe('Server Error');
     });
   });
 });
