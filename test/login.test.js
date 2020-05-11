@@ -123,13 +123,27 @@ describe('login', () => {
         expect(loginResponse.body.msg).toEqual('invalid credentials');
         done();
       });
-    });
-    describe('with failed mongoose connection', () => {
-      const mongooseConnectSpyOn = jest
-        .spyOn(mongoose, 'connect')
-        .mockImplementation(() => {
-          throw new Error('message');
-        });
+
+      it('should return an error if email is invalid and return status of 400', async (done) => {
+        const badLoginTestUser = {
+          email: 'invalid_email',
+          password: 'pass123',
+        };
+        const registerResponse = await request
+          .post('/api/users/register')
+          .send(testUser);
+
+        const loginResponse = await request
+          .post('/api/auth')
+          .send(badLoginTestUser);
+
+        expect(loginResponse.status).toEqual(400);
+        expect(loginResponse.error.text).toEqual(
+          '{"email":"Email is invalid"}'
+        );
+        expect(loginResponse.body.email).toEqual('Email is invalid');
+        done();
+      });
     });
   });
 });
