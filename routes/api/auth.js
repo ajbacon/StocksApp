@@ -19,7 +19,7 @@ router.get('/', auth, async (req, res) => {
     res.json(user);
   } catch (err) {
     console.error(err.message);
-    res.status(500).send('server error');
+    res.status(500).send('Server Error');
   }
 });
 
@@ -54,8 +54,8 @@ router.post('/', async (req, res) => {
     }
     const payload = {
       user: {
-        id: user.id
-      }
+        id: user.id,
+      },
     };
 
     jwt.sign(payload, keys.secretOrKey, { expiresIn: 360000 }, (err, token) => {
@@ -64,7 +64,7 @@ router.post('/', async (req, res) => {
     });
   } catch (err) {
     console.error(err.message);
-    res.status(500).send('server error');
+    res.status(500).send('Server Error');
   }
 });
 

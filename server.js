@@ -18,13 +18,14 @@ connectDB();
 
 // Passport middleware
 app.use(passport.initialize());
-// Passport config
-require('./config/passport')(passport);
+
 // Routes
 app.use('/api/users', users);
 app.use('/api/auth', auth);
 app.use('/api/watchitems', watchItems);
 
+// Production only code - ignore from test coverage
+/* istanbul ignore next */
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static('client/build'));
 

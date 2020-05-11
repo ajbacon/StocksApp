@@ -35,7 +35,7 @@ router.post('/register', async (req, res) => {
       firstName,
       surname,
       email,
-      password
+      password,
     });
 
     const salt = await bcrypt.genSalt(10);
@@ -45,8 +45,8 @@ router.post('/register', async (req, res) => {
 
     const payload = {
       user: {
-        id: user.id
-      }
+        id: user.id,
+      },
     };
 
     jwt.sign(payload, keys.secretOrKey, { expiresIn: 360000 }, (err, token) => {
@@ -55,7 +55,7 @@ router.post('/register', async (req, res) => {
     });
   } catch (err) {
     console.error(err.message);
-    res.status(500).send('Server error');
+    res.status(500).send('Server Error');
   }
 });
 

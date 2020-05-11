@@ -127,5 +127,32 @@ describe('register', () => {
       );
       done();
     });
+
+    it('should return an error if email already exists and return status of 400', async (done) => {
+      const response = await request.post('/api/users/register').send(testUser);
+      expect(response.status).toEqual(200);
+
+      const response2 = await request
+        .post('/api/users/register')
+        .send(testUser);
+      expect(response2.status).toEqual(400);
+      expect(response2.error.text).toEqual('{"email":"Email already exists"}');
+      done();
+    });
+
+    it('should return an error if email already exists and return status of 400', async (done) => {
+      const badUser = {
+        firstName: 'test',
+        surname: 'user',
+        email: 'test_user_example.com',
+        password: 'pass123',
+        password2: 'pass123',
+      };
+
+      const response = await request.post('/api/users/register').send(badUser);
+      expect(response.status).toEqual(400);
+      expect(response.error.text).toEqual('{"email":"Email is invalid"}');
+      done();
+    });
   });
 });

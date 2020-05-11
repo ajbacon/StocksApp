@@ -14,7 +14,7 @@ const testUser = {
 };
 process.env.TEST_ID = '';
 
-describe('login', () => {
+describe('watchItems', () => {
   process.env.NODE_ENV = 'test';
   let registerResponse;
   let authResponse;
@@ -39,7 +39,6 @@ describe('login', () => {
 
   describe('POST /api/watchitems', () => {
     it('should store and return a company symbol and user id', async (done) => {
-      // console.log(registerResponse);
       const payload = { symbol: 'AAPL', description: 'APPLE INC' };
 
       const watchItemRes = await request
@@ -58,7 +57,6 @@ describe('login', () => {
     });
 
     it('should not store a company symbol if already watched by the user', async (done) => {
-      // console.log(registerResponse);
       const payload = { symbol: 'AAPL', description: 'APPLE INC' };
 
       const watchItemRes = await request
@@ -78,6 +76,52 @@ describe('login', () => {
         '{"watchItem":"Company already on user watch list"}'
       );
       expect(items.length).toEqual(1);
+      done();
+    });
+
+    it('should deny authentication if no x-auth-token provided in the header', async (done) => {
+      const payload = { symbol: 'AAPL', description: 'APPLE INC' };
+
+      const watchItemRes = await request.post('/api/watchitems').send(payload);
+
+      expect(watchItemRes.status).toBe(401);
+      expect(watchItemRes.body.msg).toBe('No token, authorisation denied');
+      done();
+    });
+  });
+
+  describe('GET /api/watchitems', () => {
+    it('should return an array of watch items for the user', async (done) => {
+      const payload1 = { symbol: 'AAPL', description: 'APPLE INC' };
+      const payload2 = { symbol: 'AMZN', description: 'AMAZON INC' };
+
+      await request
+        .post('/api/watchitems')
+        .set('x-auth-token', registerResponse.body.token)
+        .send(payload1);
+
+      await request
+        .post('/api/watchitems')
+        .set('x-auth-token', registerResponse.body.token)
+        .send(payload2);
+
+      const watchItemRes = await request
+        .get('/api/watchitems')
+        .set('x-auth-token', registerResponse.body.token)
+        .send();
+
+      const items = await WatchItem.find({ userId: authResponse.body._id });
+
+      expect(watchItemRes.status).toEqual(200);
+      expect(JSON.stringify(watchItemRes.body)).toEqual(JSON.stringify(items));
+      done();
+    });
+
+    it('should deny authentication if no x-auth-token provided in the header', async (done) => {
+      const watchItemRes = await request.get('/api/watchitems').send();
+
+      expect(watchItemRes.status).toBe(401);
+      expect(watchItemRes.body.msg).toBe('No token, authorisation denied');
       done();
     });
   });

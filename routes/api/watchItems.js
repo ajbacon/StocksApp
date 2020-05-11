@@ -21,8 +21,6 @@ router.post('/', auth, async (req, res) => {
         .json({ watchItem: 'Company already on user watch list' });
     }
 
-    // console.log(watchItem);
-
     const newWatchItem = new WatchItem({
       symbol: req.body.symbol,
       description: req.body.description,
@@ -48,7 +46,7 @@ router.get('/', auth, async (req, res) => {
     res.json(items);
   } catch (err) {
     console.error(err.message);
-    res.status(500).send('server error');
+    res.status(500).send('Server Error');
   }
 });
 
