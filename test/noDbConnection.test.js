@@ -51,6 +51,7 @@ describe('When no mongoose connection', () => {
         .send();
 
       expect(response.status).toBe(500);
+      expect(response.text).toBe('Server Error');
     });
   });
 
@@ -59,6 +60,7 @@ describe('When no mongoose connection', () => {
       const response = await request.post('/api/auth').send(loginTestUser);
 
       expect(response.status).toBe(500);
+      expect(response.text).toBe('Server Error');
     });
   });
 
@@ -67,6 +69,7 @@ describe('When no mongoose connection', () => {
       const response = await request.post('/api/users/register').send(testUser);
 
       expect(response.status).toBe(500);
+      expect(response.text).toBe('Server Error');
     });
   });
 
