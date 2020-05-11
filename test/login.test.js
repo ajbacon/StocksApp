@@ -27,14 +27,11 @@ describe('login', () => {
     describe('with successful mongoose connection', () => {
       beforeEach(async (done) => {
         await User.deleteMany();
+        await request.post('/api/users/register').send(testUser);
         done();
       });
 
       it('should return a response status of 200 when a valid user logs in', async (done) => {
-        const registerResponse = await request
-          .post('/api/users/register')
-          .send(testUser);
-
         const loginResponse = await request
           .post('/api/auth')
           .send(loginTestUser);
@@ -49,10 +46,6 @@ describe('login', () => {
       });
 
       it('should return a jwt token', async (done) => {
-        const registerResponse = await request
-          .post('/api/users/register')
-          .send(testUser);
-
         const loginResponse = await request
           .post('/api/auth')
           .send(loginTestUser);
@@ -66,9 +59,6 @@ describe('login', () => {
         const badLoginTestUser = {
           password: 'pass123',
         };
-        const registerResponse = await request
-          .post('/api/users/register')
-          .send(testUser);
 
         const loginResponse = await request
           .post('/api/auth')
@@ -87,9 +77,6 @@ describe('login', () => {
           email: 'test_user2@example.com',
           password: 'wrongPassword',
         };
-        const registerResponse = await request
-          .post('/api/users/register')
-          .send(testUser);
 
         const loginResponse = await request
           .post('/api/auth')
@@ -108,9 +95,6 @@ describe('login', () => {
           email: 'doesnt_exist@example.com',
           password: 'pass123',
         };
-        const registerResponse = await request
-          .post('/api/users/register')
-          .send(testUser);
 
         const loginResponse = await request
           .post('/api/auth')
@@ -129,9 +113,6 @@ describe('login', () => {
           email: 'invalid_email',
           password: 'pass123',
         };
-        const registerResponse = await request
-          .post('/api/users/register')
-          .send(testUser);
 
         const loginResponse = await request
           .post('/api/auth')
@@ -142,6 +123,25 @@ describe('login', () => {
           '{"email":"Email is invalid"}'
         );
         expect(loginResponse.body.email).toEqual('Email is invalid');
+        done();
+      });
+
+      it('should return an error if password field is empty and return status of 400', async (done) => {
+        const badLoginTestUser = {
+          email: 'test_user2@example.com',
+        };
+
+        const loginResponse = await request
+          .post('/api/auth')
+          .send(badLoginTestUser);
+
+        expect(loginResponse.status).toEqual(400);
+        expect(loginResponse.error.text).toEqual(
+          '{"password":"Password field is required"}'
+        );
+        expect(loginResponse.body.password).toEqual(
+          'Password field is required'
+        );
         done();
       });
     });
