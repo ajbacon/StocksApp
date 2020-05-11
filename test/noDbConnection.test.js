@@ -85,4 +85,16 @@ describe('When no mongoose connection', () => {
       expect(response.text).toBe('Server Error');
     });
   });
+
+  describe('GET /api/watchItems', () => {
+    it('should return a status code of 500', async () => {
+      const response = await request
+        .get('/api/watchItems')
+        .set('x-auth-token', token)
+        .send();
+
+      expect(response.status).toBe(500);
+      expect(response.text).toBe('Server Error');
+    });
+  });
 });
