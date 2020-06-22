@@ -11,20 +11,23 @@ A personal project, post Makers, to solidify knowlege in developing full-stack J
 
 The live application is deployed [here](https://project-stocks-app.herokuapp.com/)
 
-## Current Features
+## Features
 
+[Trello Board](https://trello.com/b/r3ZJUaPa/stocksapp)
+
+### Implemented
 - User Sign-up / Authentication
 - Provide user with a smooth interface to search and view company share prices
 - get stock data from alphavantage api / finnhub api
 - Testing of both client and server
 
-## Next Implementations
+### Next Implementations
 - Allow user to select stocks to add to watchlist
 - Update and save user profile
 - Have news feed with latest relevant stock market news
 - Provide a mock trading enviroment
 
-## Future Implmentations
+### Future Implmentations
 - deal with password resets etc
 - email confirmations
 - Google OAuth
