@@ -5,11 +5,11 @@ import './WatchList.css';
 
 //redux
 import { connect } from 'react-redux';
-import { getWatchList } from '../../actions/watchList';
+import { loadWatchListData } from '../../actions/iexAPI.js';
 
 const $ = window.$;
 
-function WatchList({ getWatchList, watchListData }) {
+function WatchList({ loadWatchListData, watchListData }) {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -17,6 +17,15 @@ function WatchList({ getWatchList, watchListData }) {
       accordion: false,
     });
   });
+
+  useEffect(() => {
+    setLoading(true);
+    const loadData = async () => {
+      await loadWatchListData(watchListData);
+      setLoading(false);
+    };
+    loadData();
+  }, [loadWatchListData]);
 
   const renderItems = () => {
     return watchListData.map((item, i) => {
@@ -48,4 +57,4 @@ const mapStateToProps = (state) => ({
   watchListData: state.watchList.watchListData,
 });
 
-export default connect(mapStateToProps, { getWatchList })(WatchList);
+export default connect(mapStateToProps, { loadWatchListData })(WatchList);
