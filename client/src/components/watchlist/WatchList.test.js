@@ -18,11 +18,11 @@ describe('<WatchList />', () => {
   let component;
 
   it('renders loading bar before watchitems are retrieved', () => {
-    const initialState = {
-      auth: { isAuthenticated: true },
-    };
-    wrapper = setup(initialState);
-    component = findByTestAttr(wrapper, 'component-loading-bar');
-    expect(component).toHaveLength(1);
+    // const initialState = {
+    //   auth: { isAuthenticated: true },
+    // };
+    // wrapper = setup(initialState);
+    // component = findByTestAttr(wrapper, 'component-loading-bar');
+    // expect(component).toHaveLength(1);
   });
 });

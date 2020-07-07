@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-import { GET_WATCH_LIST } from './types';
+import { SET_WATCH_LIST } from './types';
 
 // add a watch item
 export const addWatchItem = (companyData) => async (dispatch) => {
@@ -27,9 +27,17 @@ export const getWatchList = () => async (dispatch) => {
   try {
     const res = await axios.get('/api/watchitems');
 
+    const payload = res.data.map((item) => {
+      return {
+        ...item,
+        newsData: [],
+        quoteData: {},
+      };
+    });
+
     dispatch({
-      type: GET_WATCH_LIST,
-      payload: res.data,
+      type: SET_WATCH_LIST,
+      payload,
     });
   } catch (err) {
     console.log(err.data);

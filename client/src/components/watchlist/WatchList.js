@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from 'react';
-// import axios from 'axios';
-// import PropTypes from 'prop-types';
-
 import LoadingBar from '../layout/LoadingBar';
 import './WatchList.css';
+// import PropTypes from 'prop-types';
 
 //redux
 import { connect } from 'react-redux';
@@ -12,24 +10,13 @@ import { getWatchList } from '../../actions/watchList';
 const $ = window.$;
 
 function WatchList({ getWatchList, watchListData }) {
-  // const [watchItems, setWatchItems] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     $('.collapsible').collapsible({
       accordion: false,
     });
   });
-
-  useEffect(() => {
-    setLoading(true);
-
-    const loadData = async () => {
-      await getWatchList();
-      setLoading(false);
-    };
-    loadData();
-  }, [getWatchList]);
 
   const renderItems = () => {
     return watchListData.map((item, i) => {
