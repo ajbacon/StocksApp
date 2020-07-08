@@ -37,7 +37,7 @@ function WatchList({ loadWatchListData, watchListData }) {
           target='_blank'
           rel='noopener noreferrer'
         >
-          <img className='news-image' src={item.image} alt='news-item-image' />
+          <img className='news-image' src={item.image} alt='news-item' />
           <p className='headline-text'>{item.headline}</p>
         </a>
       );
