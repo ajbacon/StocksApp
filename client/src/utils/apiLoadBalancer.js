@@ -1,4 +1,4 @@
-const getAlphaVantageKey = () => {
+export const getAlphaVantageKey = () => {
   const AV_KEYS = [
     process.env.REACT_APP_AV_API_KEY1,
     process.env.REACT_APP_AV_API_KEY2,
@@ -14,4 +14,12 @@ const getAlphaVantageKey = () => {
   return `${AV_KEYS[loadDist]}`;
 };
 
-export default getAlphaVantageKey;
+export const getFinnhubKey = () => {
+  const FH_KEYS = [
+    process.env.REACT_APP_FH_API_KEY1,
+    process.env.REACT_APP_FH_API_KEY2,
+  ];
+
+  const loadDist = Math.floor(Math.random() * FH_KEYS.length);
+  return `${FH_KEYS[loadDist]}`;
+};

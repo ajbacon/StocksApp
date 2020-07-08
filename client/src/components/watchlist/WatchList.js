@@ -1,19 +1,16 @@
 import React, { useEffect, useState } from 'react';
-// import axios from 'axios';
-// import PropTypes from 'prop-types';
-
 import LoadingBar from '../layout/LoadingBar';
 import './WatchList.css';
+// import PropTypes from 'prop-types';
 
 //redux
 import { connect } from 'react-redux';
-import { getWatchList } from '../../actions/watchList';
+import { loadWatchListData } from '../../actions/iexAPI.js';
 
 const $ = window.$;
 
-function WatchList({ getWatchList, watchListData }) {
-  // const [watchItems, setWatchItems] = useState([]);
-  const [loading, setLoading] = useState(true);
+function WatchList({ loadWatchListData, watchListData }) {
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     $('.collapsible').collapsible({
@@ -23,13 +20,29 @@ function WatchList({ getWatchList, watchListData }) {
 
   useEffect(() => {
     setLoading(true);
-
     const loadData = async () => {
-      await getWatchList();
+      await loadWatchListData(watchListData);
       setLoading(false);
     };
     loadData();
-  }, [getWatchList]);
+  }, [loadWatchListData]);
+
+  const renderNewsArticles = (newsData) => {
+    return newsData.map((item, index) => {
+      return (
+        <a
+          key={index}
+          href={item.url}
+          className='news-item'
+          target='_blank'
+          rel='noopener noreferrer'
+        >
+          <img className='news-image' src={item.image} alt='news-item' />
+          <p className='headline-text'>{item.headline}</p>
+        </a>
+      );
+    });
+  };
 
   const renderItems = () => {
     return watchListData.map((item, i) => {
@@ -40,8 +53,7 @@ function WatchList({ getWatchList, watchListData }) {
             <b>{`${item.symbol} - ${item.description}`}</b>
           </div>
           <div className={`collapsible-body`}>
-            This drop down will contain more market data and news articles
-            related to the company
+            {renderNewsArticles(item.newsData)}
           </div>
         </li>
       );
@@ -61,4 +73,4 @@ const mapStateToProps = (state) => ({
   watchListData: state.watchList.watchListData,
 });
 
-export default connect(mapStateToProps, { getWatchList })(WatchList);
+export default connect(mapStateToProps, { loadWatchListData })(WatchList);
