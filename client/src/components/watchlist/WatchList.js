@@ -28,10 +28,16 @@ function WatchList({ loadWatchListData, watchListData }) {
   }, [loadWatchListData]);
 
   const renderNewsArticles = (newsData) => {
-    return newsData.map((item) => {
+    return newsData.map((item, index) => {
       return (
-        <a href={item.url} className='news-item'>
-          <img className='news-image' src={item.image} alt='image' />
+        <a
+          key={index}
+          href={item.url}
+          className='news-item'
+          target='_blank'
+          rel='noopener noreferrer'
+        >
+          <img className='news-image' src={item.image} alt='news-item-image' />
           <p className='headline-text'>{item.headline}</p>
         </a>
       );
