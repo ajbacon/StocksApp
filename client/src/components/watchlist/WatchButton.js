@@ -1,11 +1,11 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 
 import Classes from './WatchButton.module.css';
 
 //redux
 import { connect } from 'react-redux';
-import { addWatchItem, getWatchList } from '../../actions/watchList';
+import { addWatchItem } from '../../actions/watchList';
 
 function WatchButton({ addWatchItem, companyData, watchListData }) {
   const renderStar = () => {

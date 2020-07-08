@@ -6,7 +6,6 @@ import setAuthToken from '../utils/setAuthToken';
 const moment = require('moment');
 
 const globalQuoteQuery = (symbol) => {
-  console.log(getAlphaVantageKey());
   const url = `https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=${symbol}&apikey=${getAlphaVantageKey()}`;
   return axios.get(url);
 };
@@ -63,7 +62,7 @@ export const loadWatchListData = (watchList) => async (dispatch) => {
       const globalQuoteRes = await globalQuoteQuery(item.symbol);
       item.quoteData = parseQuoteData(globalQuoteRes.data);
       const companyNewsRes = await companyNewsQuery(item.symbol);
-      item.newsData = companyNewsRes.data;
+      item.newsData = companyNewsRes.data.slice(0, 10);
       return item;
     })
   );
