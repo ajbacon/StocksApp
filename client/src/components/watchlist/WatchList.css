@@ -8,3 +8,26 @@
   transition: transform 200ms;
 }
 
+.news-item {
+  display: flex;
+  align-items: center;
+  margin: 10px 0
+}
+
+.news-item img {
+  width: 100px
+}
+
+.news-item p {
+  margin-left: 10px;
+  font-size: 16px
+}
+
+.headline-text {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2; /* number of lines to show */
+  -webkit-box-orient: vertical;
+}
+

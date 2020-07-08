@@ -27,6 +27,17 @@ function WatchList({ loadWatchListData, watchListData }) {
     loadData();
   }, [loadWatchListData]);
 
+  const renderNewsArticles = (newsData) => {
+    return newsData.map((item) => {
+      return (
+        <a href={item.url} className='news-item'>
+          <img className='news-image' src={item.image} alt='image' />
+          <p className='headline-text'>{item.headline}</p>
+        </a>
+      );
+    });
+  };
+
   const renderItems = () => {
     return watchListData.map((item, i) => {
       return (
@@ -36,8 +47,7 @@ function WatchList({ loadWatchListData, watchListData }) {
             <b>{`${item.symbol} - ${item.description}`}</b>
           </div>
           <div className={`collapsible-body`}>
-            This drop down will contain more market data and news articles
-            related to the company
+            {renderNewsArticles(item.newsData)}
           </div>
         </li>
       );

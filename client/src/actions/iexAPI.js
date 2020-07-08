@@ -62,7 +62,7 @@ export const loadWatchListData = (watchList) => async (dispatch) => {
       const globalQuoteRes = await globalQuoteQuery(item.symbol);
       item.quoteData = parseQuoteData(globalQuoteRes.data);
       const companyNewsRes = await companyNewsQuery(item.symbol);
-      item.newsData = companyNewsRes.data.slice(0, 10);
+      item.newsData = companyNewsRes.data.slice(0, 5);
       return item;
     })
   );
