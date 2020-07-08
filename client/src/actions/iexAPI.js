@@ -40,7 +40,6 @@ export const loadSearchQuote = (symbol) => async (dispatch) => {
   try {
     const res = await globalQuoteQuery(symbol);
     const payload = parseQuoteData(res.data);
-    console.log();
     dispatch({
       type: SEARCH_QUOTE,
       payload,
@@ -66,8 +65,6 @@ export const loadWatchListData = (watchList) => async (dispatch) => {
       return item;
     })
   );
-
-  console.log(payload);
 
   dispatch({
     type: SET_WATCH_LIST,
